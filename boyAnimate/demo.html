@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>演示</title>
+	<link rel="stylesheet" href="css/animate.css">
+	<script src="js/boyAnimate.js"></script>
+	<style>
+		.boy-animate {
+			width: 200px;
+			height: 200px;
+			border-radius: 50%;
+			background: green;
+			/*margin-top: 100px;*/
+			/*animation: boy-animate 9s;*/
+			margin: 100px auto;
+			line-height: 200px;
+			color: #fff;
+			font-size: 24px;
+			text-align: center;
+			visibility: hidden;
+		}
+		.animate {
+			visibility: visible;
+		}
+	</style>
+</head>
+<body>
+	<div class="boy-animate" boy-animate-duration="2s" boy-animate-effect="bounce" boy-animate-delay="0s">bounce</div>
+
+	<div class="boy-animate" boy-animate-duration="2s" boy-animate-effect="zoomInUp"  boy-animate-delay="0s">zoomInUp</div>
+
+	<div class="boy-animate" boy-animate-duration="2s" boy-animate-effect="zoomInDown" boy-animate-delay="0s">zoomInDown</div>
+
+	<div class="boy-animate" boy-animate-duration="2s" boy-animate-effect="rotateInDownLeft" boy-animate-delay="0s">rotateInDownLeft</div>
+
+	<div class="boy-animate" boy-animate-duration="2s" boy-animate-effect="rotateInDownRight" boy-animate-delay="0s">rotateInDownRight</div>
+
+	<div class="boy-animate" boy-animate-duration="2s" boy-animate-effect="zoomInUp" boy-animate-delay="0s">zoomInUp</div>
+
+	<div class="boy-animate" boy-animate-duration="2s" boy-animate-effect="slideInUp" boy-animate-delay="0s">slideInUp</div>
+
+	<div class="boy-animate" boy-animate-duration="2s" boy-animate-effect="slideInRight" boy-animate-delay="0s">slideInRight</div>
+
+	<div class="boy-animate" boy-animate-duration="2s" boy-animate-effect="fadeInLeft" boy-animate-delay="0s">fadeInLeft</div>
+
+	<div class="boy-animate" boy-animate-duration="2s" boy-animate-effect="fadeInRight" boy-animate-delay="0s">fadeInRight</div>
+
+	<div class="boy-animate" boy-animate-duration="2s" boy-animate-effect="flip" boy-animate-delay="1s">filp</div>
+	
+	<div class="boy-animate" boy-animate-duration="2s" boy-animate-effect="flipInX" boy-animate-delay="0.5s">filpInX</div>
+	<script>
+		var animate = new boyAnimate({});
+	</script>
+</body>
+</html>
