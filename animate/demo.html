@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<style type="text/css">
+	div { 
+    width: 300px; 
+    height: 100px; 
+    margin-top: 10px; 
+    background:red; border:1px solid #000; 
+    left: 10px; 
+    top: 40px; 
+    opacity:0.15; 
+    filter:alpha(opacity=10);
+    position: absolute;
+  }
+</style>
+<body>
+<input type="button" id="btn" value="开始运动">
+<div id="div1"></div>
+<script type="text/javascript" src="imitate-jq-animate.js"></script>
+
+	<script type="text/javascript">
+     var btn = document.getElementById('btn');
+     var div = document.getElementsByTagName('div');
+    btn.onclick = function () {
+      $('#div1').animation(
+        {
+          'left': '600px', 'height': '400px'
+        }, 
+        8000,
+        function() {
+         $('#div1').animation(
+            {
+              'left': '0px', 'height': '100px'
+            },
+            2000
+          );
+      });
+    };
+	</script>
+</body>
+</html>

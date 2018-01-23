@@ -1,0 +1,42 @@
+.swiper-container { 
+  width: 100%; 
+  height: 400px; 
+  overflow: hidden;
+  position: relative;
+}
+.swiper-container > .swiper-wrap {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: transform 0ms linear;
+}
+.swiper-container > .swiper-wrap > li { 
+  float: left; 
+}
+.swiper-container > .swiper-wrap > li > a {
+    display: block;
+    background-size: 100% 100%;
+}
+.swiper-container > .swiper-wrap > li,
+.swiper-container > .swiper-wrap,
+.swiper-container > .swiper-wrap > li > a {
+   width: 100%; 
+   height: 100%; 
+}
+.swiper-container > .swiper-circle {
+   position: absolute;
+   left: 50%;
+   bottom: 10px;
+   transform: translateX(-50%);
+}
+.swiper-container > .swiper-circle > li {
+    float: left;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+     background: #e4e4e4;
+    margin: 0 5px;
+}
+.swiper-container > .swiper-circle > li.active {
+    background: red;
+}

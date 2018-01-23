@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1, minimum-scale=1,initial-scale=1.0" />
+  <link rel="stylesheet" href="slider.css">
+	<script type="text/javascript" src="slider-1.2.1.js"></script>
+</head>
+<style type="text/css">
+    body,html,li,ul 
+    { 
+      padding: 0; 
+      margin: 0; 
+    }
+    ul { 
+      list-style: none; 
+    }
+    body,html 
+    { 
+      font-family: "Microsoft YaHei";
+      width:100%;
+      background:#fff;
+    }
+    .container { 
+      height: 2000px; 
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    input {
+      border-radius: 5px;
+      width: 100px;
+      padding: 10px;
+      outline: none;
+      border:0;
+      background: #fff;
+      color: #fff;
+      font-family: "Microsoft YaHei";
+    }
+    .success {
+       background: #58b;
+    }
+    .danger {
+       background: red;
+    }
+    #swiper3 > .pc-slider a {
+       position: absolute;
+       background: rgba(0,0,0,.5);
+       color: #fff;
+       height: 100px;
+       width: 100px;
+       border-radius: 50%;
+       text-align: center;
+       line-height: 100px;
+       font-size: 60px;
+       top: 50%;
+       transform: translateY(-50%);
+       cursor: pointer;
+    }
+    #swiper3 .swiper-next {
+        right: 0px;
+    }
+    #swiper3 .swiper-prev {
+        left: 0px;
+    }
+    #swiper3 > .swiper-circle > li {
+        width: 20px;
+        height: 20px;
+    }
+</style>
+<body>
+<div class="container">
+  
+   <!--         1、创建一个简单的轮播(移动端模式查看)                  -->
+  <div class="select1">
+      <h3>1、创建一个简单的轮播(移动端模式查看)</h3>
+
+      <div id="demo" class="swiper-container">
+         <ul class="swiper-wrap">
+              <li><a style="background-image: url(imgs/1.jpg);"></a></li>
+              <li><a style="background-image: url(imgs/2.jpg);"></a></li>
+              <li><a style="background-image: url(imgs/3.jpg);"></a></li>
+         </ul>
+         <ul class="swiper-circle"></ul>
+      </div>
+
+      <script>
+         var demo = new Touches('demo',{
+           autoPlay:false,
+           loop:true
+         });
+         //容器宽度自适应
+        demo.autoAdaption();
+      </script>
+  </div>
+
+<!--         1、创建一个简单的轮播(移动端模式查看)                  -->
+
+
+<!--      2、动态添加或删除图片实现轮播(移动端模式查看)            -->
+  <div class="select2">
+      <h3>2、动态添加或删除图片实现轮播(移动端模式查看)</h3>
+      <input class="success" type="button" value="添加图片" id="add">
+      <input class="danger" type="button" value="删除一张图片" id="del">
+      <div style="padding: 10px"></div>
+
+      <div id="swiper2" class="swiper-container">
+         <ul class="swiper-wrap">
+              <li><a style="background-image: url(imgs/1.jpg);"></a></li>
+              <li><a style="background-image: url(imgs/2.jpg);"></a></li>
+              <li><a style="background-image: url(imgs/3.jpg);"></a></li>
+         </ul>
+         <ul class="swiper-circle"></ul>
+      </div>
+
+    <script type="text/javascript">
+
+      var add = document.getElementById('add');
+      var del = document.getElementById('del');
+      var div1 = document.getElementById('swiper2');
+      var box = div1.getElementsByClassName('swiper-wrap')[0];
+      //初始化
+      var a = new Touches('swiper2',{loop:true,autoPlay:true});
+      a.sliderIndex(2);
+
+      // 添加图片
+      add.onclick = function(){
+        box.innerHTML += '<li><a style="background-image: url(imgs/4.jpg);"></a></li>';
+        a.update( 'add' );
+      }
+
+      // 删除图片
+      del.onclick = function(){
+        box.removeChild(box.children[1]); 
+        a.update( 'del' );
+      }
+    </script>
+
+  </div>
+<!--      2、动态添加或删除图片实现轮播(移动端模式查看)            -->
+
+
+<!--      3、pc端点击切换                                          -->
+  <div class="select3">
+    <h3>3、pc端点击切换</h3>
+    <div id="swiper3" class="swiper-container">
+       <ul class="swiper-wrap">
+            <li><a style="background-image: url(imgs/1.jpg);"></a></li>
+            <li><a style="background-image: url(imgs/2.jpg);"></a></li>
+            <li><a style="background-image: url(imgs/3.jpg);"></a></li>
+       </ul>
+       <ul class="swiper-circle"></ul>
+       <div class="pc-slider">
+           <a class="swiper-prev">&lt;</a>
+           <a class="swiper-next">&gt;</a>
+       </div>
+    </div>
+  </div>
+  <script>
+
+      var swiper3 = new Touches('swiper3',{
+         pcSlider:true,
+         loop:true
+      });
+
+      swiper3.sliderIndex(2);
+  </script>
+  <!--      3、pc端点击切换                                          -->
+
+
+</div>
+</body>
+</html>

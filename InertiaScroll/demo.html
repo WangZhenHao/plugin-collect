@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>惯性滚动插件</title>
+	<meta name="viewport" content="width=device-width,inital-scale=1.0,minimum-scale=1.0,minimum-scale=1.0,user-scalble=no" />
+	<script src="InertiaScroll.js"></script>
+	<script src="AreaData.js"></script>
+	<style>
+		* {
+			padding: 0;
+			margin: 0;
+		}
+		input {
+			outline: none;
+		}
+		.clear {
+			zoom:1;
+		}
+		.clear:after {
+			content: "";
+			clear: both;
+			display: block;
+		}
+		.wrap {
+			width: 100%;
+			margin: 10px auto;
+			text-align: center;
+		}
+		.scrollTarget {
+			width: 80%;
+			height: 34px;
+			font-size: 16px;
+			padding-left: 10px;
+		}
+
+
+		.inertiaScroll-wrap {
+			position: fixed;
+			left: 0;
+			bottom: 0;
+			height: 280px;
+			width: 100%;
+			visibility: hidden;
+		}
+		.shadow-box {
+			position: fixed;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			background-color: #000;
+			z-index: 1;
+			opacity:0;
+			transition: opacity 400ms ease-in-out;
+		}
+		.show-animated {
+			visibility: visible;
+		}
+		.show-animated .shadow-box{
+			opacity: .4;
+		}
+		.show-animated .inertiaScroll-container {
+			transform: translateY(0); 
+		}
+		.inertiaScroll-container {
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			background: #fff;
+			left: 0;
+			top: 0;
+			z-index: 2;
+			transform: translateY(100%); 
+			transition: transform 200ms ease-in-out;
+		}
+		.inertiaScroll-options {
+			color: #e84f2a;
+			width: 100%;
+			box-shadow: 0 1px 0 0 #a5a0a0;
+		}
+		.inertiaScroll-options span {
+			float: left;
+			padding: 10px 20px;
+		}
+		.inertiaScroll-options span.options-right {
+			float: right;
+		}
+		.inertia-scorll {
+			display: flex;
+			position: relative;
+			height: calc(100% - 40px);
+			overflow: hidden;
+			font-size: 14px;
+			/*background: -webkit-linear-gradient(top,transparent 2%, rgba(255,255,255,1) 10%, transparent 80%, rgba(255,255,255,1) 100%);*/
+		}
+		.inertia-list {
+			flex: 1;
+			text-align: center;
+			line-height: 48px;
+			transform: translate3d(0, 90px, 0);
+		}
+		.inertia-list > div {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+		/*.inertia-list > div {
+			height: 40px;
+		}*/
+		.vertical-wrap {
+			position: absolute;
+			height: 48px;
+			width: 96%;
+			left: 50%;
+			top: 50%;
+			transform: translate3d(-50%, -50%, 0);
+			border-top:1px solid #e4e4e4;
+			border-bottom: 1px solid #e4e4e4;
+			z-index: -1;
+		}
+		.inertia-scorll-bg {
+			position: absolute;
+			left: 0;
+			top: 1px;
+			width:100%;
+			height: 100%;
+			background: -webkit-linear-gradient(top,#fff, rgba(255, 255, 255, 0), #fff);
+			z-index: 2;
+			pointer-events:none;
+		}
+	</style>
+</head>
+<body>
+	<div class="wrap">
+		<input class="scrollTarget" placeholder="请选择内容" type="button" data-inertiaScroll="scrollTarget" >
+		<input class="scrollTarget" placeholder="请选择内容" type="button" data-inertiaScroll="scrollTarget" >
+		<input class="scrollTarget" placeholder="请选择内容" type="button" data-inertiaScroll="scrollTarget" >
+		<input class="scrollTarget" placeholder="请选择内容" type="button" data-inertiaScroll="scrollTarget" >
+	</div>
+
+	<!-- <div class="inertiaScroll-wrap show-animated">
+		<div class="shadow-box"></div>
+		<div class="inertiaScroll-container">
+			<div class="inertiaScroll-options clear">
+				<span class="options-left">取消</span>
+				<span class="options-right">确定</span>
+			</div>
+			<div class="inertia-scorll">
+				<div class="vertical-wrap"></div>
+				<div class="inertia-scorll-bg"></div>
+			</div>
+		</div>
+	</div> -->
+
+	<script>
+		var selecter = new InertiaScroll();
+		selecter.init({
+			target: '.scrollTarget',
+			data: LAreaData,
+			callback: function(res) {
+				console.log(this);
+				this.target.value = res.join(',');
+			}
+		})
+	</script>
+</body>
+</html>

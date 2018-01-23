@@ -1,0 +1,2 @@
+# animate
+这是一个仿照jquery中的animate函数所写的一个动画插件；兼容ie7以上的浏览器

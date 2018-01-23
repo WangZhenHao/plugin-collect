@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no,maximum-scale=1.0">
+	<title>Document</title>
+	<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+	<style>
+		* {
+			padding: 0;
+			margin: 0;
+		}
+		.wrap {
+			width: 300px;
+			height: 400px;
+			margin: 0 auto;
+			position: relative;
+			overflow: hidden;
+		}
+		.wrap > div {
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			background:#58b;
+			text-align: center;
+			line-height: 400px;
+			font-size: 32px;
+			color: #fff;
+			transition: left 0ms linear;
+			background-size: cover;
+		}
+		.wrap > div.active,
+		.wrap > div.next,
+		.wrap > div.prev{
+			display: block;
+			z-index: 2;
+		}
+
+		.wrap > div.next {
+			left: 100%;
+		}
+
+		.wrap > div.prev {
+			left: -100%;
+		}
+	</style>
+</head>
+<body>
+	<div id="wrap" class="wrap">
+		<div style="background-image: url(./imgs/1.jpg);">slider1</div>
+		<div style="background-image: url(./imgs/2.jpg);">slider2</div>
+		<div style="background-image: url(./imgs/3.jpg);">slider3</div>  
+		<div style="background-image: url(./imgs/4.jpg);">slider4</div>
+		<div style="background-image: url(./imgs/5.jpg);">slider5</div>
+		<div style="background-image: url(./imgs/6.jpg);">slider6</div>
+		<div style="background-image: url(./imgs/7.jpg);">slider7</div>
+	</div>
+	<script>
+		function Touches(id,config) {
+			this.set = {
+				speed: config.speed || 200,
+			}
+			this.wrap = document.getElementById('wrap');
+			this.w = this.wrap.offsetWidth;
+			this.wrapLi = this.wrap.children;
+			this.len = this.wrapLi.length;
+			this.index = 0;
+			this.startX = 0;
+			this.endX = 0;
+			this.animateStatus = true;
+			this.init();
+			this.calculateOffsetLeft(this.index);
+			this.touchEvent();
+		}
+
+		Touches.prototype.init = function(){
+			var count = this.wrapLi.length;
+			for(var i = 0; i < count; i++) {
+				this.wrapLi[i].style.width = this.w + 'px';
+				this.wrapLi[i].style.left = this.w * i + 'px';
+				this.wrapLi[i].setAttribute('data-index',i);
+			}
+		}
+
+		Touches.prototype.touchEvent = function() {
+			var self = this;
+			this.touchOption = function(e) {
+				var e = e || window.event,
+					el = e.srcElement || e.target;
+				console.log(self.animateStatus)
+				if(!self.animateStatus) {
+					return;
+				}
+				switch( e.type ) {
+					case 'touchstart':
+						var currentIndex = parseInt(el.getAttribute('data-index'));
+						self.startX = e.targetTouches[0].pageX;
+						self.getOffsetLeft();
+						self.calculateOffsetLeft(currentIndex);
+
+					break;
+
+					case 'touchmove':
+						 e.preventDefault();
+						if(Math.abs(self.endX) >= self.w ) {
+							var w = self.endX > 0 ? self.w : -self.w; 
+							self.toMove(w);
+							self.animateStatus = true;
+							return;
+						}
+						self.endX = (e.targetTouches[0].pageX - self.startX);
+						self.toMove(self.endX);
+					break;
+
+					case 'touchend':
+						var direction = '';
+						if(Math.abs(self.endX) >= 100 && self.endX > 0 ) {
+							  self.index = (self.len + self.index - 1) % self.len;
+							  direction = 'right';
+						} else if(Math.abs(self.endX) >= 100 && self.endX < 0) {
+							  self.index = (self.len + self.index + 1) % self.len;
+							   direction = 'left';
+						}
+						self.endX = 0;
+						console.log(self.index);
+						self.calculateOffsetLeft(self.index, 'end', direction);
+					break;
+				}
+			}
+
+			this.wrap.addEventListener('touchstart',this.touchOption);
+			this.wrap.addEventListener('touchmove',this.touchOption);
+			this.wrap.addEventListener('touchend',this.touchOption);
+		}
+
+
+		Touches.prototype.calculateOffsetLeft = function(index,duration,direction) {
+			var nextIndex = (this.len + index + 1) % this.len,
+			    prevIndex = (this.len + index - 1) % this.len;
+			this.indexArr = [prevIndex, index, nextIndex];  
+			if(duration=='end') {
+				this.animateStatus = false;
+				$(this.wrapLi[index]).animate({ left : '0px' }, this.set.speed,function() {
+					this.animateStatus = true;
+					console.log(this.animateStatus)
+				}.bind(this));
+				
+				if(direction =='left' ) {
+					$(this.wrapLi[prevIndex]).animate({ left : -this.w+'px' }, this.set.speed);
+					$(this.wrapLi[nextIndex]).css({ left : this.w+'px' });
+
+				} else if( direction =='right' ){
+					$(this.wrapLi[prevIndex]).css({ left : -this.w+'px' });
+					$(this.wrapLi[nextIndex]).animate({ left : this.w+'px' }, this.set.speed);
+				} else {
+					$(this.wrapLi[prevIndex]).animate({ left : -this.w+'px' }, this.set.speed);
+					$(this.wrapLi[nextIndex]).animate({ left : this.w+'px' }, this.set.speed);
+				}
+
+			} else {
+				this.wrapLi[prevIndex].style.left = -this.w + 'px';
+			    this.wrapLi[index].style.left = 0 + 'px';
+			    this.wrapLi[nextIndex].style.left = this.w + 'px';
+			}
+
+			for(var i = 0; i < this.len; i++ ) {
+				this.wrapLi[i].className = '';
+			}
+			if( this.wrapLi[index].className.indexOf('active') == -1 ) {
+				this.wrapLi[prevIndex].className = 'prev';
+				this.wrapLi[index].className = 'active';
+				this.wrapLi[nextIndex].className = 'next';
+			}
+
+		}
+
+		Touches.prototype.toMove = function (left) {
+			// for( var i = 0; i < this.len; i++ ) {
+			// 	this.wrapLi[i].style.left = this.offsetLeftArr[i] + left + 'px';
+			// }
+			for(var i = 0, len = this.indexArr.length; i < len; i++) {
+				this.wrapLi[this.indexArr[i]].style.left = this.offsetLeftArr[this.indexArr[i]] + left + 'px';
+			}
+		}
+
+		Touches.prototype.getOffsetLeft = function () {
+			this.offsetLeftArr = [];
+			for( var i =0; i < this.len; i++) {
+				this.offsetLeftArr.push(this.wrapLi[i].offsetLeft);
+			}
+		}
+
+		var a = new Touches('wrap',{});
+
+	</script>
+</body>
+</html>
