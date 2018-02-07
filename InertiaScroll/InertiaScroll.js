@@ -2,9 +2,21 @@
 /**
  * value = 144 - 48 * i; 通项公式
  *
- *author a_boy
- *date   2018-1-20 11:46
- * 
+ *author   a_boy
+ *created  2017-12-24
+ *update   2018-1-20 11:46
+ *
+ * 使用方法:
+ * var selecter = new InertiaScroll();
+   selecter.init({
+		target: '.scrollTarget',    //召唤插件的class类
+		data: LAreaData,			//传入的数据
+		callback: function(res) {   //点击确认按钮后的回调函数
+			console.log(this);
+			this.target.value = res.join(',');
+		}
+	})
+
  */
 
 
@@ -179,7 +191,7 @@ InertiaScroll.prototype = {
 		}
 	},
 	/**
-	 * 点击开启关闭惯性滚动选择插件
+	 * 点击确定或取消按钮
 	 * 
 	 */
 	inertiaWrapEvent: function() {
