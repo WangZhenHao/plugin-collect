@@ -1,7 +1,15 @@
 # 把自己写的插件汇总在一起
+## FileTree 目录结构
+```
+├── AreaInertailScroll          // 移动端城市联动
+├── class-carousel              // class控制的轮播  
+├── mobile-touch-slider         // 移动端轮播
+├-- ScrollClassAnimate          // 下拉,上拉加载动画
+├-- imitate-jq-animate          // 仿jquery动画函数
+├-- images						// 图片
 
+```
 ### 移动端城市联动
-
 >目录:AreaInertailScroll(地区惯性滚动)
 ```
   使用方法:
@@ -39,7 +47,7 @@
      使用方法
      id:轮播容器的id;
      json: 各种配置参数json格式;
-     var demo = Touches('swiper',{
+     var demo = new Touches('swiper',{
      	 //是否开启轮播;
          autoPlay:true,
          //下一张切换时间(毫秒)
@@ -81,6 +89,7 @@
 >目录: imitate-jq-animate(仿jquery动画)
 ```
 	//使用规则:传入一个对象或一个ID，不可以传入一个数组对象;
+
 	$('#div1').animation({'left': '100px'}, 2000, function() {
 		//执行的内容
 	})
