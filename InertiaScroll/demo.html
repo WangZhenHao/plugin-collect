@@ -99,6 +99,7 @@
 			text-align: center;
 			line-height: 48px;
 			transform: translate3d(0, 90px, 0);
+			/*position: absolute;*/
 		}
 		.inertia-list > div {
 			overflow: hidden;
@@ -129,14 +130,18 @@
 			z-index: 2;
 			pointer-events:none;
 		}
+		/*.inertia-list-wrap {
+			pointer-events: none;
+			flex: 1;
+		}*/
 	</style>
 </head>
 <body>
 	<div class="wrap">
-		<input class="scrollTarget" placeholder="请选择内容" type="button" data-inertiaScroll="scrollTarget" >
-		<input class="scrollTarget" placeholder="请选择内容" type="button" data-inertiaScroll="scrollTarget" >
-		<input class="scrollTarget" placeholder="请选择内容" type="button" data-inertiaScroll="scrollTarget" >
-		<input class="scrollTarget" placeholder="请选择内容" type="button" data-inertiaScroll="scrollTarget" >
+		<input class="scrollTarget" placeholder="请选择内容" type="button">
+		<input class="scrollTarget" placeholder="请选择内容" type="button">
+		<input class="scrollTarget" placeholder="请选择内容" type="button">
+		<input class="scrollTarget" placeholder="请选择内容" type="button">
 	</div>
 
 	<!-- <div class="inertiaScroll-wrap show-animated">
@@ -149,6 +154,8 @@
 			<div class="inertia-scorll">
 				<div class="vertical-wrap"></div>
 				<div class="inertia-scorll-bg"></div>
+				<div class="inertia-list" data-areatarget="province" style="transform: translate3d(0px, 96px, 0px);">
+				</div>
 			</div>
 		</div>
 	</div> -->

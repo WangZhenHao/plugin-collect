@@ -1,10 +1,18 @@
-
 /**
- * value = 144 - 48 * i; 通项公式
- *
  *author   a_boy
  *created  2017-12-24
- *update   2018-1-20 11:46
+ *update   2018-3-12 17:20
+ *
+ * 
+ * 地区    滚动容器的偏移量
+ * 1       96px
+ * 2       48px
+ * 3       0px
+ * 4       -48px
+ * ...     ...
+ * 从而得出通项公式: 144 - 48 * i;
+ * 
+ *
  *
  * 使用方法:
  * var selecter = new InertiaScroll();
@@ -72,6 +80,7 @@ InertiaScroll.prototype = {
 		this.dataTarget = null;
 		// 初始化数据
 		this.initData();
+
 	},
 	/**
 	 * 初始化数据
@@ -115,6 +124,8 @@ InertiaScroll.prototype = {
 		var div = document.createElement('div');
 		div.className = 'inertia-list';
 		div.style.transform = 'translate3d(0, 96px, 0)';
+		//滚动容器的高度
+		div.style.height = len * 48 + 'px';
 		div.innerHTML = strProvince;
 		return div;
 	},
@@ -123,7 +134,7 @@ InertiaScroll.prototype = {
 	 */
 	chageAllArae: function() {
 		var area = this.getElementAttr(this.scrollTarget, 'data-areaTarget'),
-			AraeCurrentIndex = this.getTargetIndex(this.cur) - 1;
+			AraeCurrentIndex = this.correctionIndex - 1;
 		switch(area) {
 			case 'province':
 				this.cityNode = this.scrollTarget.nextSibling;
@@ -157,8 +168,11 @@ InertiaScroll.prototype = {
 		  if(this.countryNode) {
 			  this.removeElement(this.inertaiScollWrap, this.countryNode);
 		  }
-		  var countryArea = this.setDateToHtml(this.dataTarget[index]['child'], 'name');
-		  this.dataWrap.appendChild(countryArea);
+		  var data = this.dataTarget[index]['child'];
+		  if(data) {
+			  var countryArea = this.setDateToHtml(this.dataTarget[index]['child'], 'name');
+			  this.dataWrap.appendChild(countryArea);
+		  }
 	},
 	/**
 	 * 处理插件显示隐藏函数
@@ -233,7 +247,7 @@ InertiaScroll.prototype = {
 	 * 获取滚动中间元素的index;
 	 */
 	getTargetIndex: function(position) {
-		return parseInt((position - 144) / -48)
+		return Math.round((position - 144) / -48);
 	},
 	/**
 	 * 获取滚动中间元素的值
@@ -316,17 +330,20 @@ InertiaScroll.prototype = {
 	 * 修正位置
 	 */
 	correctionPoition: function(position) {
-		for(var i = 1, len = this.scrollTargetChilid.length; i <= len; i++) {
-			if(position > 144 - 48 * i) {
-				this.correctionIndex = i;
-				break;
-			}
-		}
+		// 通过四舍五入来计算应该移动到第几个地区
+		this.correctionIndex = this.getTargetIndex(position);//Math.round((position - 144) / -48);
+		return 144 - (48 * this.correctionIndex);
+		// for(var i = 1, len = this.scrollTargetChilid.length; i <= len; i++) {
+		// 	if(position > 144 - 48 * i) {
+		// 		this.correctionIndex = i;
+		// 		break;
+		// 	}
+		// }
 
-		if(position > (168 - 48 * this.correctionIndex)) {
-			this.correctionIndex--;
-		}
-		return 144 - (48 * this.correctionIndex);	
+		// if(position > (168 - 48 * this.correctionIndex)) {
+		// 	this.correctionIndex--;
+		// }
+		// return 144 - (48 * this.correctionIndex);	
 	},
 	/**
 	 * 动画滚回来
@@ -342,6 +359,7 @@ InertiaScroll.prototype = {
 				this.cur = target;
 				clearInterval(this.timer);
 				//重置地区
+				this.correctionPoition(target);
 				this.chageAllArae();
 				this.isIntransition = false;
 				this.isCorrectionPoition = false;
@@ -437,7 +455,6 @@ InertiaScroll.prototype = {
 
 		//获取滚动元素当前偏移量
 		this.cur = this.getTargetCurentyPosition();
-		// console.log(this.cur);
 		this.vy = 0;
 		//获取触摸的位置
 		var clientY = e.touches[0].clientY;
@@ -447,11 +464,12 @@ InertiaScroll.prototype = {
 		this._startTime = e.timeStamp;
 		// this.isDown = true;
 		//取的滚动元素的总高度;
-		this._oh = this.scrollTarget.scrollHeight;
+		// this._oh = this.scrollTarget.scrollHeight;
+		this._oh = this.scrollTarget.offsetHeight;
 		//取的滚动元素父级容器的高度
-		this._ch = this.scrollTarget.clientHeight;
+		this._ch = 240;//this.scrollTarget.parentNode.offsetHeight;
 		// this.isDown = true;
-		this.bottomDirection = this._oh - (this._ch / 2) - 20;
+		this.bottomDirection = this._oh - (this._ch / 2) - 25;
 	},
 	/**
 	 * 设置容器偏移量
