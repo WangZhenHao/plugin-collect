@@ -4,9 +4,9 @@
 ├── AreaInertailScroll          // 移动端城市联动
 ├── class-carousel              // class控制的轮播  
 ├── mobile-touch-slider         // 移动端轮播
-├-- ScrollClassAnimate          // 下拉,上拉加载动画
-├-- imitate-jq-animate          // 仿jquery动画函数
-├-- images						// 图片
+├── ScrollClassAnimate          // 下拉,上拉加载动画
+├── imitate-jq-animate          // 仿jquery动画函数
+├── images					    // 图片
 
 ```
 ### 移动端城市联动
