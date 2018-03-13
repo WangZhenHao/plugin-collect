@@ -21,8 +21,9 @@
 			console.log(this);
 			this.target.value = res.join(',');
 		}
-	}) 
+	}); 
 ```
+![AreaInertailScroll](https://github.com/WangZhenHao/plugin-collect/blob/master/images/AreaInertiaScroll/AreaInertiaScroll.gif)
 
 ### class控制的轮播
 
