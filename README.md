@@ -23,6 +23,8 @@
 		}
 	}); 
 ```
+[演示地址: http://47.93.55.159/plugin-collect/AreaInertiaScroll/demo.html](http://47.93.55.159/plugin-collect/AreaInertiaScroll/demo.html)  
+
 ![AreaInertailScroll](https://github.com/WangZhenHao/plugin-collect/blob/master/images/AreaInertiaScroll/AreaInertiaScroll.gif)
 
 ### class控制的轮播
