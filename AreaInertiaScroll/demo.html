@@ -138,10 +138,10 @@
 </head>
 <body>
 	<div class="wrap">
-		<input class="scrollTarget" placeholder="请选择内容" type="button">
-		<input class="scrollTarget" placeholder="请选择内容" type="button">
-		<input class="scrollTarget" placeholder="请选择内容" type="button">
-		<input class="scrollTarget" placeholder="请选择内容" type="button">
+		<input class="scrollTarget" data-inertia="scrollTarget" value="点击按钮召唤插件" type="button">
+		<input class="scrollTarget" data-inertia="scrollTarget" value="点击按钮召唤插件" type="button">
+		<input class="scrollTarget" data-inertia="scrollTarget" value="点击按钮召唤插件" type="button">
+		<input class="scrollTarget" data-inertia="scrollTarget" value="点击按钮召唤插件" type="button">
 	</div>
 
 	<!-- <div class="inertiaScroll-wrap show-animated">
@@ -163,7 +163,7 @@
 	<script>
 		var selecter = new InertiaScroll();
 		selecter.init({
-			target: '.scrollTarget',
+			target: 'scrollTarget',
 			data: LAreaData,
 			callback: function(res) {
 				console.log(this);

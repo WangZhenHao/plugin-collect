@@ -1,7 +1,7 @@
 /**
  *author   a_boy
  *created  2017-12-24
- *update   2018-3-12 17:20
+ *update   2018-3-13 09:53
  *
  * 
  * 地区    滚动容器的偏移量
@@ -61,7 +61,7 @@ InertiaScroll.prototype = {
 	 */
 	init: function(params) {
 		//点击的目标
-		this.targetClassName = document.querySelector(params.target);
+		this.targetName = params.target;
 		//地区数据来源
 		this.data = params.data;
 		//获取滚动容器元素
@@ -184,9 +184,10 @@ InertiaScroll.prototype = {
 		// }.bind(this));
 		document.addEventListener('click', function(e) {
 			var event = e ||window.event,
-				el = e.srcElement || e.target,
-				cls = el.className;
-			if(cls.indexOf('scrollTarget') > -1) {
+				el = e.srcElement || e.target;
+				// cls = el.className;
+			// if(cls.indexOf(this.targetName) > -1) {
+			if(this.getElementAttr(el, 'data-inertia') == this.targetName) {
 				this.target = el;
 				this.targetShowHide();
 			}
@@ -476,7 +477,7 @@ InertiaScroll.prototype = {
 	 */
 	setTargetPostion: function(y) {
 		// var position = parseInt(y);
-		this.scrollTarget.style.transform = "translate3d(0," +  parseInt(y) + "px,0)";
+		this.scrollTarget.style.transform = "translate3d(0," +  y + "px,0)";
 	},
 	/**
 	 * 获取滚动元素位置
