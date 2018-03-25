@@ -23,7 +23,7 @@
 		}
 	}); 
 ```
-[演示地址: http://47.93.55.159/plugin-collect/AreaInertiaScroll/demo.html](http://47.93.55.159/plugin-collect/AreaInertiaScroll/demo.html)  
+[演示地址: http://www.wzhshare.top/plugin-collect/AreaInertiaScroll/demo.html](http://www.wzhshare.top/plugin-collect/AreaInertiaScroll/demo.html)  
 
 ![AreaInertailScroll](https://github.com/WangZhenHao/plugin-collect/blob/master/images/AreaInertiaScroll/AreaInertiaScroll.gif)
 
@@ -97,4 +97,4 @@
 		//执行的内容
 	})
 ```
-####不断的去优化和添加插件 有问题可以反馈: 1471047476@qq.com
+#### 不断的去优化和添加插件 有问题可以反馈: 1471047476@qq.com
