@@ -2,7 +2,7 @@
      使用方法
      id:轮播容器的id;
      json: 各种配置参数json格式;
-     var demo = Touches('swiper',{
+     var demo = new Touches('swiper',{
      autoPlay:true,
      interval:4000
      });
