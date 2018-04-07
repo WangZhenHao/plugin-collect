@@ -26,11 +26,69 @@
 				hour = date.getHours(),
 				minute = date.getMinutes(),
 	            second = date.getSeconds();
+	        // var dateObj = {
+	        // 	y: date.getFullYear(),
+	        // 	Y: this.y,
+	        // 	M: date.getMonth() + 1,
+	        // 	d: date.getDate(),
+	        // 	h: date.getHours(),
+	        // 	m: date.getMinutes(),
+	        // 	s: date.getSeconds()
+	        // }
 
 			console.log(year, month, day, hour, minute, second);
-			format.replace(/\w+[\\\-]/, function() {
+			var str = format.replace(/[YyMmDdHhSs]+/g, function(w) {
+				// var key = w.charAt(0),
+				// 	len = w.length;
+				// if(len <=2 && key.toUpperCase() == 'Y') {
+				// 	return dateObj[key].substring(2);
 
-			})
+				// } else if(len >=2 && key.toUpperCase() == 'Y') {
+				// 	return dateObj[key];
+
+				// } else if(w == 'MM') {
+				// 	return dateObj[key] >= 10 ? dateObj[key] : '0' + dateObj[key];
+
+				// } else if(w = 'M') {
+				// 	return dataObj[key];
+
+				// }
+				console.log(w);
+				if(w == 'yy' || w == 'YY' || w == 'y' || w == 'Y') {
+					return year.substring(2);
+
+				} else if(w == 'yyyy' || w == 'YYYY') {
+					return year;
+
+				} else if(w == 'MM') {
+					return month >= 10 ? month : '0' + month; 
+
+				} else if(w == 'M') {
+					return month;
+
+				} else if(w == 'DD' || w == 'dd') {
+					return day >= 10 ? day : '0' + day;
+
+				} else if(w == 'D' || w == 'd') {
+					return day;
+
+				} else if(w == 'HH' || w == 'hh') {
+					return hour >= 10 ? hour : '0' + hour;
+
+				} else if(w == 'H' || w == 'h') {
+					return hour;
+
+				} else if(w == 'mm') {
+					return minute >= 10 ? minute : '0' + minute;
+
+				} else if(w == 'm') {
+					return minute;
+
+				} else if(w == 'ss' || w == 's') {
+					return second >= 10 ? second : '0' + second;
+				}
+			});
+			return str;
 		},
 
 		/**
@@ -45,8 +103,23 @@
 		 * 获取url地址参数
 		 * @return {[type]} [description]
 		 */
-		getUrlParmas: function() {
-
+		getUrlParmas: function(param) {
+			var url = window.location.href;
+			if(url.indexOf('?') > 0) {
+				var arrParams = url.split('?')[1].split('&'),
+					json = {};
+				for(var i = 0, len = arrParams.length; i < len; i++) {
+					var arr = arrParams[i].split('=');
+					json[arr[0]] = json[arr[1]];
+				}
+				if(param) {
+					return json[param];
+				} else {
+					return json;
+				}
+			} else {
+				return '';
+			}
 		},
 		/**
 		 * 设置cookies
