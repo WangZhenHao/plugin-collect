@@ -1,6 +1,6 @@
 (function() {
 /**
- * 汇总js常见的工具库,方便使用
+ * js的工具库,方便使用
  * author   a_boy
  * created  2018-4-7 18:06
  * 
@@ -15,8 +15,8 @@
 		},
 		/**
 		 * Unix时间戳转成时间
-		 * @param {[type]} format      [description]
-		 * @param {[type]} timestamp [description]
+		 * @param {[type]} format    '格式: yy-MM-dd hh:mm:ss'
+		 * @param {[type]} timestamp '时间戳: 1525147931'
 		 */
 		TimestampToDate: function(format, timestamp) {
 			var date = timestamp ? new Date(parseInt(timestamp) * 1000) : new Date(+new Date());
@@ -26,34 +26,8 @@
 				hour = date.getHours(),
 				minute = date.getMinutes(),
 	            second = date.getSeconds();
-	        // var dateObj = {
-	        // 	y: date.getFullYear(),
-	        // 	Y: this.y,
-	        // 	M: date.getMonth() + 1,
-	        // 	d: date.getDate(),
-	        // 	h: date.getHours(),
-	        // 	m: date.getMinutes(),
-	        // 	s: date.getSeconds()
-	        // }
 
-			console.log(year, month, day, hour, minute, second);
 			var str = format.replace(/[YyMmDdHhSs]+/g, function(w) {
-				// var key = w.charAt(0),
-				// 	len = w.length;
-				// if(len <=2 && key.toUpperCase() == 'Y') {
-				// 	return dateObj[key].substring(2);
-
-				// } else if(len >=2 && key.toUpperCase() == 'Y') {
-				// 	return dateObj[key];
-
-				// } else if(w == 'MM') {
-				// 	return dateObj[key] >= 10 ? dateObj[key] : '0' + dateObj[key];
-
-				// } else if(w = 'M') {
-				// 	return dataObj[key];
-
-				// }
-				console.log(w);
 				if(w == 'yy' || w == 'YY' || w == 'y' || w == 'Y') {
 					return year.substring(2);
 
@@ -95,8 +69,8 @@
 		 * 普通数值转成两位小数
 		 * @param {[type]} money [description]
 		 */
-		ToCurrency: function(money) {
-			var currency = money;
+		ToCurrency: function(money, num = 2) {
+			return parseFloat(money).toFixed(num);
 		},
 
 		/**
@@ -124,8 +98,16 @@
 		/**
 		 * 设置cookies
 		 */
-		setCookies: function() {
-
+		setCookies: function(name, value, expires) {
+			var cookieText = name + '=' + value;
+			if(expires) {
+				var timestamp = (new Date().getTime()) / 1000 + expires;
+				var dateObj = new Date(timestamp * 1000);
+				// console.log(timestamp, dateObj)
+				cookieText += '; expires=' + dateObj.toGMTString();
+			}
+			console.log(cookieText)
+			document.cookie = cookieText;
 		},
 		/**
 		 * 清除cookies
