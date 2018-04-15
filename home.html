@@ -9,9 +9,19 @@
 	<script>
 		console.log(Tools.DateToTimestamp('2018-05-01 12:12:11'));
 		//2018/4/7 18:33:20
-		// console.log(Tools.TimestampToDate('yyyy年MM月dd日 hh时mm分ss'))
+		console.log(Tools.TimestampToDate('yyyy年MM月dd日 hh时mm分ss'))
 		// console.log(Tools.ToCurrency('12.25'))
-		console.log(Tools.setCookies('name', 'wzh', 10));
+		Tools.setCookies('name', 'wzh', 200, {
+			path: '/',
+			// domain: 'www.baidu.com'
+		})
+		Tools.setCookies('age', '19', 200, {
+			// path: '/',
+			domain: 'www.baidu.com'
+		})
+		console.log(Tools.getCookie('name'));
+		Tools.clearCookies('age')
+		// console.log();
 	</script>
 </body>
 </html>
