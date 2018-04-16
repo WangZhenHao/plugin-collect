@@ -12,16 +12,26 @@
 		console.log(Tools.TimestampToDate('yyyy年MM月dd日 hh时mm分ss'))
 		// console.log(Tools.ToCurrency('12.25'))
 		Tools.setCookies('name', 'wzh', 200, {
-			path: '/',
+			// path: '/',
 			// domain: 'www.baidu.com'
 		})
 		Tools.setCookies('age', '19', 200, {
 			// path: '/',
-			domain: 'www.baidu.com'
+			// domain: 'www.baidu.com'
 		})
-		console.log(Tools.getCookie('name'));
-		Tools.clearCookies('age')
+		// console.log(Tools.getCookie('name'));
+		// Tools.clearCookies('age')
 		// console.log();
+
+		Tools.setLocalStorage('test', 'wzh', 100);
+		Tools.setLocalStorage('name', {
+			name: 'wzh',
+			age: '18',
+			address: '广东深圳'
+		}, -100);
+
+		console.log(Tools.getLocalStorage('test'));
+		console.log(Tools.getLocalStorage('name'));
 	</script>
 </body>
 </html>

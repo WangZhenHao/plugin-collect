@@ -153,23 +153,36 @@
 		 * 获取本地缓存
 		 * @return {[type]} [description]
 		 */
-		getLocalStorage: function() {
-
+		getLocalStorage: function(key) {
+			var json = JSON.parse(localStorage.getItem(key));
+			if(json.expires) {
+				var timestamp = parseInt(+new Date() / 1000);
+				if(timestamp > json.expires) {
+					return null;
+				}
+			}
+			return json[key];
 		},
 		/**
 		 * 设置本地缓存(可设置过期时间)
-		 * @param {[type]} key   	键
-		 * @param {[type]} value 	值
-		 * @param {[type]} expires  过期时间
+		 * @param {[type]} key   	键         必填
+		 * @param {[type]} value 	值		   必填
+		 * @param {[type]} expires  过期时间   可填(秒)
 		 */
 		setLocalStorage: function(key, value, expires) {
+			var json[key] = value;
+			if(expires) {
+				var timestamp = parseInt(+new Date() / 1000) + expires;
+				json['expires'] = timestamp;  
+			}
 
+			localStorage.setItem(key, JSON.stringify(json));
 		},
 		/**
 		 * 清除本地缓存
 		 * @return {[type]} [description]
 		 */
-		clearLocalStorage: function() {
+		clearLocalStorage: function(key) {
 
 		}
 
