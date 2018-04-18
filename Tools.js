@@ -3,7 +3,7 @@
  * JavaScript的工具库,方便使用
  * author   a_boy
  * created  2018-4-7 18:06
- * 
+ * update   2018-4-17 
  */
 	var Tools = {
 		/**
@@ -80,7 +80,7 @@
 
 		/**
 		 * 获取url地址参数
-		 * param    获取某一个参数    可填(默认返回所有参数)
+		 * clearLocalStorage param    获取某一个参数    可填(默认返回所有参数)
 		 * @return {[type]} [description]
 		 */
 		getUrlParmas: function(param) {
@@ -98,7 +98,7 @@
 					return json;
 				}
 			} else {
-				return '';
+				return null;
 			}
 		},
 		/**
@@ -144,6 +144,7 @@
 		},
 		/**
 		 * 清除cookies
+		 * 
 		 * @return {[type]} [description]
 		 */
 		clearCookies: function(name,options = {}) {
@@ -151,6 +152,7 @@
 		},
 		/**
 		 * 获取本地缓存
+		 * @param {[type]} key   	键         必填
 		 * @return {[type]} [description]
 		 */
 		getLocalStorage: function(key) {
@@ -158,6 +160,7 @@
 			if(json.expires) {
 				var timestamp = parseInt(+new Date() / 1000);
 				if(timestamp > json.expires) {
+					this.clearLocalStorage(key)
 					return null;
 				}
 			}
@@ -165,12 +168,13 @@
 		},
 		/**
 		 * 设置本地缓存(可设置过期时间)
-		 * @param {[type]} key   	键         必填
-		 * @param {[type]} value 	值		   必填
-		 * @param {[type]} expires  过期时间   可填(秒)
+		 * @param {[type]} key   	键           必填
+		 * @param {[type]} value 	值		     必填
+		 * @param {[type]} expires  保存多少秒   可填(秒)
 		 */
 		setLocalStorage: function(key, value, expires) {
-			var json[key] = value;
+			var json = {}
+			json[key] = value;
 			if(expires) {
 				var timestamp = parseInt(+new Date() / 1000) + expires;
 				json['expires'] = timestamp;  
@@ -180,9 +184,67 @@
 		},
 		/**
 		 * 清除本地缓存
+		 * @param {[type]} key 	键		可填(默认清除所有)
 		 * @return {[type]} [description]
 		 */
 		clearLocalStorage: function(key) {
+			if(key) {
+				localStorage.removeItem(key);
+			} else {
+				localStorage.clear();
+			}
+		},
+		/**
+		 * 秒倒计时     
+		 * @param  {[type]} time 时间戳的差(秒)    必填
+		 * @return {[type]}      [description]
+			示例代码: 
+			var time = 24 * 60 * 60 + 4;
+		    setInterval(function() {
+		    	time--;
+		    	console.log(Tools.secondCountDown(time));
+		    }, 1000);
+
+		 */
+		secondCountDown(time) {
+			var d = parseInt(time / 86400), // 24 * 60 * 60
+				h = parseInt(time / 3600 % 24),
+				m = parseInt(time / 60 % 60),
+				s = parseInt(time % 60),
+				str = d + '天' + h + '时' + m + '分' + s + '秒';
+			return str;
+		},
+		/**
+		 * 毫秒倒计时(为了性能,所以每100毫秒执行一次)
+		 * @param  {[type]} time 时间戳的差    必填
+		 * @return {[type]}      [description]
+		 * 示例代码:
+		    var millisecondCountDown = document.getElementById('millisecondCountDown');
+		    //秒数乘余100
+		    var time = 10 * 100;  
+			setInterval(function() {
+				//每100毫秒减去10
+				time -= 10;  
+
+				if(time <= 0) {
+					time = 10 * 100;
+				}
+
+				millisecondCountDown.innerHTML = Tools.millisecondCountDown(time)
+			//每100毫秒执行一次
+			}, 100)              
+		 */
+		millisecondCountDown(time) {
+			var s = Math.ceil(time / 100);     // 计算秒数
+			var mh = parseInt(time / 10 % 10); // 计算毫秒数
+			return s + '秒' + mh + '毫秒';
+		}
+
+		phoneNumberFormat: function(phoneNumber) {
+
+		},
+
+		emailFormat: function(email) {
 
 		}
 
