@@ -90,7 +90,7 @@
 					json = {};
 				for(var i = 0, len = arrParams.length; i < len; i++) {
 					var arr = arrParams[i].split('=');
-					json[arr[0]] = json[arr[1]];
+					json[arr[0]] = arr[1];
 				}
 				if(param) {
 					return json[param];
