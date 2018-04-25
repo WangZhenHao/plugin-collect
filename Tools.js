@@ -33,7 +33,7 @@
 
 			var str = format.replace(/[YyMmDdHhSs]+/g, function(w) {
 				if(w == 'yy' || w == 'YY' || w == 'y' || w == 'Y') {
-					return year.substring(2);
+					return year.toString().substring(2);
 
 				} else if(w == 'yyyy' || w == 'YYYY') {
 					return year;
@@ -100,6 +100,7 @@
 			} else {
 				return null;
 			}
+			
 		},
 		/**
 		 * 设置cookies
@@ -238,14 +239,26 @@
 			var s = Math.ceil(time / 100);     // 计算秒数
 			var mh = parseInt(time / 10 % 10); // 计算毫秒数
 			return s + '秒' + mh + '毫秒';
-		}
-
-		phoneNumberFormat: function(phoneNumber) {
-
 		},
-
+		/**
+		 * 手机号码验证
+		 * @param  {[type]} phoneNumber 手机号码字符串   必填
+		 * @return true | false             
+		 */
+		phoneNumberFormat: function(phoneNumber) {
+			var re = /^1[34578][0-9]{9}$/
+			// var re = /^1(3|4|5|7|8)[0-9]{9}$/;
+			return re.test(phoneNumber);
+		},
+		/**
+		 * 邮箱验证
+		 * @param  {[type]} email 邮箱字符串     必填
+		 * @return true | false      
+		 */
 		emailFormat: function(email) {
-
+			var re = /^[A-z0-9_.-]+\w+@\w+\.[A-z]{2,5}$/;
+			// var re = /^[a-zA-Z0-9-_.]\w+(-|\.)?\w+@\w+\.\w{2,5}$/;
+			return re.test(email);
 		}
 
 	};
