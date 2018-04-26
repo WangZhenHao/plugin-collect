@@ -106,7 +106,7 @@
 		 * 设置cookies
 		 * @param {[type]} name    cookie名称    必填
 		 * @param {[type]} value   cookie值		 必填
-		 * @param {[type]} expires 缓存多少秒	 必填
+		 * @param {[type]} expires 缓存多少秒	 可填(默认session 关闭浏览器会自动的清除)
 		 * @param {[type]} options 对象          可填(默认设置根目录)
 		 */
 		setCookies: function(name, value, expires, options = {}) {
