@@ -259,6 +259,14 @@
 			var re = /^[A-z0-9_.-]+\w+@\w+\.[A-z]{2,5}$/;
 			// var re = /^[a-zA-Z0-9-_.]\w+(-|\.)?\w+@\w+\.\w{2,5}$/;
 			return re.test(email);
+		},
+		/**
+		 * 深度拷贝
+		 * @param  {[type]} object [description]
+		 * @return {[type]}        [description]
+		 */
+		deepCopy: function(object) {
+
 		}
 
 	};
