@@ -59,10 +59,13 @@
 			{name: 'wzh', age: 18},
 			{name: 'xm', age: 19},
 		];
-		var arr = parmas;
+		// var arr = parmas;
 
+		// arr[0] = 1;
+		// console.log(parmas);
+		var arr = Tools.deepCopy(parmas);
 		arr[0] = 1;
-		console.log(parmas);
+		console.log(arr, parmas);
 	</script>
 </body>
 </html>

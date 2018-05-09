@@ -262,11 +262,21 @@
 		},
 		/**
 		 * 深度拷贝
-		 * @param  {[type]} object [description]
+		 * @param  {[type]} object 需要拷贝的对象或者数组   必填
 		 * @return {[type]}        [description]
 		 */
 		deepCopy: function(object) {
-
+			var newObj = object.constructor == Array ? [] : {}
+			if(typeof object != 'object') {
+				return;
+			} else if(window.JSON) {
+				newObj = JSON.parse(JSON.stringify(object));
+			} else {
+				for(var i in object) {
+					newObj[i] = typeof object[i] == 'object' ? this.deepCopy(object[i]) : object[i];
+				}
+			}
+			return newObj;
 		}
 
 	};
