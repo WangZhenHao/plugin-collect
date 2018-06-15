@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+	<title>虚拟键盘</title>
+	<link rel="stylesheet" href="http://at.alicdn.com/t/font_709005_2fq0kn635st.css">
+	<style>
+		.clearfix:after {
+			content: "";
+			display: block;
+			clear: both;
+		}
+		.text-center {
+			text-align: center;
+		}
+		.line-height {
+			line-height: 60px;
+		}
+		.key-board {
+			width: 100%;
+			height: 240px;
+			position: fixed;
+			bottom: 0;
+			left: 0;
+			display: flex;
+			z-index: 1px;
+		}
+		.key-board * {
+			box-sizing: border-box;
+		}
+		.key-board > .key-code-block {
+			flex: 1;
+			color: #333;
+		}
+		.key-board > .key-code-block > span {
+			float: left;
+			font-size: 38px;
+			height: 25%;
+			width: 33.33%;
+			border-top: 1px solid #eee;
+			border-right: 1px solid #eee;
+		}
+		.key-board > .options {
+			width: 25%
+		}
+		.key-board > .options > .delete {
+			font-size: 38px;
+			height: 25%;
+			border-top: 1px solid #eee;
+
+		}
+		.key-board > .options > .comfirm {
+			height: 75%;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			color: #fff;
+			background: linear-gradient(180deg,#ff6e15,#ffb911);
+		}
+
+
+		#keyBoard {
+			display: block;
+			height: 100px;
+			width: 100%;
+		}
+	</style>
+</head>
+<body>
+	<span class="money" data-target="keyBoard" id="keyBoard"></span>
+	<div class="key-board-wrap">
+		<div class="key-board text-center">
+			<div class="key-code-block clearfix line-height">
+				<span class="key-code">1</span>
+				<span class="key-code">2</span>
+				<span class="key-code">3</span>
+				<span class="key-code">4</span>
+				<span class="key-code">5</span>
+				<span class="key-code">6</span>
+				<span class="key-code">7</span>
+				<span class="key-code">8</span>
+				<span class="key-code">9</span>
+				<span class="iconfont icon-jianpan"></span>
+				<span class="key-code">0</span>
+				<span class="iconfont icon-dian1"></span>
+			</div>
+			<div class="options">
+				<div class="delete iconfont icon-tuige line-height"></div>
+				<div class="comfirm">
+					<div>确认</div>
+					<div>支付</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="./virtualKeyBoard.js"></script>
+	<script>
+		var keyBoard = new KeyBoard();
+	</script>
+</body>
+</html>
