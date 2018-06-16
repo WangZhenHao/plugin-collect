@@ -25,6 +25,13 @@
 			left: 0;
 			display: flex;
 			z-index: 1px;
+			transition: transform 0.2s;
+		}
+		.key-board.blur {
+			transform: translateY(240px);
+		}
+		.key-board.focus {
+			transform: translateY(0);
 		}
 		.key-board * {
 			box-sizing: border-box;
@@ -64,39 +71,46 @@
 			display: block;
 			height: 100px;
 			width: 100%;
+			font-size: 30px;
 		}
+
+
 	</style>
 </head>
 <body>
 	<span class="money" data-target="keyBoard" id="keyBoard"></span>
-	<div class="key-board-wrap">
-		<div class="key-board text-center">
-			<div class="key-code-block clearfix line-height">
-				<span class="key-code">1</span>
-				<span class="key-code">2</span>
-				<span class="key-code">3</span>
-				<span class="key-code">4</span>
-				<span class="key-code">5</span>
-				<span class="key-code">6</span>
-				<span class="key-code">7</span>
-				<span class="key-code">8</span>
-				<span class="key-code">9</span>
-				<span class="iconfont icon-jianpan"></span>
-				<span class="key-code">0</span>
-				<span class="iconfont icon-dian1"></span>
-			</div>
-			<div class="options">
-				<div class="delete iconfont icon-tuige line-height"></div>
-				<div class="comfirm">
-					<div>确认</div>
-					<div>支付</div>
-				</div>
+	<div id="key-board-wrap" class="key-board text-center focus">
+		<div class="key-code-block clearfix line-height">
+			<span class="key-code">1</span>
+			<span class="key-code">2</span>
+			<span class="key-code">3</span>
+			<span class="key-code">4</span>
+			<span class="key-code">5</span>
+			<span class="key-code">6</span>
+			<span class="key-code">7</span>
+			<span class="key-code">8</span>
+			<span class="key-code">9</span>
+			<span class="iconfont icon-jianpan"></span>
+			<span class="key-code">0</span>
+			<span class="iconfont icon-dian1"></span>
+		</div>
+		<div class="options">
+			<div class="delete iconfont icon-tuige line-height"></div>
+			<div class="comfirm">
+				<div>确认</div>
+				<div>支付</div>
 			</div>
 		</div>
 	</div>
 	<script src="./virtualKeyBoard.js"></script>
 	<script>
-		var keyBoard = new KeyBoard();
+		var keyBoard = new KeyBoard({
+			targetId: '#keyBoard',
+			callBack: function(value) {
+				// console.log(typeof value, value);
+				this.target.innerHTML = value;
+			}
+		});
 	</script>
 </body>
 </html>

@@ -263,10 +263,11 @@
 		/**
 		 * 深度拷贝
 		 * @param  {[type]} object 需要拷贝的对象或者数组   必填
-		 * @return {[type]}        [description]
+		 * @return {[type]}        对象 
+		 * 
 		 */
 		deepCopy: function(object) {
-			var newObj = object.constructor == Array ? [] : {}
+			var newObj = object.constructor == Array ? [] : {};
 			if(typeof object != 'object') {
 				return;
 			} else if(window.JSON) {
