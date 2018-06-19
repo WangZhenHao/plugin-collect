@@ -336,7 +336,7 @@ KeyBoard.prototype = {
 	 * @return {[type]} [description]
 	 */
 	inputIsLegal: function(value) {
-		if(value[0] == '0' && (value[1] && value[1] != '.')) {
+		if(value[0] == '.' || (value[0] == '0' && (value[1] && value[1] != '.'))) {
 			return false;
 		}
 		return true;
