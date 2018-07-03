@@ -2,6 +2,7 @@
 ## FileTree 目录结构
 ```
 ├── AreaInertailScroll          // 移动端城市联动
+├── virtualKeyBoard             //虚拟键盘支付插件
 ├── class-carousel              // class控制的轮播  
 ├── mobile-touch-slider         // 移动端轮播
 ├── ScrollClassAnimate          // 下拉,上拉加载动画
@@ -26,6 +27,11 @@
 [演示地址: http://www.wzhshare.top/plugin-collect/AreaInertiaScroll/demo.html](http://www.wzhshare.top/plugin-collect/AreaInertiaScroll/demo.html)  
 
 ![AreaInertailScroll](https://github.com/WangZhenHao/plugin-collect/blob/master/images/AreaInertiaScroll/AreaInertiaScroll.gif)
+
+### 虚拟键盘支付插件
+>目录:virtualKeyBoard(虚拟键盘支付插件)
+>>网上对于虚拟键盘支付的插件好像不是很多,都是基于vue, react, angular,挺少是基于原生js的,于是乎这个插件就出来了
+![AreaInertailScroll](https://github.com/WangZhenHao/plugin-collect/blob/master/images/virtualKeyBoard/virtualKeyBoard.gif)
 
 ### class控制的轮播
 
