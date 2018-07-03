@@ -30,7 +30,11 @@
 
 ### 虚拟键盘支付插件
 >目录:virtualKeyBoard(虚拟键盘支付插件)
->>网上对于虚拟键盘支付的插件好像不是很多,都是基于vue, react, angular,挺少是基于原生js的,于是乎这个插件就出来了
+>>网上对于虚拟键盘支付的插件好像不是很多,都是基于vue, react, angular,挺少是基于原生js的,
+于是乎这个插件就出来了,可以配合其他框架一起使用
+```
+  
+```
 ![AreaInertailScroll](https://github.com/WangZhenHao/plugin-collect/blob/master/images/virtualKeyBoard/virtualKeyBoard.gif)
 
 ### class控制的轮播
