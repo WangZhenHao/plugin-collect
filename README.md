@@ -80,7 +80,7 @@
      id:轮播容器的id;
      json: 各种配置参数json格式;
      var demo = new Touches('swiper',{
-     	 //是否开启轮播;
+       //是否开启轮播;
          autoPlay:true,
          //下一张切换时间(毫秒)
          interval:4000,
@@ -96,6 +96,7 @@
 
 
 ```
+[演示地址: http://www.wzhshare.top/plugin-collect/mobile-touch-slider/demo.html](http://www.wzhshare.top/plugin-collect/mobile-touch-slider/demo.html)
 
 ### 下拉,上拉加载动画
 >目录: ScrollClassAnimate(滚动加载动画)
@@ -116,6 +117,7 @@
   		animate: 'animate'	  //执行动画的class
 	});
 ```
+[演示地址: http://www.wzhshare.top/plugin-collect/ScrollClassAnimate/demo.html](http://www.wzhshare.top/plugin-collect/ScrollClassAnimate/demo.html)
 
 ### 仿jquery动画函数
 >目录: imitate-jq-animate(仿jquery动画)
@@ -126,4 +128,6 @@
 		//执行的内容
 	})
 ```
+
+[演示地址: http://www.wzhshare.top/plugin-collect/imitate-jq-animate/demo.html](http://www.wzhshare.top/plugin-collect/imitate-jq-animate/demo.html)
 #### 不断的去优化和添加插件 有问题可以反馈
