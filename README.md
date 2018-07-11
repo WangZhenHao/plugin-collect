@@ -33,8 +33,27 @@
 >>网上对于虚拟键盘支付的插件好像不是很多,都是基于vue, react, angular,挺少是基于原生js的,
 于是乎这个插件就出来了,可以配合其他框架一起使用
 ```
+   //class="key-board-cursor" 获取焦点闪烁的class类
+   //data-key-board="target"  触发虚拟键盘显示和隐藏的元素
   
+   <div class="key-board-cursor" data-key-board="target" id="keyBoard">
+   </div>
+    
+    //javascript
+    var keyBoard = new KeyBoard({
+    target: 'target',
+    //点击虚拟键盘返回的数字
+    callBack: function(res, status) {
+      this.target.innerHTML = res.value;
+    },
+    //点击确认
+    comfirm: function(res) {
+      console.log(res);
+    }
+  });
+
 ```
+[演示地址: http://www.wzhshare.top/plugin-collect/AreaInertiaScroll/demo.html](http://www.wzhshare.top/plugin-collect/virtualKeyBoard/demo.html) 
 ![AreaInertailScroll](https://github.com/WangZhenHao/plugin-collect/blob/master/images/virtualKeyBoard/virtualKeyBoard.gif)
 
 ### class控制的轮播
