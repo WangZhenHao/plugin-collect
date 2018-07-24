@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>日期选择插件</title>
+	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+	<script src="./calender.js"></script>
+	<style>
+		.calender {
+			width: 200px;
+			height: 34px;
+			border: 1px solid #000;
+			line-height: 34px;
+			margin: 0 auto;
+		}
+		* {
+			padding: 0;
+			margin: 0;
+		}
+		.align-center {
+			text-align: center;
+		}
+		.clearfix {
+			zoom: 1;
+		}
+		.clearfix:after {
+			content: "";
+			display: block;
+			clear: both;
+		}
+		.calendar-wrap > .calendar-title  {
+			height: 35px;
+			color: #fff;
+			background: #36CBFF;
+			line-height: 35px;
+		}
+		.calendar-wrap > .calendar-week {
+			height: 30px;
+			display: flex;
+			line-height: 30px;
+			background: #FAFAFA;
+			font-size: 14px;
+		}
+		.calendar-wrap > .calendar-week > span {
+			flex: 1;
+		}
+		.calendar-wrap > .calendar-content > span {
+			float: left;
+			width: 14.2%;
+			min-height: 40px;
+			line-height: 40px;
+		}
+	</style>
+</head>
+<body>
+	<!-- <div class="calender">
+		选择日期插件
+	</div> -->
+	<div class="calendar-wrap">
+		<p class="calendar-title align-center">2018年7月</p>
+		<p class="calendar-week align-center">
+			<span>一</span>
+			<span>二</span>
+			<span>三</span>
+			<span>四</span>
+			<span>五</span>
+			<span>六</span>
+			<span>日</span>
+		</p>
+		<div class="calendar-content clearfix align-center">
+			<span>1</span>
+			<span>2</span>
+			<span>3</span>
+			<span>4</span>
+			<span>5</span>
+			<span>6</span>
+			<span>7</span>
+			<span>8</span>
+			<span>9</span>
+			<span>10</span>
+			<span>11</span>
+			<span>12</span>
+			<span>13</span>
+			<span>14</span>
+			<span>15</span>
+			<span>16</span>
+			<span>17</span>
+			<span>18</span>
+			<span>19</span>
+			<span>20</span>
+			<span>21</span>
+			<span>22</span>
+			<span>23</span>
+			<span>24</span>
+			<span>25</span>
+			<span>26</span>
+			<span>27</span>
+			<span>28</span>
+			<span>29</span>
+			<span>30</span>
+		</div>
+	</div>
+	<script>
+		var calender = new Calender();
+	</script>
+</body>
+</html>
