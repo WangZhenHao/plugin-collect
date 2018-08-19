@@ -3,7 +3,7 @@
  * JavaScript的工具库,方便使用
  * author   a_boy
  * created  2018-4-7 18:06
- * update   2018-4-17 
+ * update   2018-8-19 17:14:00 
  */
 	var Tools = {
 		/**
@@ -278,7 +278,48 @@
 				}
 			}
 			return newObj;
+		},
+		/**
+		 * 隐藏字符串
+		 * @param  {[type]} targetStr 字符串
+		 * @param  {[type]} start     开始隐藏的位置,不包括start
+		 * @param  {[type]} howmany   隐藏多少个字符串
+		 * @param  {String} symbol    隐藏字符的符号                   可填
+		 * @return {[type]}           [description]
+		 */
+		hideSomething: function(targetStr, start, howmany, symbol = '*') {
+			let str = '',
+				end = start + howmany;
+			for(let i = 0; i < howmany; i++) {
+				str += symbol;
+			}
+			return targetStr.substring(0, start) + str + targetStr.substring(end);
+		},
+		/**
+		 * 数组深度排序
+		 * @param  {[type]} arr         数组列表
+		 * @param  {[type]} sortName    一维数组排序字段
+		 * @param  {String} twoSortName 二维数组排序字段
+		 * @return {[type]}             [description]
+		 */
+		export function listSort(arr, sortName, twoSortName = 'sort') {
+			let tem = null,
+				len = arr.length;
+			for(let i = 0; i < len; i++) {
+				if(arr[i][twoSortName] && arr[i][twoSortName].length) {
+					listSort(arr[i][twoSortName]);
+				}
+				for(let j = 0; j < len - 1; j++) {
+					if(arr[j][sortName] < arr[j + 1][sortName]) {
+						tem = arr[j];
+						arr[j] = arr[j + 1];
+						arr[j + 1] = tem;
+					}
+				}
+			}
+			return arr;
 		}
+
 
 	};
 	window.Tools = Tools;
