@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="./ajax.js"></script>
+</head>
+<body>
+	<script>
+		document.onclick = function() {
+			ajax({
+				url: 'test.php',
+				type: 'GET',
+				// data: {
+				// 	name: '忽见在',
+				// 	age: 11,
+				// 	address: '深圳罗湖区'
+				// },
+				// timeout: 2000,
+				// async: true,
+				success: function(res) {
+					console.log('success', res);
+				},
+				error: function(res) {
+					console.log('error', res)
+				},
+				beforeSend: function() {
+
+				},
+				complete: function(status) {
+					console.log('complete', status);
+				}
+			})
+		}
+	</script>
+</body>
+</html>
