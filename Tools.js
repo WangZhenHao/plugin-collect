@@ -158,14 +158,18 @@
 		 */
 		getLocalStorage: function(key) {
 			var json = JSON.parse(localStorage.getItem(key));
-			if(json.expires) {
-				var timestamp = parseInt(+new Date() / 1000);
-				if(timestamp > json.expires) {
-					this.clearLocalStorage(key)
-					return null;
+			if(json) {
+				if(json.expires) {
+					var timestamp = parseInt(+new Date() / 1000);
+					if(timestamp > json.expires) {
+						this.clearLocalStorage(key)
+						return null;
+					}
 				}
+				return json[key];
+			} else {
+				return null;
 			}
-			return json[key];
 		},
 		/**
 		 * 设置本地缓存(可设置过期时间)
