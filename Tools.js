@@ -306,7 +306,7 @@
 		 * @param  {String} twoSortName 二维数组排序字段
 		 * @return {[type]}             [description]
 		 */
-		export function listSort(arr, sortName, twoSortName = 'sort') {
+		listSort: function(arr, sortName, twoSortName = 'sort') {
 			let tem = null,
 				len = arr.length;
 			for(let i = 0; i < len; i++) {
