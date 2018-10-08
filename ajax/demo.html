@@ -10,7 +10,7 @@
 		document.onclick = function() {
 			ajax({
 				url: 'test.php',
-				type: 'GET',
+				type: 'POST',
 				// data: {
 				// 	name: '忽见在',
 				// 	age: 11,
@@ -24,8 +24,9 @@
 				error: function(res) {
 					console.log('error', res)
 				},
-				beforeSend: function() {
-
+				beforeSend: function(xhr) {
+					xhr.setRequestHeader("zx_token", "dsfasdfsdfsdfsdfdsdsf");
+					// console.log(xhr)
 				},
 				complete: function(status) {
 					console.log('complete', status);
