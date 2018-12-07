@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>抽奖</title>
+</head>
+<body>
+	<!-- <div class="lottery-wrap" id="lottery-wrap">
+		<li class="lottery-item">
+			<p>一等奖</p>
+			<img width="40px" height="40px" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544096608859&di=f3baca7b9e494912d7a754e8f55fb49c&imgtype=0&src=http%3A%2F%2Fpic28.photophoto.cn%2F20130728%2F0020033020430867_b.jpg" alt="">
+		</li>
+		<li class="lottery-item">
+			<p>一等奖</p>
+			<img width="40px" height="40px" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544096608859&di=f3baca7b9e494912d7a754e8f55fb49c&imgtype=0&src=http%3A%2F%2Fpic28.photophoto.cn%2F20130728%2F0020033020430867_b.jpg" alt="">
+		</li>
+	</div> -->
+	<script src="./Lottery.js"></script>
+	<script>
+		var lottery = new Lottery({
+			wrap: {
+				height: '400px',
+				width: '400px',
+				background: '#ffbf08'
+			},
+			animate: {
+				transitionDuration: '6s',
+				transitionTimingFunction: 'ease-in-out'
+			},
+			lotteryItem: [
+				{
+					desc: '一等奖',
+					img: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544096608859&di=f3baca7b9e494912d7a754e8f55fb49c&imgtype=0&src=http%3A%2F%2Fpic28.photophoto.cn%2F20130728%2F0020033020430867_b.jpg'
+				},
+				{
+					desc: '二等奖',
+					img: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544096608859&di=f3baca7b9e494912d7a754e8f55fb49c&imgtype=0&src=http%3A%2F%2Fpic28.photophoto.cn%2F20130728%2F0020033020430867_b.jpg'
+				},
+				{
+					desc: '三等奖',
+					img: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544096608859&di=f3baca7b9e494912d7a754e8f55fb49c&imgtype=0&src=http%3A%2F%2Fpic28.photophoto.cn%2F20130728%2F0020033020430867_b.jpg'
+				},
+				{
+					desc: '四等奖',
+					img: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544096608859&di=f3baca7b9e494912d7a754e8f55fb49c&imgtype=0&src=http%3A%2F%2Fpic28.photophoto.cn%2F20130728%2F0020033020430867_b.jpg'
+				},
+				{
+					desc: '五等奖',
+					img: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544096608859&di=f3baca7b9e494912d7a754e8f55fb49c&imgtype=0&src=http%3A%2F%2Fpic28.photophoto.cn%2F20130728%2F0020033020430867_b.jpg'
+				},
+				{
+					desc: '六等奖',
+					img: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544096608859&di=f3baca7b9e494912d7a754e8f55fb49c&imgtype=0&src=http%3A%2F%2Fpic28.photophoto.cn%2F20130728%2F0020033020430867_b.jpg'
+				},
+			],
+		});
+
+		lottery.arrow.onclick = function() {
+			var lotter = '五等奖';
+			var lotteryItem = lottery.params.lotteryItem
+			for(var i = 0, len = lotteryItem.length; i < len; i++) {
+				if(lotteryItem[i]['desc'] === lotter) {
+					lottery.toAnimate(i);
+					return;
+				}
+			}
+
+		}
+	</script>
+</body>
+</html>
