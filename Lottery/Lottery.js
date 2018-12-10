@@ -36,7 +36,7 @@ Lottery.prototype = {
 	createCss: function() {
 		var style = document.createElement('style'),
 			transformOrigin = this.params['wrap']['width'] ? parseInt(this.params['wrap']['width']) / 2 : 200;
-			
+
 		var cssStr = `
 		    .lottery-el {
 				width: 400px;
@@ -75,7 +75,7 @@ Lottery.prototype = {
 			}
 			.lottery-wrap .lottery-line {
 				width: 2px;
-				height: 200px;
+				height: ${transformOrigin}px;
 				position: absolute;
 				left: 50%;
 				transform: translate3d(-50%, 0, 0);
@@ -94,6 +94,7 @@ Lottery.prototype = {
 				padding-top: 5px;
 			}
 		`;
+
 		style.innerHTML = cssStr;
 		document.head.appendChild(style);
 	},
@@ -164,6 +165,7 @@ Lottery.prototype = {
 	},
 
 	toAnimate(index) {
+		console.log(this.isAnimated)
 		if(this.isAnimated) return;
 
 		var cricle = 360 * 4,
@@ -196,7 +198,9 @@ Lottery.prototype = {
 	//清楚事件
 	destroy: function() {
 		this.lotteryWrap.removeEventListener('transitionend', this.toAnimateHandle);
+		this.isAnimated = false;
 		this.lotteryWrap.style.transitionProperty = 'none'
 		this.lotteryWrap.style.transform = `rotate(0deg)`;
+		// debugger;
 	}
 }

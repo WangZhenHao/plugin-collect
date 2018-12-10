@@ -2,9 +2,25 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
 	<title>抽奖</title>
+	<style>
+		#result {
+			color: red;
+			font-size: 24px;
+			text-align: center;
+		}
+		input {
+			font-size: 16px;
+			
+		}
+	</style>
 </head>
 <body>
+	<input type="button" id="btn" value="重新抽奖(默认六等奖)">
+	<input type="button" id="btn2" value="抽三等奖">
+	<input type="button" id="btn3" value="抽五等奖">
+	<div id="result"></div>
 	<!-- <div class="lottery-wrap" id="lottery-wrap">
 		<li class="lottery-item">
 			<p>一等奖</p>
@@ -18,15 +34,18 @@
 	<script src="./Lottery.js"></script>
 	<script>
 		var lottery = new Lottery({
+			//抽奖容器样式
 			wrap: {
-				height: '400px',
-				width: '400px',
+				height: '360px',
+				width: '360px',
 				background: '#ffbf08'
 			},
+			//旋转动画特效
 			animate: {
 				transitionDuration: '6s',
 				transitionTimingFunction: 'ease-in-out'
 			},
+			//奖项
 			lotteryItem: [
 				{
 					desc: '一等奖',
@@ -61,23 +80,68 @@
 				// 	img: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544096608859&di=f3baca7b9e494912d7a754e8f55fb49c&imgtype=0&src=http%3A%2F%2Fpic28.photophoto.cn%2F20130728%2F0020033020430867_b.jpg'
 				// },
 			],
+			///抽奖旋转完成之后的回调
 			success: function(res) {
-				alert(`恭喜你,抽中${res.desc}`)
-				lottery.destroy();
+				document.querySelector('#result').innerHTML = `恭喜你,抽中${res.desc}`;
+				// lottery.destroy();
 				
 			}
 		});
 
+		//点击抽奖,可以这一步可以请求后台接口,得出抽奖结果
 		lottery.arrow.onclick = function() {
+			lottery.destroy();
+			//加入抽中了六等奖
 			var lotter = '六等奖';
+
+			setTimeout(() => {
+				lotteryHanlde(lotter);
+			}, 10)
+			
+
+		}
+
+		function lotteryHanlde(lotter) {
 			var lotteryItem = lottery.params.lotteryItem
 			for(var i = 0, len = lotteryItem.length; i < len; i++) {
 				if(lotteryItem[i]['desc'] === lotter) {
+					//旋转到知道的奖项
 					lottery.toAnimate(i + 1);
+
 					return;
 				}
 			}
+		}
 
+		var btn = document.querySelector('#btn');
+		var btn2 = document.querySelector('#btn2');
+		var btn3 = document.querySelector('#btn3');
+		btn.onclick = function() {
+			lottery.destroy();
+
+			var lotter = '六等奖';
+
+			setTimeout(() => {
+				lotteryHanlde(lotter)
+			}, 10)
+		}
+
+		btn2.onclick = function() {
+			lottery.destroy();
+			var lotter = '三等奖';
+
+			setTimeout(() => {
+				lotteryHanlde(lotter)
+			}, 10)
+		}
+
+		btn3.onclick = function() {
+			lottery.destroy();
+			var lotter = '五等奖';
+
+			setTimeout(() => {
+				lotteryHanlde(lotter)
+			}, 10)
 		}
 	</script>
 </body>

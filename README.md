@@ -1,15 +1,86 @@
 # 把自己写的插件汇总在一起
 ## FileTree 目录结构
 ```
+├── Lottery                     //抽奖插件
 ├── AreaInertailScroll          // 移动端城市联动
 ├── virtualKeyBoard             //虚拟键盘支付插件
 ├── class-carousel              // class控制的轮播  
 ├── mobile-touch-slider         // 移动端轮播
 ├── ScrollClassAnimate          // 下拉,上拉加载动画
 ├── imitate-jq-animate          // 仿jquery动画函数
-├── images					    // 图片
+├── images					            // 图片
 
 ```
+
+### 抽奖插件
+>目录:Lottery
+```
+  使用方法:
+   var lottery = new Lottery({
+      //抽奖容器样式
+      wrap: {
+        height: '360px',
+        width: '360px',
+        background: '#ffbf08'
+      },
+      //旋转动画特效
+      animate: {
+        transitionDuration: '6s',
+        transitionTimingFunction: 'ease-in-out'
+      },
+      //奖项
+      lotteryItem: [
+        {
+          desc: '一等奖',
+          img: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544096608859&di=f3baca7b9e494912d7a754e8f55fb49c&imgtype=0&src=http%3A%2F%2Fpic28.photophoto.cn%2F20130728%2F0020033020430867_b.jpg'
+        },
+        {
+          desc: '二等奖',
+          img: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544096608859&di=f3baca7b9e494912d7a754e8f55fb49c&imgtype=0&src=http%3A%2F%2Fpic28.photophoto.cn%2F20130728%2F0020033020430867_b.jpg'
+        },
+        {
+          desc: '三等奖',
+          img: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544096608859&di=f3baca7b9e494912d7a754e8f55fb49c&imgtype=0&src=http%3A%2F%2Fpic28.photophoto.cn%2F20130728%2F0020033020430867_b.jpg'
+        },
+        {
+          desc: '四等奖',
+          img: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544096608859&di=f3baca7b9e494912d7a754e8f55fb49c&imgtype=0&src=http%3A%2F%2Fpic28.photophoto.cn%2F20130728%2F0020033020430867_b.jpg'
+        },
+        {
+          desc: '五等奖',
+          img: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544096608859&di=f3baca7b9e494912d7a754e8f55fb49c&imgtype=0&src=http%3A%2F%2Fpic28.photophoto.cn%2F20130728%2F0020033020430867_b.jpg'
+        },
+        {
+          desc: '六等奖',
+          img: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544096608859&di=f3baca7b9e494912d7a754e8f55fb49c&imgtype=0&src=http%3A%2F%2Fpic28.photophoto.cn%2F20130728%2F0020033020430867_b.jpg'
+        },
+      ],
+      ///抽奖旋转完成之后的回调
+      success: function(res) {
+        document.querySelector('#result').innerHTML = `恭喜你,抽中${res.desc}`;
+        
+      }
+    });
+
+    //点击抽奖,可以这一步可以请求后台接口,得出抽奖结果
+    lottery.arrow.onclick = function() {
+      lottery.destroy();
+      //加入抽中了六等奖
+      var lotter = '六等奖';
+
+      setTimeout(() => {
+        lotteryHanlde(lotter);
+      }, 10)
+      
+
+    }
+```
+[演示地址: http://www.wzhshare.top/plugin-collect/Lottery/demo.html](http://www.wzhshare.top/plugin-collect/Lottery/demo.html)  
+
+![AreaInertailScroll](https://github.com/WangZhenHao/plugin-collect/blob/master/images/Lottery/Lottery.gif)
+
+
+
 ### 移动端城市联动
 >目录:AreaInertailScroll(地区惯性滚动)
 ```
@@ -27,6 +98,8 @@
 [演示地址: http://www.wzhshare.top/plugin-collect/AreaInertiaScroll/demo.html](http://www.wzhshare.top/plugin-collect/AreaInertiaScroll/demo.html)  
 
 ![AreaInertailScroll](https://github.com/WangZhenHao/plugin-collect/blob/master/images/AreaInertiaScroll/AreaInertiaScroll.gif)
+
+
 
 ### 虚拟键盘支付插件
 >目录:virtualKeyBoard(虚拟键盘支付插件)
