@@ -203,4 +203,4 @@
 ```
 
 [演示地址: http://www.wzhshare.top/plugin-collect/imitate-jq-animate/demo.html](http://www.wzhshare.top/plugin-collect/imitate-jq-animate/demo.html)
-#### 不断的去优化和添加插件 有问题可以反馈
+#### 不断的去优化和添加插件 有问题可以反馈  qq群: 475870039
