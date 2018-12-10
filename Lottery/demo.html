@@ -52,15 +52,28 @@
 					desc: '六等奖',
 					img: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544096608859&di=f3baca7b9e494912d7a754e8f55fb49c&imgtype=0&src=http%3A%2F%2Fpic28.photophoto.cn%2F20130728%2F0020033020430867_b.jpg'
 				},
+				// {
+				// 	desc: '七等奖',
+				// 	img: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544096608859&di=f3baca7b9e494912d7a754e8f55fb49c&imgtype=0&src=http%3A%2F%2Fpic28.photophoto.cn%2F20130728%2F0020033020430867_b.jpg'
+				// },
+				// {
+				// 	desc: '八等奖',
+				// 	img: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1544096608859&di=f3baca7b9e494912d7a754e8f55fb49c&imgtype=0&src=http%3A%2F%2Fpic28.photophoto.cn%2F20130728%2F0020033020430867_b.jpg'
+				// },
 			],
+			success: function(res) {
+				alert(`恭喜你,抽中${res.desc}`)
+				lottery.destroy();
+				
+			}
 		});
 
 		lottery.arrow.onclick = function() {
-			var lotter = '五等奖';
+			var lotter = '六等奖';
 			var lotteryItem = lottery.params.lotteryItem
 			for(var i = 0, len = lotteryItem.length; i < len; i++) {
 				if(lotteryItem[i]['desc'] === lotter) {
-					lottery.toAnimate(i);
+					lottery.toAnimate(i + 1);
 					return;
 				}
 			}

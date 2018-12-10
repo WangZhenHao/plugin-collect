@@ -3,11 +3,26 @@
  *
  * author   wzh
  * create   2018-12-7
+ *
+ *
+ * 如果有6(n)个奖项
+ *
+ * 可以得出每一个奖项可以分成   360 / 6(n) = 60(deg)度
+ * 
+ * 第一个奖项旋转     180度
+ * 第二个奖项旋转     120度
+ * 第三个奖项旋转     60度
+ * 第四个奖项旋转     0度
+ * 第五个奖项旋转     -60 = 320度
+ * 第六个奖项旋转     -120 = 240度
+ *
+ * 因而可以得出通项公式  180 + (n - 1) * -deg
  * 
  */
 function Lottery(params) {
 	this.params = params || {};
 	this.len = this.params['lotteryItem'].length;
+	this.isAnimated = false;
 	this.init();
 }
 
@@ -19,7 +34,9 @@ Lottery.prototype = {
 	},	
 	//创建样式
 	createCss: function() {
-		var style = document.createElement('style');
+		var style = document.createElement('style'),
+			transformOrigin = this.params['wrap']['width'] ? parseInt(this.params['wrap']['width']) / 2 : 200;
+			
 		var cssStr = `
 		    .lottery-el {
 				width: 400px;
@@ -32,7 +49,7 @@ Lottery.prototype = {
 		    	position: absolute;
 		    	width: 76px;
 		    	height: 110px;
-		    	background: url(./arrow.png);
+		    	background: url(https://operator-advmainimg.zhongxiang51.com/lottery-arrow.png);
 		    	background-size: 100% 100%;
 		    	left: 50%;
 		    	top: 50%;
@@ -53,7 +70,7 @@ Lottery.prototype = {
 				transform: translate3d(-50%, 0, 0);
 				padding-top: 20px;
 				text-align: center;
-				transform-origin: 50% 200px;
+				transform-origin: 50% ${transformOrigin}px;
 				color: #fff;
 			}
 			.lottery-wrap .lottery-line {
@@ -144,14 +161,42 @@ Lottery.prototype = {
 	//点击抽奖
 	toLottery: function() {
 		this.arrow = document.querySelector('#arrow');
-		// console.log(this.lotteryWrap)
-		// lotteryWrap.addEventListener('click', function() {
-		// 	this.toAnimate()
-		// }.bind(this))
 	},
 
 	toAnimate(index) {
+		if(this.isAnimated) return;
+
 		var cricle = 360 * 4,
-			rotate = cricle + index * (360 / this.len)
+			deg = 180 - (index - 1) * this.lotteryItemDeg,
+			rotate = 0,
+			self = this;
+		this.isAnimated = true;
+		this.index = index;
+
+		if(deg < 0) {
+			deg = 360 + deg
+		}
+		//得出需要旋转的角度
+		rotate = cricle + deg;
+
+		this.lotteryWrap.style.transitionProperty = 'transform'
+		this.lotteryWrap.style.transform = `rotate(${rotate}deg)`;
+
+		this.toAnimateHandle = function() {
+			if(typeof self.params.success == 'function') {
+				self.isAnimated = false;
+				self.params.success(self.params['lotteryItem'][self.index - 1]);
+			}
+		}
+
+		this.lotteryWrap.addEventListener('transitionend', this.toAnimateHandle);
+
+
+	},
+	//清楚事件
+	destroy: function() {
+		this.lotteryWrap.removeEventListener('transitionend', this.toAnimateHandle);
+		this.lotteryWrap.style.transitionProperty = 'none'
+		this.lotteryWrap.style.transform = `rotate(0deg)`;
 	}
 }
