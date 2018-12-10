@@ -1,4 +1,6 @@
 # 把自己写的插件汇总在一起
+#### 不断的去优化和添加插件 有问题可以反馈  qq群: 475870039
+
 ## FileTree 目录结构
 ```
 ├── Lottery                     //抽奖插件
@@ -203,4 +205,4 @@
 ```
 
 [演示地址: http://www.wzhshare.top/plugin-collect/imitate-jq-animate/demo.html](http://www.wzhshare.top/plugin-collect/imitate-jq-animate/demo.html)
-#### 不断的去优化和添加插件 有问题可以反馈  qq群: 475870039
+
