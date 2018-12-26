@@ -242,6 +242,6 @@ Calender.prototype = {
 	},
 }
 
-var calenderObj = new Calender();
+// var calenderObj = new Calender();
 
-export default calenderObj;
+// export default calenderObj;
