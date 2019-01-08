@@ -328,8 +328,20 @@
 		 * @return {Boolean} [description]
 		 */
 		isPc: function() {
-			
-		}
+			var userAgentInfo = navigator.userAgent,
+				agents = ['Android', 'iPhone', 'SymbianOS', 'Windows Phone', 'iPad', 'iPod'],
+				flag = true;
+			for(var i = 0, len = agents.length; i < len; i++) {
+				if(userAgentInfo.indexOf(agents[i]) > -1) {
+					flag = false;
+					break;
+				}
+			}
+			return flag;
+		},
+		/**
+		 * 计算开始时间和结束时间
+		 */
 
 
 	};

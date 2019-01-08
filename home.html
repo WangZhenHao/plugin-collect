@@ -10,7 +10,7 @@
 	<script>
 		// console.log(Tools.DateToTimestamp('2018-05-01 12:12:11'));
 		//2018/4/7 18:33:20
-		console.log(Tools.TimestampToDate('yyyy年MM月dd日 hh时mm分ss'))
+		// console.log(Tools.TimestampToDate('yyyy年MM月dd日 hh时mm分ss'))
 		// console.log(Tools.ToCurrency('12.25'))
 		// Tools.setCookies('name', 'wzh', 200, {
 		// 	// path: '/',
@@ -55,17 +55,19 @@
 		// var b = Tools.emailFormat('Wang-Zhen-Hao@qq.com');
 		// console.log(b)
 
-		var parmas = [
-			{name: 'wzh', age: 18},
-			{name: 'xm', age: 19},
-		];
-		// var arr = parmas;
+		// var parmas = [
+		// 	{name: 'wzh', age: 18},
+		// 	{name: 'xm', age: 19},
+		// ];
+		// // var arr = parmas;
 
+		// // arr[0] = 1;
+		// // console.log(parmas);
+		// var arr = Tools.deepCopy(parmas);
 		// arr[0] = 1;
-		// console.log(parmas);
-		var arr = Tools.deepCopy(parmas);
-		arr[0] = 1;
-		console.log(arr, parmas);
+		// console.log(arr, parmas);
+
+		console.log(Tools.isPc())
 	</script>
 </body>
 </html>
