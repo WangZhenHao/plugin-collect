@@ -5,6 +5,11 @@
  * 
  * @param  {[type]} pramas [description]
  * @return {[type]}        [description]
+ 
+ 1.创建一个XMLHttpRequest的对象. 
+ 2.通过open与服务器建立连接。 
+ 3.使用send来发送请求。 
+ 4.使用onreadystatechange事件来监听。如果表示readystate==4就说明解析成功，且status==200(状态码成功)，就说明与后台搭建成功，最后通过success函数进行渲染。
  */
 function ajax(pramas) {
 	//方式
