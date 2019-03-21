@@ -340,8 +340,33 @@
 			return flag;
 		},
 		/**
-		 * 计算开始时间和结束时间
+		 * 函数节流
+		 * @return {[type]} [description]
 		 */
+		throttle: function(fn, interval) {
+			var _self = fn,
+				timer,
+				firstTime = true,
+				_interval = interval || 500;
+
+
+				return function() {
+					var agr = arguments,
+						me = this;
+					if(firstTime) {
+						_self.apply(me, agr);
+						firstTime = false;
+					}
+					if(timer) {
+						return false;
+					}
+					timer = setTimeout(function() {
+						clearTimeout(timer)
+						timer = null;
+						_self.apply(me, agr);
+					}, _interval)
+				}
+		}
 
 
 	};
