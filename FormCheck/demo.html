@@ -6,6 +6,42 @@
 	<script src="./formCheck.js"></script>
 </head>
 <body>
-	
+	<script>
+		function toCheck() {
+		    //1: 新建一个实例
+		    var validator = new Validator();
+
+			//自定义校验规则
+		    validator.addRuleType('test', function(val, msg) {
+		      if(val[2] == '请选择') {
+		        return msg;
+		      }
+		    })
+
+		    //2: 添加校验规则
+		    validator.add('18924298774', [
+		      { rule: 'isMobile', errorMsg: '请输入正确手机号!' }
+		    ])
+
+		    validator.add('12', [
+		      { rule: 'isNoEmpty', errorMsg: '不能为空' }
+		    ])
+		    //多个条件校验
+			validator.add('1234567890_', [
+		      { rule: 'minLength:6', errorMsg: '不能少于6位' },
+		      { rule: 'maxLength:10', errorMsg: '不能超过十位' }
+		    ])
+			
+			//3:开始校验,如果校验通过返回undefined, 否则返回错误信息
+		    return validator.start();
+		  }
+
+		  var msg = toCheck();
+
+		  if(msg) {
+			  alert(msg);
+		  }
+
+	</script>
 </body>
 </html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<img width="100px" src="https://material.zhongxiang51.com/1550469086130_qrcode.png" id="img" alt="">
+	<button id="btn">点击下载</button>
+	<script>
+		var downLoadImage = {
+			toDownLoad: function(url) {
+				// this.getImage(url);
+				// return;
+				if(this.myBrowser()) {
+					this.getImageForIe(url)
+				} else {
+					this.getImage(url);
+				}
+			},
+			saveFile: function(strData, filename) {
+				var save_link = document.createElement('a');
+				save_link.href = strData;
+				save_link.download = filename;
+				var event = new MouseEvent('click',{"bubbles":false, "cancelable":false});
+				save_link.dispatchEvent(event);
+			},
+			getImage: function(src) {
+				var image = new Image(),
+					self = this;
+				image.crossOrigin = "Anonymous";
+				image.src = src;
+
+				image.onload = function() {
+					base64 = self.getBase64Image(image);
+					self.saveFile(base64, '下载');
+				}
+			},
+
+			getImageForIe: function(url) {
+				// var oPop = window.open(url, "", "width=1, height=1, top=5000, left=5000");
+				// var oPop = window.open(url, 'al');
+		  //       for(; oPop.document.readyState != "complete"; )
+		  //       {
+		  //           if (oPop.document.readyState == "complete")break;
+		  //       }
+		  //       oPop.document.execCommand("SaveAs");
+		  //       oPop.close();
+		        var canvas = document.createElement('canvas');
+				var img = document.createElement('img');
+				img.src = url;
+				img.onload = function(e) {
+				    canvas.width = img.width;
+				    canvas.height = img.height;
+				    var context = canvas.getContext('2d');
+				    context.drawImage( img, 0, 0, img.width, img.height);
+				    window.navigator.msSaveBlob(canvas.msToBlob(),'image.jpg');
+				}
+			},
+			getBase64Image: function(img) {
+				var canvas = document.createElement("canvas");  
+			     canvas.width = img.width;  
+			     canvas.height = img.height;  
+			     var ctx = canvas.getContext("2d");  
+			     ctx.drawImage(img, 0, 0, img.width, img.height);  
+			     var ext = img.src.substring(img.src.lastIndexOf(".")+1).toLowerCase(); 
+			     var type = "image/" + ext
+			     var dataURL = canvas.toDataURL(type, 1);  
+			     return dataURL;  
+			},
+			
+			//判断浏览器类型
+			myBrowser: function() {
+				let userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
+				if(userAgent.lastIndexOf('Edge') > -1 || 
+					userAgent.lastIndexOf("Trident") > -1 || 
+					userAgent.lastIndexOf("compatible") > -1
+				) {
+					return true;
+				} 
+				else {
+					return false;
+				} 
+			},
+		};
+		alert(downLoadImage.myBrowser());
+		// https://material.zhongxiang51.com/1550469086130_qrcode.png
+		var btn = document.querySelector('#btn');
+		btn.onclick = function() {
+			downLoadImage.toDownLoad('https://material.zhongxiang51.com/1550469086130_qrcode.png')
+		}
+	</script>
+</body>
+</html>
