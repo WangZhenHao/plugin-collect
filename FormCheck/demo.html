@@ -8,6 +8,10 @@
 <body>
 	<script>
 		function toCheck() {
+			var email = 'test.wzh@qq.com',
+				phone = '18924298775',
+				username = 'test',
+				num = '1234567890_';
 		    //1: 新建一个实例
 		    var validator = new Validator();
 
@@ -19,21 +23,21 @@
 		    })
 
 		    //2: 添加校验规则
-		    validator.add('test.wzh@qq.com', [
+		    validator.add(email, [
 		      { rule: 'isEmail', errorMsg: '请输入正确邮箱!' }
 		    ])
 
-		    validator.add('18924298774', [
+		    validator.add(phone, [
 		      { rule: 'isMobile', errorMsg: '请输入正确手机号!' }
 		    ])
 
-		    validator.add('12', [
+		    validator.add(username, [
 		      { rule: 'isNoEmpty', errorMsg: '不能为空' }
 		    ])
 		    //多个条件校验
-			validator.add('1234567890_', [
-		      { rule: 'minLength:6', errorMsg: '不能少于6位' },
-		      { rule: 'maxLength:10', errorMsg: '不能超过十位' }
+			validator.add(num, [
+		      { rule: 'minLength:6', errorMsg: 'num不能少于6位' },
+		      { rule: 'maxLength:10', errorMsg: 'num不能超过十位' }
 		    ])
 			
 			//3:开始校验,如果校验通过返回undefined, 否则返回错误信息
