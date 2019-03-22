@@ -12,7 +12,11 @@
  * 
 
   function toCheck() {
-    1: 新建一个实例
+	var email = 'test.wzh@qq.com',
+		phone = '18924298775',
+		username = 'test',
+		num = '1234567890_';
+    //1: 新建一个实例
     var validator = new Validator();
 
 	//自定义校验规则
@@ -22,7 +26,11 @@
       }
     })
 
-    2: 添加校验规则
+    //2: 添加校验规则
+    validator.add(email, [
+      { rule: 'isEmail', errorMsg: '请输入正确邮箱!' }
+    ])
+
     validator.add(phone, [
       { rule: 'isMobile', errorMsg: '请输入正确手机号!' }
     ])
@@ -30,20 +38,20 @@
     validator.add(username, [
       { rule: 'isNoEmpty', errorMsg: '不能为空' }
     ])
-
-	validator.add(minLength, [
-      { rule: 'minLength:6', errorMsg: '不能少于6位' }
+    //多个条件校验
+	validator.add(num, [
+      { rule: 'minLength:6', errorMsg: 'num不能少于6位' },
+      { rule: 'maxLength:10', errorMsg: 'num不能超过十位' }
     ])
 	
-	3:开始校验,如果校验通过返回undefined, 否则返回错误信息
+	//3:开始校验,如果校验通过返回undefined, 否则返回错误信息
     return validator.start();
   }
 
   var msg = toCheck();
 
   if(msg) {
-	  Tools.showTips(msg);
-	  return;
+	  alert(msg);
   }
 
 
