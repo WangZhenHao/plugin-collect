@@ -19,6 +19,10 @@
 		    })
 
 		    //2: 添加校验规则
+		    validator.add('test.wzh@qq.com', [
+		      { rule: 'isEmail', errorMsg: '请输入正确邮箱!' }
+		    ])
+
 		    validator.add('18924298774', [
 		      { rule: 'isMobile', errorMsg: '请输入正确手机号!' }
 		    ])

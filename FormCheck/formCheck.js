@@ -76,6 +76,13 @@ function Validator() {
 			if(!re.test(value)) {
 				return errorMsg;
 			}
+		},
+		isEmail: function(value, errorMsg) {
+			var re = /^[A-z0-9_.-]+\w+@\w+\.[A-z]{2,5}$/;
+			// var re = /^[a-zA-Z0-9-_.]\w+(-|\.)?\w+@\w+\.\w{2,5}$/;
+			if(!re.test(value)) {
+				return errorMsg;
+			}
 		}
 
 	}
