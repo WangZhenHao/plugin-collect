@@ -437,6 +437,7 @@ InertiaScroll.prototype = {
 		//如果缓慢滑动
 		if(e.timeStamp - this._startTime > 40) {
 			this._startTime = e.timeStamp;
+			// this.cur = clientY - clientY + this.cur
 			this.cur = clientY - this._oy;
 			this.setTargetPostion(this.cur);
 		}
