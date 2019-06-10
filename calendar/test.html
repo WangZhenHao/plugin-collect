@@ -2,135 +2,107 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Document</title>
+	<title>日期选择插件</title>
 	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+	<link rel="stylesheet" href="http://at.alicdn.com/t/font_762585_vh6yctlbqfd.css">
 	<script src="./test.js"></script>
 	<style>
+		.calender {
+			width: 200px;
+			height: 34px;
+			border: 1px solid #000;
+			line-height: 34px;
+			margin: 0 auto;
+		}
 		* {
 			padding: 0;
 			margin: 0;
 		}
+		/*.align-center {
+			text-align: center;
+		}
+		.clearfix {
+			zoom: 1;
+		}
+		.clearfix:after {
+			content: "";
+			display: block;
+			clear: both;
+		}
+		.calendar-wrap > .calendar-title  {
+			display: flex;
+			height: 42px;
+			color: #fff;
+			background: #36CBFF;
+			line-height: 42px;
+			align-items: center;
+			justify-content: space-between;
+			padding: 0 20px;
+		}
+		.calendar-wrap > .calendar-week {
+			height: 30px;
+			display: flex;
+			line-height: 30px;
+			background: #FAFAFA;
+			font-size: 14px;
+		}
+		.calendar-wrap > .calendar-week > span {
+			flex: 1;
+		}
+		.calendar-wrap > .calendar-content > span {
+			float: left;
+			width: 14.2%;
+			min-height: 40px;
+			line-height: 40px;
+		}
+		.font-28 {
+			font-size: 28px;
+		}
+		.disable {
+			color: #999;
+		}*/
 	</style>
 </head>
 <body>
-	<div id="test">
-		
-	</div>
+	<!-- <div class="calender">
+		选择日期插件
+	</div> -->
+	<div id="calendar-id"></div>
 	<script>
-		var Tools = {
-			/**
-			 * 日期时间换成Unix时间戳
-			 * data  	时间戳    必填
-			 * @param {[type]} data [description]
-			 */
-			DateToTimestamp: function(data) {
-				return Date.parse(data) / 1000;
-			},
-			/**
-			 * Unix时间戳转成时间
-			 * @param {[type]} format     格式: 	 			必填
-			 * 如: YY/MM/DD hh:mm:ss   
-			 *     YY年MM月DD日 hh时mm分ss秒
-			 *     Y-M-D h:m:s
-			 * @param {[type]} timestamp '时间戳: 1525147931'	可填(默认当前时间)
-			 */
-			TimestampToDate: function(format, timestamp) {
-				var date = timestamp ? new Date(parseInt(timestamp) * 1000) : new Date(+new Date());
-				var	year = date.getFullYear(),
-					month = date.getMonth() + 1,
-					day = date.getDate(),
-					hour = date.getHours(),
-					minute = date.getMinutes(),
-		            second = date.getSeconds();
-				var str = format.replace(/[YyMmDdHhSs]+/g, function(w) {
-					if(w == 'yy' || w == 'YY' || w == 'y' || w == 'Y') {
-						return year.toString().substring(2);
-
-					} else if(w == 'yyyy' || w == 'YYYY') {
-						return year;
-
-					} else if(w == 'MM') {
-						return month >= 10 ? month : '0' + month; 
-
-					} else if(w == 'M') {
-						return month;
-
-					} else if(w == 'DD' || w == 'dd') {
-						return day >= 10 ? day : '0' + day;
-
-					} else if(w == 'D' || w == 'd') {
-						return day;
-
-					} else if(w == 'HH' || w == 'hh') {
-						return hour >= 10 ? hour : '0' + hour;
-
-					} else if(w == 'H' || w == 'h') {
-						return hour;
-
-					} else if(w == 'mm') {
-						return minute >= 10 ? minute : '0' + minute;
-
-					} else if(w == 'm') {
-						return minute;
-
-					} else if(w == 'ss' || w == 's') {
-						return second >= 10 ? second : '0' + second;
-					}
-				});
-				return str;
-			}
-		}
-	</script>
-	<script>
-		var date = 1532762546774;
-		var list = [
-			            {
-			                "goodsId": "845569",
-			                "platGoodsId": "70336177d50b4c749730025178a7ed4d",
-			                "date": 1532880000000,
-			                "sellPrice": 110,
-			                "marketPrice": 181,
-			                "freePrice": 0,
-			                "freeStock": 11,
-			                "disPrice": 0,
-			                "disStock": -1
-			            },
-			            {
-			                "goodsId": "845569",
-			                "platGoodsId": "70336177d50b4c749730025178a7ed4d",
-			                "date": 1535644800000,
-			                "sellPrice": 110,
-			                "marketPrice": 181,
-			                "freePrice": 0,
-			                "freeStock": 12,
-			                "disPrice": 0,
-			                "disStock": -1
-			            }
-			            
-			        ];
-		var obj = new Calendar();
-		var Cyear = Tools.TimestampToDate('YYYY', date / 1000);
-		var Cmonth = parseInt(Tools.TimestampToDate('M', date / 1000));
-
-		// var previousMonth = Tools.TimestampToDate('M', list[0].date / 1000);
-		var lastMonth = Tools.TimestampToDate('M', list[list.length - 1].date / 1000);
-		// console.log(Cyear, Cmonth);
-
-		var count = lastMonth - Cmonth;
-		var arr = [];
-		for(var i = 0; i <= count; i++) {
-			arr.push(Cmonth);
-			Cmonth++;
-		}
-		obj.init({
-			wrap: 'test',
-			year: Cyear,
-			monthList: arr,
-			data: list,
-			confirm: function(res) {
-				console.log(res);
+		var calender = new Calender();
+		console.log(calender)
+		calender.init({
+			id: 'calendar-id',
+			rule: {
+			  "201906": {"01":"1","02":"1","07":"2","08":"1","09":"1","15":"1","16":"1","22":"1","23":"1","29":"1","30":"1"}
 			}
 		})
+
+		calender.createCurrentMonthDay = function() {
+			var dataDetail = this.parmas.rule[this._getCurrentDay(this.year) + this._getCurrentDay(this.month)];
+
+			for(var i = 1; i <= this.currentMonthLength; i++) {
+				if(this.month === this._currentMonth && i === this._currentDay) {
+					this.htmlStr += `<span class="calendar-data ${dataDetail[this._getCurrentDay(i)] ? 'data-off ' : ''} current-data" calendar-date="${i}">${i}</span>`
+				} 
+				else if(dataDetail[this._getCurrentDay(i)]) {
+				  this.htmlStr += '<span class="calendar-data data-off">' + i + '</span>'
+				} 
+				else {
+				   this.htmlStr += '<span class="calendar-data" calendar-date="' + i + '">' + i + '</span>'
+				}
+			}
+		}
+		calender.callBack = function(res) {
+			console.log(res)
+		}
+		calender.switchMonth = function(year, month) {
+			let rule = {"201907":{"06":"1","07":"1","13":"1","14":"1","20":"1","21":"1","27":"1","28":"1"}};
+				this.parmas.rule = rule;
+				this.createDay();
+		}
+
+		calender.createDay();
 	</script>
 </body>
 </html>

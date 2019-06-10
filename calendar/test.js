@@ -6,20 +6,21 @@
  */
 
 
-function Calendar() {
+function Calender() {
 	
 }
 
-Calendar.prototype = {
+Calender.prototype = {
 	/**
 	 * 初始化操作
 	 * @return {[type]} [description]
 	 */
 	init: function(parmas = {}) {
 		this.config(parmas);
-		this.createCss();
-		this.creteHtml();
-		this.initDom();
+		this._createCss();
+		this._creteHtml();
+		this._initDom();
+		// this.createDay();
 	},
 	/**
 	 * 设置配置
@@ -27,19 +28,16 @@ Calendar.prototype = {
 	 */
 	config: function(parmas) {
 		var date = new Date();
-		this.year = parmas.year || date.getFullYear();
-		// this.month = parmas.month || date.getMonth() + 1;
-		this.monthList = parmas.monthList;
-		this.callBack = parmas.confirm;
-		this.wrap = parmas.wrap;
-		this.data = parmas.data;
-		// this.dataLength = this.data.length;
+		this._currentYear = date.getFullYear();
+		this._currentMonth = date.getMonth() + 1;
+		this._currentDay = date.getDate();
+		this.parmas = parmas;
+		this.year = parmas.year || this._currentYear
+		this.month = parmas.month || this._currentMonth
+		this.calenderId = parmas.id;
+		// this.callBack = parmas.confirm;
 
-		this.hashDataList = {}
-		for(var item of this.data) {
-			this.hashDataList[item.date] = item;
-		}
-		this.data = null;
+		this.weekDesc = ['一', '二', '三', '四', '五', '六', '日'];
 	},
 	/**
 	 * 获取某一个月的天数
@@ -61,7 +59,7 @@ Calendar.prototype = {
 	 * 插入css
 	 * @return {[type]} [description]
 	 */
-	createCss() {
+	_createCss() {
 		var style = document.createElement('style');
 		var str = `.align-center {
 			text-align: center;
@@ -74,13 +72,22 @@ Calendar.prototype = {
 			display: block;
 			clear: both;
 		}
+		.calendar-wrap * {
+			box-sizing: border-box;
+		}
 		.calendar-wrap > .calendar-title  {
+			display: flex;
 			height: 42px;
 			line-height: 42px;
-			color: #fff;
-			background: #36CBFF;
-			text-align: center;
+			align-items: center;
+			justify-content: space-between;
 			padding: 0 20px;
+		}
+		.calendar-wrap > .calendar-title .switch-btn {
+			font-size: 14px;
+			border: 1px solid #d0cfcf;
+			padding: 5px 16px;
+			cursor: pointer;
 		}
 		.calendar-wrap > .calendar-week {
 			height: 30px;
@@ -89,33 +96,43 @@ Calendar.prototype = {
 			background: #FAFAFA;
 			font-size: 14px;
 		}
-		.calendar-wrap {
-			margin-bottom: 10px;
-		}
 		.calendar-wrap > .calendar-week > span {
 			flex: 1;
 		}
-		.calendar-wrap > .calendar-content span {
+		.calendar-wrap > .calendar-content {
+			border-left: 1px solid #d0cfcf;
+		}
+		.calendar-wrap > .calendar-content > span {
 			float: left;
 			width: 14.2%;
-			min-height: 58px;
-			background: #fff;
-			padding: 2px 0;
+			min-height: 40px;
+			line-height: 40px;
+			border-right: 1px solid #d0cfcf;
+			border-bottom: 1px solid #d0cfcf;
 		}
-		.calendar-wrap .calendar-content .selected {
-			background: #36CBFF;
+		.calendar-wrap .data-off {
+			background: #fff0f0;
+			position: relative;
+			color: red;
+		}
+		.calendar-wrap .current-data {
+			background: #FF6E15;
 			color: #fff;
 		}
-		.calendar-wrap .font-8 {
-			font-size: 8px;
+		.calendar-wrap .data-off:after {
+			content: "休";
+			position: absolute;
+			left: 5px;
+			top: 5px;
+			font-size: 12px;
+			line-height: normal;
 		}
-		.calendar-wrap .font-28 {
+		.font-28 {
 			font-size: 28px;
 		}
-		.calendar-wrap .disable {
+		.disable {
 			color: #999;
-		}
-		`;
+		}`;
 		style.innerHTML = str;
 		document.head.appendChild(style);
 	},
@@ -123,157 +140,168 @@ Calendar.prototype = {
 	 * 插入html
 	 * @return {[type]} [description]
 	 */
-	creteHtml() {
-		var htmlStr = '';
-		for(var i = 0; i < this.monthList.length; i++) {
-
-			htmlStr += `<div class="calendar-wrap">
-								<p class="calendar-title">
-									<span class="c-t-detial">${this.year}年${this.monthList[i]}</span>
-								</p>
-								<p class="calendar-week align-center">
-									<span>一</span>
-									<span>二</span>
-									<span>三</span>
-									<span>四</span>
-									<span>五</span>
-									<span>六</span>
-									<span>日</span>
-								</p>
-								<div class="calendar-content clearfix align-center">
+	_creteHtml() {
+		
+		var	html = `
+							<div class="calendar-title">
+								<span class="c-t-detial"></span>
+								<div>
+									<span class="switch-btn switch-previous">上个月</span>
+									<span class="switch-btn">今天</span>
+									<span class="switch-btn switch-next">下个月</span>
 								</div>
-						</div>`;
-		}
-		var htmlWrap = document.getElementById(this.wrap);
-		htmlWrap.innerHTML = htmlStr;
+							</div>
+							<p class="calendar-week align-center">
+							</p>
+							<div class="calendar-content clearfix align-center">
+							</div>
+						`;
+			// html = `
+			// 				<p class="calendar-title">
+			// 					<span class="iconfont icon-zuojiantou font-28"></span>
+			// 					<span class="c-t-detial"></span>
+			// 					<span class="iconfont icon-youjiantou font-28"></span>
+			// 				</p>
+			// 				<p class="calendar-week align-center">
+			// 				</p>
+			// 				<div class="calendar-content clearfix align-center">
+			// 				</div>
+			// 			`;
+			this.calendarWrap = document.querySelector('#' + this.calenderId);
+		    this.calendarWrap.className = 'calendar-wrap';
+		    this.calendarWrap.innerHTML = html;
+		// document.body.appendChild(div);
 	},
 	/**
 	 * 初始化dom操作
 	 * @return {[type]} [description]
 	 */
-	initDom() {
-		this.calendarWrap = document.querySelectorAll('.calendar-wrap');
-		for(var i = 0; i < this.monthList.length; i++) {
-			this.calendarWrap[i].querySelector('.calendar-content').innerHTML = this.createDay(this.year, this.monthList[i]);
-		}
-		// console.log(this.calendarWrap)
+	_initDom() {
+		this.content = document.querySelector('#' + this.calenderId + ' > .calendar-content'); 
+		this.title = document.querySelector('#' + this.calenderId + ' > .calendar-title > .c-t-detial');
+		this.weekendWrap = document.querySelector('#' + this.calenderId + ' > .calendar-week');
 		this.bind();
+
+		var str = '';
+		for(var i = 0; i < 7; i++) {
+			str += '<span>' + this.weekDesc[i] + '</span>';
+		}
+		this.weekendWrap.innerHTML = str;
 	},
 	bind() {
-		document.addEventListener('click' , function(e) {
+		this.calendarWrap.addEventListener('click' , function(e) {
 			var el = e.srcElement || e.target;
-			if(this.searchElement(el, 'calendar-data')) {
-				var target = this.searchElement(el, 'calendar-data');
-				target.className += ' selected';
-				this.emitDate(target);
+			console.log(el);
+			if(el.className.indexOf('switch-previous') > -1) {
+				this.previousMonth();
+			} 
+			else if(el.className.indexOf('switch-next') > -1) {
+				this.nextMonth();
+			} 
+			else if(el.className.indexOf('calendar-data') > -1) {
+				this.emitDate(el);
 			}
 		}.bind(this))
+	},
+	/**
+	 * 点击下一个月
+	 * @return {[type]} [description]
+	 */
+	previousMonth() {
+		this.month--;
+		if(this.month <= 0) {
+			this.month = 12;
+			this.year--;
+		}
+		if(typeof this.switchMonth == 'function') {
+			this.switchMonth.call(this, this.year, this.month)
+		}
 	},
 	/**
 	 * 发出数据
 	 * @return {[type]} [description]
 	 */
 	emitDate(el) {
-		var date = el.getAttribute('calendar-date');
-		if(this.callBack) {
+		var year = this.year,
+			month = this.month,
+			day = el.getAttribute('calendar-date');
+		if(this.callBack && day) {
 			this.callBack({
-				date: date
+				year: year,
+				month: month,
+				day: day
 			});
 		}
+	},
+	/**
+	 * 点击下一个月
+	 * @return {[type]} [description]
+	 */
+	nextMonth() {
+		this.month++;
+		if(this.month >= 13) {
+			this.month = 1;
+			this.year++;
+		}
+		if(typeof this.switchMonth == 'function') {
+			this.switchMonth.call(this, this.year, this.month)
+		}
+		// this.createDay();
 	},
 	/**
 	 * 创建日期列表
 	 * @return {[type]} [description]
 	 */
-	createDay(year, month) {
+	createDay() {
+		this.title.innerHTML = this.year + '年' + this.month + '月';
+		this.weekend = this.getFirsrtweekend(this.year, this.month);
+		this.currentMonthLength = this.getMonthLength(this.year, this.month);
 		this.htmlStr = '';
-		this.firsrtweekend = this.getFirsrtweekend(year, month);
-		this.currentMonthLength = this.getMonthLength(year, month);
-		this.createPreviousMonthDay(year, month, this.firsrtweekend);
-		this.createCurrentMonthDay(year, month, this.currentMonthLength);
-		this.createNextMonthDay(year, month, this.currentMonthLength, this.firsrtweekend);
-		return this.htmlStr;
-		// this.content.innerHTML = this.htmlStr;
+		this.createPreviousMonthDay();
+		this.createCurrentMonthDay();
+		this.createNextMonthDay();
+		
+		this.content.innerHTML = this.htmlStr;
 	},
 	/**
 	 * 显示上一月的天数
 	 * @return {[type]} [description]
 	 */
-	createPreviousMonthDay(year, month, firsrtweekend) {
-		var previousMonthLength = this.getMonthLength(year, month - 1);
-		for(var i = previousMonthLength - (firsrtweekend - 2); i <= previousMonthLength; i++) {
-			this.htmlStr += '<span class="disable"></span>';
+	createPreviousMonthDay() {
+		var previousMonthLength = this.getMonthLength(this.year, this.month - 1);
+		for(var i = previousMonthLength - (this.weekend - 2); i <= previousMonthLength; i++) {
+			this.htmlStr += '<span class="calendar-data disable">' + i + '</span>';
 		}
 	},
 	/**
 	 * 显示当前月的天数
 	 * @return {[type]} [description]
 	 */
-	createCurrentMonthDay(year, month, currentMonthLength) {
-		for(var i = 1; i <= currentMonthLength; i++) {
-			var date = `${year}-${month}-${i}`,
-				stamp = this.DateToTimestamp(date) + '000',
-				htmlStr = '';
-			if(this.hashDataList[stamp]) {
-				htmlStr = `
-							 <span class="calendar-data" 
-							   calendar-date="${year}-${month}-${i}" 
-							   >
-							   		<p>${i}</p>
-							   		<p class="font-8">¥${this.hashDataList[stamp]['freePrice']}</p>
-							   		<p class="font-8">余${this.hashDataList[stamp]['freeStock']}</p>
-							   </span> 
-						  `;
-			} else {
-				htmlStr = `
-							 <span class="disable" 
-							   calendar-data="${year}-${month}-${i}" 
-							   >${i}</span> 
-						  `;
-			}
-			this.htmlStr += htmlStr;
-		}
-	},
-	/**
-	 * 日期时间换成Unix时间戳
-	 * data  	时间戳    必填
-	 * @param {[type]} data [description]
-	 */
-	DateToTimestamp: function(data) {
-		return Date.parse(data) / 1000;
+	// createCurrentMonthDay() {
+	// 	var dataDetail = this.parmas.rule[this._getCurrentDay(this.year) + this._getCurrentDay(this.month)];
+	// 	for(var i = 1; i <= this.currentMonthLength; i++) {
+	// 		if(dataDetail[this._getCurrentDay(i)]) {
+	// 		  this.htmlStr += '<span class="calendar-data data-off">' + i + '</span>'
+	// 		} else {
+	// 		   this.htmlStr += '<span class="calendar-data" calendar-date="' + i + '">' + i + '</span>'
+	// 		}
+	// 	}
+	// },
+    _getCurrentDay(value) {
+		return value > 10 ? value : '0' + value
 	},
 	/**
 	 * 显示下一个月的天数
 	 * @return {[type]} [description]
 	 */
-	createNextMonthDay(year, month, currentMonthLength, firsrtweekend) {
-		var nextMonthLength = this.getMonthLength(year, month + 1);
-		for(var i = 1, len = 42 - (currentMonthLength + firsrtweekend - 1); i <= len; i++) {
-			this.htmlStr += '<span class="disable"></span>'
+	createNextMonthDay() {
+		var nextMonthLength = this.getMonthLength(this.year, this.month + 1);
+		for(var i = 1, len = 42 - (this.currentMonthLength + this.weekend - 1); i <= len; i++) {
+			this.htmlStr += '<span class="calendar-data disable">' + i + '</span>'
 		}
 	},
-	/**
-	 * 搜索元素,解决事件委托颗粒度问题
-	 * @param  {[type]} el     [description]
-	 * @param  {[type]} classN [description]
-	 * @return {[type]}        [description]
-	 */
-	searchElement: function(el, classN) {
-		var target = el,
-			count = 0;
-		while(target) {
-			count++;
-			if(count > 5 || target.nodeName.toLowerCase() == 'html') {
-				target = null;
-				return target;
-			} else if(target.className != null && target.className.indexOf(classN) > -1) {
-				return target;
-			}
-			target = target.parentNode;
-		}
-	},
-	//清除内存
-	calendarDestroy() {
-
-	}
 }
+
+// var calenderObj = new Calender();
+
+// export default calenderObj;

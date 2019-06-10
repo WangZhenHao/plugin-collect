@@ -172,7 +172,8 @@ BScroll.prototype = {
 	},
 	_end: function(e) {
 		this.initiated = false;
-
+		
+		//如果超出了最大滑动距离和最小滑动距离
 		if (this.resetPosition(this.options.bounceTime, ease.bounce)) {
 	      return
 	    }
@@ -241,6 +242,7 @@ BScroll.prototype = {
 	    this._transitionTime(time)
 	    this._translate(x, y)
 	},
+	//如果超出了最大滑动距离和最小滑动距离
 	resetPosition: function(time = 0, easeing = ease.bounce) {
 		let y = this.y
 		let x = this.x
