@@ -18,6 +18,9 @@
 			padding: 0;
 			margin: 0;
 		}
+		.calender-seleted {
+			background: red;
+		}
 		/*.align-center {
 			text-align: center;
 		}
@@ -79,18 +82,28 @@
 		})
 
 		calender.createCurrentMonthDay = function() {
+
+			var dateDay = this.year + this._getCurrentDay(this.month);
 			var dataDetail = this.parmas.rule[this._getCurrentDay(this.year) + this._getCurrentDay(this.month)];
 
 			for(var i = 1; i <= this.currentMonthLength; i++) {
-				if(this.month === this._currentMonth && i === this._currentDay) {
-					this.htmlStr += `<span class="calendar-data ${dataDetail[this._getCurrentDay(i)] ? 'data-off ' : ''} current-data" calendar-date="${i}">${i}</span>`
-				} 
-				else if(dataDetail[this._getCurrentDay(i)]) {
-				  this.htmlStr += '<span class="calendar-data data-off">' + i + '</span>'
+				var json = {
+					dateDay: dateDay + this._getCurrentDay(i)
+				}
+				// if(this.month === this._currentMonth && i === this._currentDay) {
+				// 	this.htmlStr += `<span class="calendar-data ${dataDetail[this._getCurrentDay(i)] ? 'data-off ' : ''} current-data" calendar-date="${i}">${i}</span>`
+				// } 
+				// else 
+				if(dataDetail[this._getCurrentDay(i)]) {
+				  this.htmlStr += '<span class="calendar-data data-off">' + i + '</span>';
+				  json.isWorkerDay = 1;
 				} 
 				else {
+				   json.isWorkerDay = 0;
 				   this.htmlStr += '<span class="calendar-data" calendar-date="' + i + '">' + i + '</span>'
 				}
+
+				this.calenderList.push(json);
 			}
 		}
 		calender.callBack = function(res) {

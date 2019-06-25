@@ -132,6 +132,7 @@ BScroll.prototype = {
 	    this.maxScrollY = this.wrapperHeight - this.scrollerHeight;
 	},	
 	_addDOMEvents: function() {
+		//会执行this中的handleEvent方法
 		addEvent(this.wrapper, 'mousedown', this)
 		addEvent(window, 'mousemove', this)
 		addEvent(window, 'mouseup', this)

@@ -11,7 +11,10 @@
 ├── ScrollClassAnimate          // 下拉,上拉加载动画
 ├── imitate-jq-animate          // 仿jquery动画函数
 ├── images					            // 图片
-
+├── calender                    //日历插件
+├── ajax                        //原生ajax封装
+├── InputNum                    //数字输入框
+├── BScroll                     //better-scroll 滚动核心原理
 ```
 
 ### 抽奖插件

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1, minimum-scale=1,initial-scale=1.0" />
+	<title>Document</title>
+	<script src="./InputNum.js?v=1.1.3"></script>
+</head>
+<body>
+	<style>
+		* {
+			padding: 0;
+			margin: 0;
+		}
+		#input-wrap {
+			margin-top: 100px;
+		}
+		/*input {
+	    -webkit-user-select: auto!important;
+	    -khtml-user-select: auto!important;
+	    -moz-user-select: auto!important;
+	    -ms-user-select: auto!important;
+	    -o-user-select: auto!important;
+	    user-select: auto!important;
+	   }*/
+
+	</style>
+	<div id="input-wrap">
+		<!-- <div class="input-wrap text-center">
+			<div class="flex-box">
+				<div class="i-item flex-1"></div>
+				<div class="i-item flex-1"></div>
+				<div class="i-item flex-1"></div>
+				<div class="i-item flex-1"></div>
+			</div>
+			<input type="text" id="input-text">
+		</div> -->
+	</div>
+
+
+	<script>
+		var test = new InputNum({
+			id: '#input-wrap',
+			inputNum: 6,
+			value: '123',
+			hiddenNum: false,
+			callback: function(res) {
+				setTimeout(() => {
+					alert(res)
+				}, 100)
+			}
+		})
+		console.log(test)
+	</script>
+</body>
+</html>

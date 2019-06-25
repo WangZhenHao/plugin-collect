@@ -35,6 +35,8 @@ Calender.prototype = {
 		this.year = parmas.year || this._currentYear
 		this.month = parmas.month || this._currentMonth
 		this.calenderId = parmas.id;
+		this.multipleClick = true;
+		this.calenderList = [];
 		// this.callBack = parmas.confirm;
 
 		this.weekDesc = ['一', '二', '三', '四', '五', '六', '日'];
@@ -198,7 +200,7 @@ Calender.prototype = {
 			else if(el.className.indexOf('switch-next') > -1) {
 				this.nextMonth();
 			} 
-			else if(el.className.indexOf('calendar-data') > -1) {
+			else if(this.multipleClick && el.getAttribute('calendar-date')) {
 				this.emitDate(el);
 			}
 		}.bind(this))
@@ -218,19 +220,31 @@ Calender.prototype = {
 		}
 	},
 	/**
-	 * 发出数据
+	 * 发出数据 
 	 * @return {[type]} [description]
 	 */
 	emitDate(el) {
 		var year = this.year,
 			month = this.month,
-			day = el.getAttribute('calendar-date');
+			day = el.getAttribute('calendar-date')
+
+		if(el.className.indexOf('calender-seleted') > -1) {
+
+			el.className = el.className.replace(' calender-seleted', '');
+			for(var i = 0, len = this.calenderList.length; i < len; i++) {
+				if(this.calenderList[i]['day'] == day) {
+					this.calenderList.splice(i, 1);
+					break;
+				}
+			}
+
+		} else {
+			el.className += ' calender-seleted';
+			this.calenderList.push({year, month, day})
+		}
+
 		if(this.callBack && day) {
-			this.callBack({
-				year: year,
-				month: month,
-				day: day
-			});
+			this.callBack(this.calenderList);
 		}
 	},
 	/**
