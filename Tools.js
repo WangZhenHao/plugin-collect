@@ -342,6 +342,15 @@
 		/**
 		 * 函数节流
 		 * @return {[type]} [description]
+
+		  var fn = Tools.throttle(function(res) {
+				console.log(this)
+			}, 1000)
+
+			window.onresize = function() {
+				fn.call({name: 'wzh'}, 1);
+			}
+
 		 */
 		throttle: function(fn, interval) {
 			var _self = fn,
@@ -366,6 +375,31 @@
 						_self.apply(me, agr);
 					}, _interval)
 				}
+		},
+		/**
+		* 函数防抖
+
+		  var fn = Tools.debounce(function(res) {
+				console.log(this, res)
+			}, 1000)
+
+			window.onresize = function() {
+				fn.call({name: 'wzh'}, 1);
+			}
+		*/
+		debounce: function(fn, wait) {
+			var timer = null;
+		  return function () {
+	      var context = this
+	      var args = arguments
+	      if (timer) {
+	          clearTimeout(timer);
+	          timer = null;
+	      }
+	      timer = setTimeout(function () {
+	          fn.apply(context, args)
+	      }, wait)
+		  }
 		}
 
 

@@ -66,16 +66,23 @@
 		// var arr = Tools.deepCopy(parmas);
 		// arr[0] = 1;
 		// console.log(arr, parmas);
-		var fn = Tools.throttle(function(res) {
-			console.log(this)
-			// console.log(res)
+		// var fn = Tools.throttle(function(res) {
+		// 	console.log(this)
+		// 	// console.log(res)
+		// }, 1000)
+		// console.log(fn)
+		// window.onresize = function() {
+		// 	console.log(0)
+		// 	fn.call({name: 'wzh'}, 1);
+		// }
+	 //防抖
+	 var fn = Tools.debounce(function(res) {
+			console.log(this, res)
 		}, 1000)
-		console.log(fn)
+
 		window.onresize = function() {
-			console.log(0)
 			fn.call({name: 'wzh'}, 1);
 		}
-		// console.log(Tools.isPc())
 	</script>
 </body>
 </html>
