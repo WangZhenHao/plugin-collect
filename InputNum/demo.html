@@ -25,15 +25,16 @@
 		var test = new InputNum({
 			id: '#input-wrap',
 			inputNum: 6,
-			value: '123',
-			hiddenNum: true,
+			hiddenNum: false,
 			callback: function(res) {
 				setTimeout(() => {
 					alert(res)
 				}, 100)
 			}
 		})
-		console.log(test)
+		setTimeout(() => {
+			test.addValue(123)
+		}, 1000)
 	</script>
 </body>
 </html>

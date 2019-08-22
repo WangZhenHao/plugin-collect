@@ -76,13 +76,22 @@
 		// 	fn.call({name: 'wzh'}, 1);
 		// }
 	 //防抖
-	 var fn = Tools.debounce(function(res) {
-			console.log(this, res)
-		}, 1000)
+	//  var fn = Tools.debounce(function(res) {
+	// 		console.log(this, res)
+	// 	}, 1000)
 
-		window.onresize = function() {
-			fn.call({name: 'wzh'}, 1);
-		}
+	// 	window.onresize = function() {
+	// 		fn.call({name: 'wzh'}, 1);
+	// 	}
+
+	//数字添加逗号
+	// console.log(Tools.filerNumber(1202455));
+	console.log('null的显示： ', Tools.monetizationNumber(null));
+	console.log('10000的显示： ',Tools.monetizationNumber('10000'));
+	console.log('10000的显示： ',Tools.monetizationNumber('10000', 0));
+	console.log('1202455.10的显示： ',Tools.monetizationNumber(1202455.10));
+	console.log('12455.5的显示： ',Tools.monetizationNumber('12455.5'));
+	console.log('1245121212125.52631的显示： ',Tools.monetizationNumber('1245121212125.52631', 3));
 	</script>
 </body>
 </html>

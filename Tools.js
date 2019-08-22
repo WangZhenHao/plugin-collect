@@ -400,6 +400,21 @@
 	          fn.apply(context, args)
 	      }, wait)
 		  }
+		},
+		/**
+		 * 货币化数字
+		 * @param {*} num        数字或者字符串数字
+		 * @param {*} decimal    保留多少位小数字 默认两位   
+		 */
+		monetizationNumber: function(num, decimal = 2) {
+			if(!num) return num;
+
+			var strArr = Number(num).toFixed(decimal).split('.'),
+					str = strArr[0].split('').reverse().join(''),
+					arr;
+					
+			arr = str.match(/(\d{3})|(\d+)/g);
+			return arr.join(',').split('').reverse().join('') + ((strArr.length > 1 && decimal > 0) ? '.' + strArr[1] : '' );
 		}
 
 
