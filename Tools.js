@@ -366,7 +366,8 @@
 						_self.apply(me, agr);
 					}, _interval)
 				}
-		}
+		},
+		
 
 
 	};
