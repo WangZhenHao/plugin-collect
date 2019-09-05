@@ -49,7 +49,7 @@ KeyBoard.prototype = {
 	//
 	createCss: function() {
 		var element = document.createElement('style');
-		var str = '.clearfix:after{content:"";display:block;clear:both}.text-center{text-align:center}.line-height{line-height:60px}.key-board{width:100%;height:240px;position:fixed;bottom:0;left:0;display:flex;z-index:1;transition:transform .2s;background:#fff}.key-board.blur{transform:translateY(240px)}.key-board.focus{transform:translateY(0)}.key-board *{box-sizing:border-box}.key-board>.key-code-block{flex:1;color:#333}.key-board>.key-code-block>span{float:left;font-size:38px;height:25%;width:33.33%;border-top:1px solid #eee;border-right:1px solid #eee}.key-board>.options{width:25%;height:100%;}.key-board>.options>.delete{font-size:38px;height:25%;border-top:1px solid #eee}.key-board>.options>.comfirm{height:75%;display:flex;display:-webkit-box;display:-webkit-flex;flex-direction:column;justify-content:center;color:#fff;background:linear-gradient(180deg,#ff6e15,#ffb911);font-size:18px}#keyBoard{display:block;height:100px;width:100%;font-size:30px;text-align:right;border:1px solid #000}.key-board-cursor:after{content:"|";animation:showHideCursor 1s steps(1) infinite}@keyframes showHideCursor{50%{visibility:hidden}}';
+		var str = '.clearfix:after{content:"";display:block;clear:both}.text-center{text-align:center}.line-height{line-height:60px}.key-board{width:100%;height:240px;position:fixed;bottom:0;left:0;display:flex;z-index:9;transition:transform .2s;background:#fff}.key-board.blur{transform:translateY(240px)}.key-board.focus{transform:translateY(0)}.key-board *{box-sizing:border-box}.key-board>.key-code-block{flex:1;color:#333}.key-board>.key-code-block>span{float:left;font-size:38px;height:25%;width:33.33%;border-top:1px solid #eee;border-right:1px solid #eee}.key-board>.options{width:25%;height:100%;}.key-board>.options>.delete{font-size:38px;height:25%;border-top:1px solid #eee}.key-board>.options>.comfirm{height:75%;display:flex;display:-webkit-box;display:-webkit-flex;flex-direction:column;justify-content:center;color:#fff;background:linear-gradient(180deg,#ff6e15,#ffb911);font-size:18px}#keyBoard{display:block;height:100px;width:100%;font-size:30px;text-align:right;border:1px solid #000}.key-board-cursor:after{content:"|";animation:showHideCursor 1s steps(1) infinite}@keyframes showHideCursor{50%{visibility:hidden}}';
 		element.innerHTML = str;
 		document.head.appendChild(element);
 	},
@@ -72,7 +72,7 @@ KeyBoard.prototype = {
 				'<span class="key-code">7</span>' +
 				'<span class="key-code">8</span>' +
 				'<span class="key-code">9</span>' +
-				'<span class="iconfont icon-jianpan"></span>' +
+				'<span class="iconfont icon-jianpan js-slide-down-keyboard"></span>' +
 				'<span class="key-code">0</span>' +
 				'<span class="iconfont icon-dian1"></span>' +
 			'</div>' +
@@ -187,7 +187,9 @@ KeyBoard.prototype = {
 				this.keyCode('.');
 			} else if(className.indexOf('comfirm') > -1) {
 				this.touchComfirmButton();
-			}
+			} else if(className.indexOf('js-slide-down-keyboard') > -1) {
+        this.blur();
+      }
 		}.bind(this));
 	},
 	/**
