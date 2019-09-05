@@ -94,7 +94,11 @@ KeyBoard.prototype = {
 		this.createKeyBoard();
 		this.keyBoard = document.querySelector('#key-board-wrap');
 		this.touchEvent();
-		this.focus();
+    if(this.isInitFocus) {
+      this.focus();
+    } else {
+      this.blur();
+    }
 	},
 	/**
 	 * 虚拟键盘初始化
@@ -146,7 +150,12 @@ KeyBoard.prototype = {
 			this.emitKeyCode();
 			return;
 		}
-		this.twoDecimal();
+    // 输入小数是否需要补0，默认不需要
+    if(this.isFillDecimal) {
+      this.twoDecimal();
+    } else {
+      this.removeDotWithDecimal();
+    }
 	},
 	/**
 	 * 获取焦点

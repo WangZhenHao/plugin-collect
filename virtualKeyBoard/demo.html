@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
 	<title>虚拟键盘</title>
-	<link rel="stylesheet" href="http://at.alicdn.com/t/font_709005_2fq0kn635st.css"> 
+	<link rel="stylesheet" href="http://at.alicdn.com/t/font_709005_2fq0kn635st.css">
 </head>
 <body>
 	<div class="key-board-cursor" data-key-board="target" id="keyBoard">
@@ -13,7 +13,9 @@
 	<script>
 		var keyBoardEl = document.querySelector('#keyBoard');
 		var keyBoard = new KeyBoard({
-			target: 'target',
+      target: 'target',
+      isInitFocus: false, // 初始化是获取焦点显示键盘
+      isFillDecimal: false, // 默认 false 输入"."是否补0，不补0将处理掉"."
 			callBack: function(res, status) {
 				// console.log(res.value);
 				keyBoardEl.innerHTML = res.value;
