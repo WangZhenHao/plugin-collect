@@ -1,16 +1,16 @@
 /**
  * author    wzh
  * created   2018-6-15 17:37
- * 
+ *
  * 虚拟键盘插件使用方法:
- * 
+ *
 	class="key-board-cursor" 获取焦点闪烁的class类
 	data-key-board="target"  触发虚拟键盘显示和隐藏的元素
-	
+
    --html--
    <div class="key-board-cursor" data-key-board="target" id="keyBoard">
    </div>
-   	
+
 	--javascript--
     var keyBoard = new KeyBoard({
 		target: 'target',
@@ -24,21 +24,29 @@
 		}
 	});
 
- */
-function KeyBoard(params) {
-
-	this.target = params['target'];
-	this.callBack = params['callBack'];
-	this.comfirm = params['comfirm'];
-	this.init();
-}
+  /**
+   * @description: 虚拟键盘类
+   * @param {Object} 配置参数对象 {
+   * @param {Number} digit 允许输入数字位数
+   * @param {Number} decimals 小数有效位
+   * }
+   * @return: {Class}
+   */
+  function KeyBoard(params) {
+    if(this instanceof KeyBoard) {
+      Object.assign(this, params);
+      this.init();
+    } else {
+      return new KeyBoard(params);
+    }
+  }
 
 KeyBoard.prototype = {
 	/**
 	 * 插入css
 	 * @return {[type]} [description]
 	 */
-	// 
+	//
 	createCss: function() {
 		var element = document.createElement('style');
 		var str = '.clearfix:after{content:"";display:block;clear:both}.text-center{text-align:center}.line-height{line-height:60px}.key-board{width:100%;height:240px;position:fixed;bottom:0;left:0;display:flex;z-index:1;transition:transform .2s;background:#fff}.key-board.blur{transform:translateY(240px)}.key-board.focus{transform:translateY(0)}.key-board *{box-sizing:border-box}.key-board>.key-code-block{flex:1;color:#333}.key-board>.key-code-block>span{float:left;font-size:38px;height:25%;width:33.33%;border-top:1px solid #eee;border-right:1px solid #eee}.key-board>.options{width:25%;height:100%;}.key-board>.options>.delete{font-size:38px;height:25%;border-top:1px solid #eee}.key-board>.options>.comfirm{height:75%;display:flex;display:-webkit-box;display:-webkit-flex;flex-direction:column;justify-content:center;color:#fff;background:linear-gradient(180deg,#ff6e15,#ffb911);font-size:18px}#keyBoard{display:block;height:100px;width:100%;font-size:30px;text-align:right;border:1px solid #000}.key-board-cursor:after{content:"|";animation:showHideCursor 1s steps(1) infinite}@keyframes showHideCursor{50%{visibility:hidden}}';
@@ -53,7 +61,7 @@ KeyBoard.prototype = {
 		var element = document.createElement('div');
 		element.id = 'key-board-wrap';
 		element.className = 'key-board text-center focus';
-		element.innerHTML = 
+		element.innerHTML =
 			'<div class="key-code-block clearfix line-height">' +
 				'<span class="key-code">1</span>' +
 				'<span class="key-code">2</span>' +
@@ -137,7 +145,7 @@ KeyBoard.prototype = {
 			this.value = '';
 			this.emitKeyCode();
 			return;
-		} 
+		}
 		this.twoDecimal();
 	},
 	/**
@@ -203,7 +211,7 @@ KeyBoard.prototype = {
 		if(!this.legal(this.value)) {
 			this.value = oldValue;
 			return;
-		} 
+		}
 		this.emitKeyCode();
 	},
 	/**
@@ -220,7 +228,7 @@ KeyBoard.prototype = {
 		return arr.every(function(fn) {
 			return fn.call(self, value);
 		})
-	}, 
+	},
 	/**
 	 * 检测数字是否合法
 	 * @param  {[type]} value [description]
@@ -233,13 +241,13 @@ KeyBoard.prototype = {
 		}
 		if(arr[0].length > this.digit) {
 			return false;
-		} 
+		}
 		if(arr[1] && arr[1].length > this.decimals) {
 			return false;
 		}
 
 		return true;
-		
+
 	},
 	/**
 	 * 输入是否合法
