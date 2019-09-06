@@ -1,28 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
-	<title>虚拟键盘</title>
-	<link rel="stylesheet" href="http://at.alicdn.com/t/font_709005_2fq0kn635st.css"> 
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <title>虚拟键盘</title>
+  <link rel="stylesheet"
+        href="http://at.alicdn.com/t/font_709005_2fq0kn635st.css">
+  <style>
+    .input-price-box {
+      height: 30px;
+      line-height: 30px;
+      margin-bottom: 10px;
+      border: 1px solid #FF6A00;
+      border-radius: 7px;
+      text-align: right;
+    }
+
+  </style>
 </head>
+
 <body>
-	<div class="key-board-cursor" data-key-board="target" id="keyBoard">
-	</div>
-	<script src="./virtualKeyBoard.js"></script>
-	<script>
-		var keyBoardEl = document.querySelector('#keyBoard');
-		var keyBoard = new KeyBoard({
-			target: 'target',
-			callBack: function(res, status) {
-				// console.log(res.value);
-				keyBoardEl.innerHTML = res.value;
-				console.log(keyBoardEl.innerHTML)
-			},
-			comfirm: function(res) {
-				console.log(res);
-			}
-		});
-	</script>
+  <div class="key-board-cursor input-price-box"
+       data-key-board="target">
+  </div>
+  <div class="key-board-cursor input-price-box"
+       data-key-board="target">
+  </div>
+  <script src="./virtualKeyBoard.js"></script>
+  <script>
+    var keyBoard = KeyBoard({
+      target: 'target',
+      isInitFocus: false, // 初始化是获取焦点显示键盘
+      isFillDecimal: false, // 默认 false 输入"."是否补0，不补0将处理掉"."
+      inputRegion: '.input-price-box', // 需要作为输入框绑定的类
+      callBack: function (res, status) {
+        console.log('键盘点击回调', res, status)
+      },
+      // 确认按钮事件
+      comfirm: function (res) {
+        console.log(res);
+      }
+    });
+  </script>
 </body>
+
 </html>
