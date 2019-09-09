@@ -33,6 +33,13 @@ InputNum.prototype = {
 		this._initDomEvent();
 	},
 	/**
+	* 设置默认值
+	*/
+	addValue: function(value) {
+		this.value = value;
+		this._initIuputValue();
+	},
+	/**
 	 * 创建html
 	 * @return {[type]} [description]
 	 */

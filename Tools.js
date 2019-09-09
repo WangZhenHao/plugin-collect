@@ -342,6 +342,15 @@
 		/**
 		 * 函数节流
 		 * @return {[type]} [description]
+
+		  var fn = Tools.throttle(function(res) {
+				console.log(this)
+			}, 1000)
+
+			window.onresize = function() {
+				fn.call({name: 'wzh'}, 1);
+			}
+
 		 */
 		throttle: function(fn, interval) {
 			var _self = fn,
@@ -367,7 +376,46 @@
 					}, _interval)
 				}
 		},
-		
+		/**
+		* 函数防抖
+
+		  var fn = Tools.debounce(function(res) {
+				console.log(this, res)
+			}, 1000)
+
+			window.onresize = function() {
+				fn.call({name: 'wzh'}, 1);
+			}
+		*/
+		debounce: function(fn, wait) {
+			var timer = null;
+		  return function () {
+	      var context = this
+	      var args = arguments
+	      if (timer) {
+	          clearTimeout(timer);
+	          timer = null;
+	      }
+	      timer = setTimeout(function () {
+	          fn.apply(context, args)
+	      }, wait)
+		  }
+		},
+		/**
+		 * 货币化数字
+		 * @param {*} num        数字或者字符串数字
+		 * @param {*} decimal    保留多少位小数字 默认两位   
+		 */
+		monetizationNumber: function(num, decimal = 2) {
+			if(!num) return num;
+
+			var strArr = Number(num).toFixed(decimal).split('.'),
+					str = strArr[0].split('').reverse().join(''),
+					arr;
+					
+			arr = str.match(/(\d{3})|(\d+)/g);
+			return arr.join(',').split('').reverse().join('') + ((strArr.length > 1 && decimal > 0) ? '.' + strArr[1] : '' );
+		}
 
 
 	};
