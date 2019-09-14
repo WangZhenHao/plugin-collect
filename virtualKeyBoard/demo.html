@@ -6,7 +6,7 @@
 	<title>虚拟键盘</title>
 	<link rel="stylesheet" href="http://at.alicdn.com/t/font_709005_2fq0kn635st.css"> 
 	<style type="text/css">
-				#keyBoard {
+				#keyBoard, .class2 {
 					display: block;
 					height: 100px;
 					width: 100%;
@@ -17,14 +17,19 @@
 	</style>
 </head>
 <body>
-	<div class="key-board-cursor" key-board-element="true" id="keyBoard">
+	<div key-board-element="true" id="keyBoard">
+
 	</div>
+	<!-- <div class="class2" key-board-element="true"></div> -->
 	<!-- <script src="./virtualKeyBoard.js"></script> -->
 	<script src="./virtualKeyBoard-2.0.0.js"></script>
 	<script>
 		var keyBoardEl = document.querySelector('#keyBoard');
 		var keyBoard = new KeyBoard({
 			decimals: 2,
+			value: '23',
+			keyBoardStatus: true,
+			// targetElement: keyBoardEl,
 			onInput: function(value, res) {
 				keyBoardEl.innerHTML = value;
 			},
@@ -36,6 +41,9 @@
 			},
 			onBlur(value, res) {
 				console.log(value, res, '失去焦点')
+			},
+			onFinish(res) {
+				keyBoardEl.innerHTML = this.value;
 			}
 		});
 	</script>
