@@ -5,22 +5,37 @@
 	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
 	<title>虚拟键盘</title>
 	<link rel="stylesheet" href="http://at.alicdn.com/t/font_709005_2fq0kn635st.css"> 
+	<style type="text/css">
+				#keyBoard {
+					display: block;
+					height: 100px;
+					width: 100%;
+					font-size: 30px;
+					text-align: right;
+					border: 1px solid #000
+				}
+	</style>
 </head>
 <body>
-	<div class="key-board-cursor" data-key-board="target" id="keyBoard">
+	<div class="key-board-cursor" key-board-element="true" id="keyBoard">
 	</div>
-	<script src="./virtualKeyBoard.js"></script>
+	<!-- <script src="./virtualKeyBoard.js"></script> -->
+	<script src="./virtualKeyBoard-2.0.0.js"></script>
 	<script>
 		var keyBoardEl = document.querySelector('#keyBoard');
 		var keyBoard = new KeyBoard({
-			target: 'target',
-			callBack: function(res, status) {
-				// console.log(res.value);
-				keyBoardEl.innerHTML = res.value;
-				console.log(keyBoardEl.innerHTML)
+			decimals: 2,
+			onInput: function(value, res) {
+				keyBoardEl.innerHTML = value;
 			},
-			comfirm: function(res) {
+			onComfirm: function(res) {
 				console.log(res);
+			},
+			onFoucs(value, res) {
+				console.log(value, res, '获取焦点')
+			},
+			onBlur(value, res) {
+				console.log(value, res, '失去焦点')
 			}
 		});
 	</script>
