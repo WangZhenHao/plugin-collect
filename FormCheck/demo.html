@@ -12,17 +12,26 @@
 				phone = '18924298775',
 				username = 'test',
 				num = '1234567890_';
+
+			var form = {
+				startTime: 100,
+				endTime: 10
+			}
 		    //1: 新建一个实例
 		    var validator = new Validator();
 
 			//自定义校验规则
-		    validator.addRuleType('test', function(val, msg) {
-		      if(val[2] == '请选择') {
-		        return msg;
+		    validator.addRuleType('checkTime', function(val, msg) {
+		      if(val.startTime > val.endTime) {
+		      	return msg
 		      }
 		    })
 
 		    //2: 添加校验规则
+		    validator.add(form, [
+		    	{ rule: 'checkTime', errorMsg: '请输入正确的时间范围' }
+		    ])
+
 		    validator.add(email, [
 		      { rule: 'isEmail', errorMsg: '请输入正确邮箱!' }
 		    ])
