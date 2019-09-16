@@ -86,16 +86,26 @@ KeyBoard.prototype = {
 		Object.assign(this, DEFAULT, params)
 
 	},
-	/**
-	 * 事件函数
-	 * @return {[type]} [description]
-	 */
-  touchEvent: function () {
-  	this.keyBoard = document.querySelector('#key-board-wrap');
-    this.targetElement = document.querySelector('div[key-board-element]')
-
-    document.addEventListener('touchstart', function (e) {
-      var el = e.scrElement || e.target;
+  setValue: function (value) {
+    this.value = value;
+    // this._focus();
+    this.onFinish.call(this, this);
+  },
+  /**
+   * 清除事件
+   * @return {[type]} [description]
+   */
+  keyBoardDestroy: function () {
+    document.removeEventListener('touchstart', this.documentTouchStartHandle)
+    this.keyBoard.removeEventListener('touchstart', this.keyBoardTouchStartHandle)
+  },
+  /**
+   * 文档触摸开始事件
+   * @param  {[type]} e [description]
+   * @return {[type]}   [description]
+   */
+  _documentTouchStart: function (e) {
+    var el = e.scrElement || e.target;
       // var targetEl = this.searchElement(el, 'true');
       let targetElement = this.searchElement(el, 'true');
       if(targetElement) {
@@ -104,34 +114,89 @@ KeyBoard.prototype = {
       } else {
         this._blur();
       }
+  },
+  /**
+   * 虚拟键盘触摸开始事件
+   * @param  {[type]} e [description]
+   * @return {[type]}   [description]
+   */
+  _keyBoardTouchStart: function (e) {
+    e.stopPropagation();
+
+    var el = e.scrElement || e.target;
+    var className = el.className;
+
+    if (className.indexOf('key-code') > -1) {
+      var num = el.innerText;
+      this._touchKeyCode(num);
+    } else if (className.indexOf('delete') > -1) {
+      this._touchDel();
+    } else if (className.indexOf('icon-dian1') > -1) {
+      this._touchKeyCode('.');
+    } else if (className.indexOf('comfirm') > -1) {
+      this._touchComfirm();
+    } else if (className.indexOf('icon-jianpan') > -1) {
+      this._blur();
+    }
+  },
+	/**
+	 * 事件函数
+	 * @return {[type]} [description]
+	 */
+  touchEvent: function () {
+    var self = this;
+  	this.keyBoard = document.querySelector('#key-board-wrap');
+    this.targetElement = document.querySelector('div[key-board-element]')
+
+    /**
+     * 控制this的传值
+     * 详情参考文档： https://developer.mozilla.org/zh-CN/docs/Web/API/EventTarget/addEventListener
+     */
+    this.documentTouchStartHandle = function (e) {
+      return self._documentTouchStart(e);
+    }
+
+    this.keyBoardTouchStartHandle = function (e) {
+      return self._keyBoardTouchStart(e);
+    }
+
+    document.addEventListener('touchstart', this.documentTouchStartHandle)
+    this.keyBoard.addEventListener('touchstart', this.keyBoardTouchStartHandle)
+
+    // document.addEventListener('touchstart', this._documentTouchStart.bind(this))
+    // this.keyBoard.addEventListener('touchstart', this._keyBoardTouchStart.bind(this))
+    // document.addEventListener('touchstart', function (e) {
+    //   var el = e.scrElement || e.target;
+    //   // var targetEl = this.searchElement(el, 'true');
+    //   let targetElement = this.searchElement(el, 'true');
+    //   if(targetElement) {
+    //     this.targetElement = this.searchElement(el, 'true');
+    //     this._focus();
+    //   } else {
+    //     this._blur();
+    //   }
       
+    // }.bind(this));
 
-      // if(this.targetElement) {
-      // 	this._focus();
-      // } else {
-      // 	this._blur();
-      // }
-    }.bind(this));
+    // this.keyBoard.addEventListener('touchstart', function (e) {
+    //   e.stopPropagation();
+    //   var el = e.scrElement || e.target;
+    //   var className = el.className;
 
-    this.keyBoard.addEventListener('touchstart', function (e) {
-      e.stopPropagation();
-      var el = e.scrElement || e.target;
-      var className = el.className;
+    //   if (className.indexOf('key-code') > -1) {
+    //     var num = el.innerText;
+    //     this._touchKeyCode(num);
+    //   } else if (className.indexOf('delete') > -1) {
+    //     this._touchDel();
+    //   } else if (className.indexOf('icon-dian1') > -1) {
+    //     this._touchKeyCode('.');
+    //   } else if (className.indexOf('comfirm') > -1) {
+    //     this._touchComfirm();
+    //   } else if (className.indexOf('icon-jianpan') > -1) {
+    //     this._blur();
+    //   }
 
-      if (className.indexOf('key-code') > -1) {
-        var num = el.innerText;
-        this._touchKeyCode(num);
-      } else if (className.indexOf('delete') > -1) {
-        this._touchDel();
-      } else if (className.indexOf('icon-dian1') > -1) {
-        this._touchKeyCode('.');
-      } else if (className.indexOf('comfirm') > -1) {
-        this._touchComfirm();
-      } else if (className.indexOf('icon-jianpan') > -1) {
-        this._blur();
-      }
-
-    }.bind(this));
+    // }.bind(this));
   },
   /**
    * 处理键盘输入
