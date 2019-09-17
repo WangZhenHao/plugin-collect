@@ -1,5 +1,6 @@
 ### 虚拟键盘2.0.0  特性
 
+![AreaInertailScroll](https://github.com/WangZhenHao/plugin-collect/blob/master/images/virtualKeyBoard/virtualKeyBoard.png)
 
 ##### 实例代码
 ```
