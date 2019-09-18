@@ -41,8 +41,7 @@
  */
 function KeyBoard(params) {
   if (this instanceof KeyBoard) {
-    Object.assign(this, params)
-    this.init()
+    this.init(params)
   } else {
     return new KeyBoard(params)
   }
@@ -113,16 +112,21 @@ KeyBoard.prototype = {
    * 虚拟键盘初始化
    * @return {[type]} [description]
    */
-  init: function() {
-    this.digit = 5
-    this.decimals = 2
-    this.keyBoardStatus = true
-    this.isIegalNum = false
-    this.cache = [] // 缓存输入的数据
-    this.value = ''
-    this.wrap = this.wrap || 'key-board-wrap'
-    this.inputRegion = this.inputRegion || '.key-board-cursor'
-    this.inputRegionElementArray = [] // 输入框元素数组
+  init: function(params) {
+    var defaultOptions = {
+      digit: 5,
+      decimals: 2,
+      keyBoardStatus: true,
+      isIegalNum: false,
+      cache: [], // 缓存输入的数据,
+      value: '',
+      wrap: 'key-board-wrap',
+      inputRegion: '.key-board-cursor',
+      target: 'h5-keyboard',
+      targetAttr: 'keyboard', // 目标元素属性,
+      inputRegionElementArray: [] // 输入框元素数组,
+    }
+    Object.assign(this, defaultOptions, params)
     this.initDom()
   },
   /**
@@ -315,7 +319,17 @@ KeyBoard.prototype = {
     }
   },
   /**
-   * 数字
+   * @description: 清除键盘输入缓存
+   * @return: void
+   */
+  clearCache: function() {
+    this.cache.map(function(item) {
+      return (item.value = '')
+    })
+    this.emitKeyCode()
+  },
+  /**
+   * 数字追加
    * @param  {[type]} value [description]
    * @return {[type]}       [description]
    */
@@ -341,10 +355,11 @@ KeyBoard.prototype = {
       return fn.call(self, value)
     })
   },
+
   /**
-   * 检测数字是否合法
-   * @param  {[type]} value [description]
-   * @return {[type]}       [description]
+   * @description: 检测数字是否合法
+   * @param {String} value
+   * @return: Boolean
    */
   numIslegal: function(value) {
     var arr = value.split('.')
@@ -357,12 +372,13 @@ KeyBoard.prototype = {
     if (arr[1] && arr[1].length > this.decimals) {
       return false
     }
-
     return true
   },
+
   /**
-   * 输入是否合法
-   * @return {[type]} [description]
+   * @description: 输入是否合法
+   * @param {String} value
+   * @return: Boolean
    */
   inputIsLegal: function(value) {
     if (value[0] == '.' || (value[0] == '0' && (value[1] && value[1] != '.'))) {
@@ -372,7 +388,6 @@ KeyBoard.prototype = {
   },
   /**
    * 删除按钮
-   * @return {[type]} [description]
    */
   del: function() {
     var self = this
@@ -427,16 +442,14 @@ KeyBoard.prototype = {
    */
   searchElement: function(el, attr) {
     var target = el,
-      count = 0
+      count = 0,
+      endTarget = this.targetAttr
     while (target) {
       count++
       if (count > 5 || target.nodeName.toLowerCase() == 'html') {
         target = null
         return target
-      } else if (
-        target.getAttribute('data-key-board') != null &&
-        target.getAttribute('data-key-board').indexOf(attr) > -1
-      ) {
+      } else if (target.dataset[endTarget] && target.dataset[endTarget].indexOf(attr) > -1) {
         return target
       }
       target = target.parentNode
