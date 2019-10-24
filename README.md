@@ -6,7 +6,8 @@
 ├── Lottery                     //抽奖插件
 ├── AreaInertailScroll          // 移动端城市联动
 ├── virtualKeyBoard             //虚拟键盘支付插件
-├── class-carousel              // class控制的轮播  
+    ├── keyboard             // uniapp组件
+├── class-carousel              // class控制的轮播
 ├── mobile-touch-slider         // 移动端轮播
 ├── ScrollClassAnimate          // 下拉,上拉加载动画
 ├── imitate-jq-animate          // 仿jquery动画函数
@@ -63,7 +64,7 @@
       ///抽奖旋转完成之后的回调
       success: function(res) {
         document.querySelector('#result').innerHTML = `恭喜你,抽中${res.desc}`;
-        
+
       }
     });
 
@@ -76,11 +77,11 @@
       setTimeout(() => {
         lotteryHanlde(lotter);
       }, 10)
-      
+
 
     }
 ```
-[演示地址: http://www.wzhshare.top/plugin-collect/Lottery/demo.html](http://www.wzhshare.top/plugin-collect/Lottery/demo.html)  
+[演示地址: http://www.wzhshare.top/plugin-collect/Lottery/demo.html](http://www.wzhshare.top/plugin-collect/Lottery/demo.html)
 
 ![AreaInertailScroll](https://github.com/WangZhenHao/plugin-collect/blob/master/images/Lottery/Lottery.gif)
 
@@ -98,9 +99,9 @@
 			console.log(this);
 			this.target.value = res.join(',');
 		}
-	}); 
+	});
 ```
-[演示地址: http://www.wzhshare.top/plugin-collect/AreaInertiaScroll/demo.html](http://www.wzhshare.top/plugin-collect/AreaInertiaScroll/demo.html)  
+[演示地址: http://www.wzhshare.top/plugin-collect/AreaInertiaScroll/demo.html](http://www.wzhshare.top/plugin-collect/AreaInertiaScroll/demo.html)
 
 ![AreaInertailScroll](https://github.com/WangZhenHao/plugin-collect/blob/master/images/AreaInertiaScroll/AreaInertiaScroll.gif)
 
@@ -113,10 +114,10 @@
 ```
    //class="key-board-cursor" 获取焦点闪烁的class类
    //data-key-board="target"  触发虚拟键盘显示和隐藏的元素
-  
+
    <div class="key-board-cursor" data-key-board="target" id="keyBoard">
    </div>
-    
+
     //javascript
     var keyBoard = new KeyBoard({
     target: 'target',
@@ -131,7 +132,7 @@
   });
 
 ```
-[演示地址: http://www.wzhshare.top/plugin-collect/AreaInertiaScroll/demo.html](http://www.wzhshare.top/plugin-collect/virtualKeyBoard/demo.html) 
+[演示地址: http://www.wzhshare.top/plugin-collect/AreaInertiaScroll/demo.html](http://www.wzhshare.top/plugin-collect/virtualKeyBoard/demo.html)
 ![AreaInertailScroll](https://github.com/WangZhenHao/plugin-collect/blob/master/images/virtualKeyBoard/virtualKeyBoard.gif)
 
 ### class控制的轮播
@@ -182,7 +183,7 @@
 ```
 使用方法
  	//html部分
- 	<div class="boy-animate" boy-animate-duration="2s" boy-animate-effect="bounce" 
+ 	<div class="boy-animate" boy-animate-duration="2s" boy-animate-effect="bounce"
  	boy-animate-delay="0s">
  	</div>
  	boy-animate-duration:表示动画执行的时间(秒);
@@ -208,4 +209,3 @@
 ```
 
 [演示地址: http://www.wzhshare.top/plugin-collect/imitate-jq-animate/demo.html](http://www.wzhshare.top/plugin-collect/imitate-jq-animate/demo.html)
-
