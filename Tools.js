@@ -1,9 +1,11 @@
 (function () {
   /**
+   * 
    * JavaScript的工具库,方便使用
    * author   a_boy
    * created  2018-4-7 18:06
    * update   2018-8-19 17:14:00
+   * 
    */
   var Tools = {
 		/**
