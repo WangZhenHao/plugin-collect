@@ -8,9 +8,14 @@
 <body>
 	<div id="millisecondCountDown"></div>
 	<script>
+		var str = 'yyyyMMYYYY';
+		var re1 = /(y+|M+)/gi;
+		var re2 = /[yM]+/gi
+		console.log(str.match(re1))
+		console.log(str.match(re2))
 		// console.log(Tools.DateToTimestamp('2018-05-01 12:12:11'));
 		//2018/4/7 18:33:20
-		// console.log(Tools.TimestampToDate('yyyy年MM月dd日 hh时mm分ss'))
+		console.log(Tools.TimestampToDate('yyyyMM', +new Date()))
 		// console.log(Tools.ToCurrency('12.25'))
 		// Tools.setCookies('name', 'wzh', 200, {
 		// 	// path: '/',

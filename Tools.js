@@ -26,7 +26,12 @@
 		 * @param {[type]} timestamp '时间戳: 1525147931'	可填(默认当前时间)
 		 */
     TimestampToDate: function (format, timestamp) {
-      var date = timestamp ? new Date(parseInt(timestamp) * 1000) : new Date(+new Date());
+      if(!timestamp) {
+        return timestamp;
+      }
+
+      // var date = timestamp ? new Date(parseInt(timestamp) * 1000) : new Date(+new Date());
+      var date = new Date(parseInt(timestamp));
       var year = date.getFullYear(),
         month = date.getMonth() + 1,
         day = date.getDate(),
@@ -34,7 +39,7 @@
         minute = date.getMinutes(),
         second = date.getSeconds();
 
-      var str = format.replace(/[YyMmDdHhSs]+/g, function (w) {
+      var str = format.replace(/y+|m+|d+|h+|s+/gi, function (w) {
         if (w == 'yy' || w == 'YY' || w == 'y' || w == 'Y') {
           return year.toString().substring(2);
 
