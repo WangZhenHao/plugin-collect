@@ -91,12 +91,22 @@
 
 	//数字添加逗号
 	// console.log(Tools.filerNumber(1202455));
-	console.log('null的显示： ', Tools.monetizationNumber(null));
-	console.log('10000的显示： ',Tools.monetizationNumber('10000'));
-	console.log('10000的显示： ',Tools.monetizationNumber('10000', 0));
-	console.log('1202455.10的显示： ',Tools.monetizationNumber(1202455.10));
-	console.log('12455.5的显示： ',Tools.monetizationNumber('12455.5'));
-	console.log('1245121212125.52631的显示： ',Tools.monetizationNumber('1245121212125.52631', 3));
+	// console.log('null的显示： ', Tools.monetizationNumber(null));
+	// console.log('10000的显示： ',Tools.monetizationNumber('10000'));
+	// console.log('10000的显示： ',Tools.monetizationNumber('10000', 0));
+	// console.log('1202455.10的显示： ',Tools.monetizationNumber(1202455.10));
+	// console.log('12455.5的显示： ',Tools.monetizationNumber('12455.5'));
+	// console.log('1245121212125.52631的显示： ',Tools.monetizationNumber('1245121212125.52631', 3));
+	
+	// 限制输入
+	console.log('12.00结果为：', Tools.suretyFloat('12.00', 0));
+	console.log('12.结果为：', Tools.suretyFloat('12.', 0));
+	console.log('12.99结果为：', Tools.suretyFloat('12.99', 1));
+	console.log('aaaa结果为：', Tools.suretyFloat('aaaa'));
+	console.log('12.01结果为：', Tools.suretyFloat('12.01', 2, true, 0, 12));
+
+	console.log('-101结果为：', Tools.suretyFloat('-101', 2, true, -10, 100));
+	console.log('101结果为：', Tools.suretyFloat('101', 2, true, -10, 100));
 	</script>
 </body>
 </html>
