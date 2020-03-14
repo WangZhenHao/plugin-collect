@@ -121,6 +121,7 @@ Validator.prototype.add = function(value, rules) {
 				var ruleFn = strategyAry.shift();
 				strategyAry.unshift(value);
 				strategyAry.push(errorMsg);
+				
 				return self.ruleType[ruleFn].apply(null, strategyAry)
 			})
 		})(item)
@@ -133,13 +134,19 @@ Validator.prototype.add = function(value, rules) {
  * 如果校验通过返回undefined, 否则返回错误信息
  * @return {[type]} [description]
  */
-Validator.prototype.start = function() {
+Validator.prototype.start = function(cb) {
+	var errorMsg;
+
 	for(var i = 0, ruleTypeFn; ruleTypeFn = this.cache[i++];) {
-		var errorMsg = ruleTypeFn();
+		errorMsg = ruleTypeFn();
 		if(errorMsg) {
-			this.cache = [];
-			return errorMsg;
+			break;
 		}
 	}
+
+	this.cache = [];
+	cb && cb(errorMsg);
+	
+	return errorMsg;
 }
 
