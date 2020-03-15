@@ -1,9 +1,12 @@
 (function () {
   /**
+   * 
    * JavaScript的工具库,方便使用
    * author   a_boy
    * created  2018-4-7 18:06
    * update   2018-8-19 17:14:00
+   *
+   * 
    */
   var Tools = {
 		/**
@@ -23,7 +26,12 @@
 		 * @param {[type]} timestamp '时间戳: 1525147931'	可填(默认当前时间)
 		 */
     TimestampToDate: function (format, timestamp) {
-      var date = timestamp ? new Date(parseInt(timestamp) * 1000) : new Date(+new Date());
+      if(!timestamp) {
+        return timestamp;
+      }
+
+      // var date = timestamp ? new Date(parseInt(timestamp) * 1000) : new Date(+new Date());
+      var date = new Date(parseInt(timestamp));
       var year = date.getFullYear(),
         month = date.getMonth() + 1,
         day = date.getDate(),
@@ -31,7 +39,7 @@
         minute = date.getMinutes(),
         second = date.getSeconds();
 
-      var str = format.replace(/[YyMmDdHhSs]+/g, function (w) {
+      var str = format.replace(/y+|m+|d+|h+|s+/gi, function (w) {
         if (w == 'yy' || w == 'YY' || w == 'y' || w == 'Y') {
           return year.toString().substring(2);
 
@@ -415,6 +423,47 @@
 
       arr = str.match(/(\d{3})|(\d+)/g);
       return arr.join(',').split('').reverse().join('') + ((strArr.length > 1 && decimal > 0) ? '.' + strArr[1] : '');
+    },
+    /**
+     * 限制输入数字
+     * @param  {[type]} value    字符串
+     * @param  {Number} decimal  保留多少位小数
+     * @param  {[type]} limit    是否限制大小
+     * @param  {Number} minValue 最小值
+     * @param  {Number} maxValue 最大值
+     * @return {[type]}          [description]
+     */
+    suretyFloat (value, decimal, limit, minValue, maxValue) {
+      if (value == '0.' || value == '.' || value == '00') {
+        return '0.'
+      }
+
+      if(decimal <= 0) {
+        return value.split('.')[0]
+      }
+
+      if (value == '-') {
+        return '-'
+      }
+      // limit = true
+      minValue = isNaN(minValue) ? 0 : minValue ;
+      maxValue = isNaN(minValue) ? 9999 : maxValue;
+      decimal = isNaN(decimal) ? 2 : decimal;
+
+      let newRe = new RegExp(`-?(0\|([1-9]\\d*))\\.?\\d{0,${decimal}}`);
+      let arr = value.match(newRe);
+      let num = arr ? arr[0] : '';
+      // console.log(value, arr)
+      if (limit && Number(num) < minValue) {
+        return minValue;
+      }
+
+      if (limit && Number(num) > maxValue) {
+        return maxValue;
+      }
+
+      // console.log(num, String(parseFloat(num)))
+      return num;
     }
 
 

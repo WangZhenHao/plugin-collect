@@ -6,6 +6,7 @@
 	<script src="./formCheck.js"></script>
 </head>
 <body>
+	<button id="btn">校验</button>
 	<script>
 		function toCheck() {
 			var email = 'test.wzh@qq.com',
@@ -53,12 +54,36 @@
 		    return validator.start();
 		  }
 
-		  var msg = toCheck();
+		  // var msg = toCheck();
 
-		  if(msg) {
-			  alert(msg);
-		  }
+		  // if(msg) {
+			 //  alert(msg);
+		  // }
 
+	</script>
+	<script>
+		 var btn = document.querySelector('#btn')
+     var email = 'test.wzhqq.com'
+		 var validator = new Validator();
+     
+     
+     
+     btn.onclick = function() {
+	     	
+	     validator.add(email, [
+         { rule: 'isEmail', errorMsg: '错误' }
+       ])
+
+	     validator.start((msg) => {
+	     	 console.log(msg)
+	     });
+	     
+	     // var msg = validator.start();
+
+	     email = '147@qq.com'
+     }
+
+     
 	</script>
 </body>
 </html>

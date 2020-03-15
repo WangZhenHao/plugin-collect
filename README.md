@@ -17,6 +17,8 @@
 ├── BScroll                     //better-scroll 滚动核心原理
 ```
 
+
+
 ### 抽奖插件
 >目录:Lottery
 ```
@@ -80,7 +82,7 @@
 
     }
 ```
-[演示地址: http://www.wzhshare.top/plugin-collect/Lottery/demo.html](http://www.wzhshare.top/plugin-collect/Lottery/demo.html)  
+[演示地址: https://wangzhenhao.github.io/plugin-collect/Lottery/demo.html](https://wangzhenhao.github.io/plugin-collect/Lottery/demo.html)  
 
 ![AreaInertailScroll](https://github.com/WangZhenHao/plugin-collect/blob/master/images/Lottery/Lottery.gif)
 
@@ -100,7 +102,7 @@
 		}
 	}); 
 ```
-[演示地址: http://www.wzhshare.top/plugin-collect/AreaInertiaScroll/demo.html](http://www.wzhshare.top/plugin-collect/AreaInertiaScroll/demo.html)  
+[演示地址: https://wangzhenhao.github.io/plugin-collect/AreaInertiaScroll/demo.html](https://wangzhenhao.github.io/plugin-collect/AreaInertiaScroll/demo.html)  
 
 ![AreaInertailScroll](https://github.com/WangZhenHao/plugin-collect/blob/master/images/AreaInertiaScroll/AreaInertiaScroll.gif)
 
@@ -131,7 +133,7 @@
   });
 
 ```
-[演示地址: http://www.wzhshare.top/plugin-collect/AreaInertiaScroll/demo.html](http://www.wzhshare.top/plugin-collect/virtualKeyBoard/demo.html) 
+[演示地址: https://wangzhenhao.github.io/plugin-collect/AreaInertiaScroll/demo.html](https://wangzhenhao.github.io/plugin-collect/virtualKeyBoard/demo.html) 
 ![AreaInertailScroll](https://github.com/WangZhenHao/plugin-collect/blob/master/images/virtualKeyBoard/virtualKeyBoard.gif)
 
 ### class控制的轮播
@@ -174,7 +176,7 @@
 
 
 ```
-[演示地址: http://www.wzhshare.top/plugin-collect/mobile-touch-slider/demo.html](http://www.wzhshare.top/plugin-collect/mobile-touch-slider/demo.html)
+[演示地址: https://wangzhenhao.github.io/plugin-collect/mobile-touch-slider/demo.html](https://wangzhenhao.github.io/plugin-collect/mobile-touch-slider/demo.html)
 
 ### 下拉,上拉加载动画
 >目录: ScrollClassAnimate(滚动加载动画)
@@ -195,7 +197,7 @@
   		animate: 'animate'	  //执行动画的class
 	});
 ```
-[演示地址: http://www.wzhshare.top/plugin-collect/ScrollClassAnimate/demo.html](http://www.wzhshare.top/plugin-collect/ScrollClassAnimate/demo.html)
+[演示地址: https://wangzhenhao.github.io/plugin-collect/ScrollClassAnimate/demo.html](https://wangzhenhao.github.io/plugin-collect/ScrollClassAnimate/demo.html)
 
 ### 仿jquery动画函数
 >目录: imitate-jq-animate(仿jquery动画)
@@ -207,5 +209,5 @@
 	})
 ```
 
-[演示地址: http://www.wzhshare.top/plugin-collect/imitate-jq-animate/demo.html](http://www.wzhshare.top/plugin-collect/imitate-jq-animate/demo.html)
+[演示地址: https://wangzhenhao.github.io/plugin-collect/imitate-jq-animate/demo.html](https://wangzhenhao.github.io/plugin-collect/imitate-jq-animate/demo.html)
 

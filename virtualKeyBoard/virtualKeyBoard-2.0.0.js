@@ -2,7 +2,7 @@
  * 
  * author     王贞浩
  * created    2019-9-11 09:45
- * 
+ *
  */
 
 
@@ -20,7 +20,29 @@ KeyBoard.prototype = {
 		this.createKeyBoardCss();
 		this.createKeyBoardElement();
 		this.touchEvent();
+    this.initOptions();
 	},
+  initOptions () {
+    let self = this;
+
+    this.prevTargetElement = this.targetElement
+   
+
+    if(this.keyBoardStatus) {
+      this.keyBoardFocus();
+    } else {
+      this.keyBoardBlur();
+    }
+
+    this.setTargetAttrValue();
+    this.onFinish.call(this, this);
+  },
+  setTargetAttrValue() {
+    this.targetElement.setAttribute('data-value', this.value)
+  },
+  getTargetAttrValue() {
+    this.value = this.targetElement.getAttribute('data-value') || '';
+  },
 	/**
 	 * 参数合并
 	 * @param  {[type]}
@@ -35,9 +57,10 @@ KeyBoard.prototype = {
 			// 值
 			value: '',
 			// 是否唤起虚拟键盘
-			keyBoardStatus: true,
+			keyBoardStatus: false,
+      targetElement: null,
 			// 目标元素属性
-			target: 'key-board-element',
+			targetAttr: 'key-board-element',
 			// 获取焦点
 			onFocus: function () {},
 			// 失去焦点
@@ -45,53 +68,105 @@ KeyBoard.prototype = {
 			// 输入回调
 			onInput: function () {},
 			// 点击确认
-			onComfirm: function () {}
+			onComfirm: function () {},
+      // 初始化完毕
+      onFinish: function() {}
 		}
 
 		Object.assign(this, DEFAULT, params)
 
 	},
+  setKeyBoardValue: function (value) {
+    this.value = value;
+    // this.keyBoardFocus();
+    this.setTargetAttrValue();
+    this.onFinish.call(this, this);
+  },
+  /**
+   * 清除事件
+   * @return {[type]} [description]
+   */
+  keyBoardEventDestroy: function () {
+    document.removeEventListener('touchstart', this.documentTouchStartHandle)
+    this.keyBoard.removeEventListener('touchstart', this.keyBoardTouchStartHandle)
+  },
+  /**
+   * 文档触摸开始事件
+   * @param  {[type]} e [description]
+   * @return {[type]}   [description]
+   */
+  _documentTouchStart: function (e) {
+    var el = e.scrElement || e.target;
+      // var targetEl = this.searchElement(el, 'true');
+      let targetElement = this.searchElement(el, 'true');
+      if(targetElement) {
+        //设置上一个输入框
+        if(this.prevTargetElement !== targetElement) {
+          this.prevTargetElement.classList.remove('key-board-active');
+          this.addDecimal();
+          this.onBlur(this.value, { keyBoardStatus: this.keyBoardStatus, el: this.prevTargetElement });
+        }
+
+        this.targetElement = this.searchElement(el, 'true');
+        this.keyBoardFocus();
+      } else {
+        this.keyBoardBlur();
+      }
+  },
+  /**
+   * 虚拟键盘触摸开始事件
+   * @param  {[type]} e [description]
+   * @return {[type]}   [description]
+   */
+  _keyBoardTouchStart: function (e) {
+    e.stopPropagation();
+
+    var el = e.scrElement || e.target;
+    var className = el.className;
+
+    if (className.indexOf('key-code') > -1) {
+      var num = el.innerText;
+      this._touchKeyCode(num);
+    } else if (className.indexOf('delete') > -1) {
+      this._touchDel();
+    } else if (className.indexOf('icon-dian1') > -1) {
+      this._touchKeyCode('.');
+    } else if (className.indexOf('comfirm') > -1) {
+      this._touchComfirm();
+    } else if (className.indexOf('icon-jianpan') > -1) {
+      this.keyBoardBlur();
+    }
+  },
 	/**
 	 * 事件函数
 	 * @return {[type]} [description]
 	 */
   touchEvent: function () {
+    var self = this;
   	this.keyBoard = document.querySelector('#key-board-wrap');
+    // this.targetElement = document.querySelector('div[key-board-element]')
 
-    document.addEventListener('touchstart', function (e) {
-      var el = e.scrElement || e.target;
-      var targetEl = this.searchElement(el, 'true');
+    /**
+     * 控制this的传值
+     * 详情参考文档： https://developer.mozilla.org/zh-CN/docs/Web/API/EventTarget/addEventListener
+     */
+    this.documentTouchStartHandle = function (e) {
+      return self._documentTouchStart(e);
+    }
 
-      if(targetEl) {
-      	this._focus(targetEl);
-      } else {
-      	this._blur();
-      }
-    }.bind(this));
+    this.keyBoardTouchStartHandle = function (e) {
+      return self._keyBoardTouchStart(e);
+    }
 
-    this.keyBoard.addEventListener('touchstart', function (e) {
-      e.stopPropagation();
-      var el = e.scrElement || e.target;
-      var className = el.className;
+    document.addEventListener('touchstart', this.documentTouchStartHandle)
+    this.keyBoard.addEventListener('touchstart', this.keyBoardTouchStartHandle)
 
-      if (className.indexOf('key-code') > -1) {
-        var num = el.innerText;
-        this._touchkeyCode(num);
-      } else if (className.indexOf('delete') > -1) {
-        this._touchDel();
-      } else if (className.indexOf('icon-dian1') > -1) {
-        this._touchKeyCode('.');
-      } else if (className.indexOf('comfirm') > -1) {
-        this._touchComfirm();
-      }
-
-    }.bind(this));
   },
   /**
    * 处理键盘输入
    * @return {[type]}
    */
-  _touchkeyCode: function(value) {
+  _touchKeyCode: function(value) {
   	var oldValue = this.value;
   	this.value += value;
 
@@ -126,6 +201,7 @@ KeyBoard.prototype = {
    * @return {[type]}
    */
   onKeyCode: function() {
+    this.setTargetAttrValue();
   	this.onInput(this.value, { keyBoardStatus: this.keyBoardStatus })
   },
   /**
@@ -209,26 +285,41 @@ KeyBoard.prototype = {
    * 获取焦点
    * @return {[type]}
    */
-  _focus: function (targetEl) {
+  keyBoardFocus: function () {
+    
+    if(!this.targetElement) {
+      console.error('[KeyBoard warn]: "需要获取焦点的元素"');
+      return
+    }
+
+    this.getTargetAttrValue();
+    this.prevTargetElement = this.targetElement;
+
   	this.keyBoard.classList.add('focus');
   	this.keyBoard.classList.remove('blur');
+    this.targetElement && this.targetElement.classList.add('key-board-active');
 
-  	this.keyBoardStatus = true;
-  	this.onFocus(this.value, { keyBoardStatus: this.keyBoardStatus, el: targetEl });
+    // if(!this.keyBoardStatus) {
+    //   debugg
+    this.keyBoardStatus = true;
+    this.onFocus(this.value, { keyBoardStatus: this.keyBoardStatus, el: this.targetElement });
+    // }
+  	
   },
   /**
    * 获取焦点
    * @return {[type]}
    */
-  _blur: function () {
-  	this.keyBoard.classList.add('blur');
-  	this.keyBoard.classList.remove('focus');
+  keyBoardBlur: function () {
+    this.keyBoard.classList.add('blur');
+    this.keyBoard.classList.remove('focus');
+    this.targetElement && this.targetElement.classList.remove('key-board-active');
 
   	if(this.keyBoardStatus) {
   		this.keyBoardStatus = false;
   		this.addDecimal();
 
-  		this.onBlur(this.value, { keyBoardStatus: this.keyBoardStatus });
+  		this.onBlur(this.value, { keyBoardStatus: this.keyBoardStatus, el: this.targetElement });
   	}
   	
   },
@@ -241,7 +332,7 @@ KeyBoard.prototype = {
   searchElement: function (el, attr) {
     var touchTarget = el,
       count = 0,
-      endTarget = this.target;
+      endTarget = this.targetAttr;
 
     while (touchTarget) {
       count++;
@@ -339,7 +430,7 @@ KeyBoard.prototype = {
 					font-size: 18px
 				}
 
-				.key-board-cursor:after {
+				.key-board-active:after {
 					content: "|";
 					animation: showHideCursor 1s steps(1) infinite
 				}
