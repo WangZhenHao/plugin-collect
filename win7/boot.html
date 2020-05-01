@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>开机页面</title>
+    <link rel="icon" href="images/winlogo.png" sizes="16*16" type="image/gif" />
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <script type="text/javascript" src="js/common.js"></script>
+  <style type="text/css">
+       .boot_container{width:100%;height:100%;background:url(images/interface.jpg);background-size:cover;background-position:center;background-color:#345;position:relative}.boot_detail{position:absolute;left:50%;bottom:18px;transform:translateX(-50%)}.user_message{position:absolute;left:50%;transform:translateX(-50%);top:50%;margin-top:11px;width:210px;height:22px;background:red}.user_message .pwd{width:100%;height:100%;padding-left:10px;border:1px solid rgba(0,0,0,.5);border-radius:4px;box-shadow:0 0 0 1px rgba(255,255,255,.5)}.user_message .go{position:absolute;right:-50px;top:-3px;height:32px;width:32px;border-radius:50%;overflow:hidden;border:1px solid rgba(0,0,0,.3);box-shadow:0 0 12px 0 rgba(255,255,255,.6);background:linear-gradient(top,rgba(50,122,164,0.2),rgba(46,75,90,0.2),rgba(92,176,220,0.2)),-webkit-linear-gradient(left,rgba(81,115,132,0.1),rgba(121,163,184,0.3) 50%,rgba(81,115,132,0.3));background:-webkit-linear-gradient(top,rgba(50,122,164,0.2),rgba(46,75,90,0.2),rgba(92,176,220,0.2)),-webkit-linear-gradient(left,rgba(81,115,132,0.1),rgba(121,163,184,0.3) 50%,rgba(81,115,132,0.3));background:-ms-linear-gradient(top,rgba(50,122,164,0.2),rgba(46,75,90,0.2),rgba(92,176,220,0.2)),-webkit-linear-gradient(left,rgba(81,115,132,0.1),rgba(121,163,184,0.3) 50%,rgba(81,115,132,0.3))}.user_message .go:hover{box-shadow:0 0 12px 4px rgba(255,255,255,.6)}.user_message .go .go_bg{height:100%;width:100%;background:-webkit-linear-gradient(top,transparent,transparent 49%,rgba(5,59,91,0.2) 50%,rgba(6,92,144,0.2),rgba(6,133,177,0.2));background:-ms-linear-gradient(top,transparent,transparent 49%,rgba(5,59,91,0.2) 50%,rgba(6,92,144,0.2),rgba(6,133,177,0.2))}.go_bg_arrow{width:100%;height:100%;background:url(images/arrow.png) no-repeat center;background-size:72% 16px}.user_box{position:absolute;left:50px;top:-178px}.user_logo{width:90px;height:90px;background:-webkit-linear-gradient(top,rgba(50,122,164,0.8),rgba(46,75,90,0.8),rgba(92,176,220,0.8));background:-ms-linear-gradient(top,rgba(50,122,164,0.8),rgba(46,75,90,0.8),rgba(92,176,220,0.8));border:1px solid rgba(0,0,0,.5);box-shadow:0 0 12px 0 rgba(0,0,0,.8);border-radius:18px;padding:10px}.user_logo img{box-sizing:border-box;border:1px solid rgba(0,0,0,.5);width:100%;height:100%;border-radius:4px}.user_name{color:#fff;width:210px;font-size:16px;text-align:center;text-shadow:0 4px 12px rgba(0,0,0,1);padding-top:20px;margin-left:-46px}
+  </style>
+</head>
+<body>
+  <div class="boot_container"><div class="user_message"><input type="password" name="pwd" id="pwd" class="pwd" placeholder="密码" /><div title="密码为123456" id="go" class="go"><div class="go_bg"><div class="go_bg_arrow"></div></div></div><div id="img_box" title="点击头像切换到全屏模式" class="user_box"><div class="user_logo"><img src="images/user.jpg" /></div><p class="user_name">WangZhenHao</p></div></div><img class="boot_detail" src="images/boot_detail.png" alt="win7专业版"></div>
+<script type="text/javascript">
+   var pwd=getId("pwd");var go=getId("go");var img_box=getId("img_box");img_box.onclick=function(){toFullscreen()};pwd.focus();go.onclick=function(){if(pwd.value=="123456"){location.href="desktop.html"}else{pwd.value="";pwd.focus()}};document.onkeydown=function(e){var e=e||event;if(e.keyCode==13){if(pwd.value=="123456"){location.href="desktop.html"}else{pwd.value="";pwd.focus()}}};document.oncontextmenu=function(){return false;}
+</script> 
+</body>
+</html>

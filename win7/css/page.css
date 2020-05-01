@@ -1,0 +1,31 @@
+.pagebox {
+	position: absolute;
+	width: 50%;
+	height: 70%;
+	left: 50%;
+	top: 50%;
+	transform: translateX(-50%) translateY(-50%);
+	border:1px solid #000;
+	border-radius: 10px;
+	box-shadow: 0 0 12px 1px rgba(0,0,0,1);
+	display: none;
+
+}
+.page1 {
+	background: url(../images/compute_page.png) no-repeat;
+	background-size: 100% 100%;
+}
+.page2 {
+	background: url(../images/rubbish.png) no-repeat;
+	background-size: 100% 100%;
+}
+.page3 {
+	background: url(../images/network_box.png) no-repeat;
+	background-size: 100% 100%;
+}
+.close {
+	float:right;
+	width: 10%;
+	height: 10%;
+/*	background:red;*/
+}
