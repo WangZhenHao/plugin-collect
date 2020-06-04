@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.bootcss.com/vue/2.5.16/vue.min.js"></script>
+    <script src="./calendar.js"></script>
+    <style>
+      .align-center {
+        text-align: center;
+      }
+      .clearfix {
+        zoom: 1;
+      }
+      .clearfix:after {
+        content: "";
+        display: block;
+        clear: both;
+      }
+      .calendar-wrap > .calendar-week {
+        height: 30px;
+        display: flex;
+        line-height: 30px;
+        background: #fafafa;
+        font-size: 14px;
+      }
+      .calendar-wrap > .calendar-week > span {
+        flex: 1;
+      }
+      .calendar-wrap > .calendar-content > .cal-list {
+        float: left;
+        width: 14.2%;
+        min-height: 40px;
+        line-height: 40px;
+      }
+      .font-28 {
+        font-size: 28px;
+      }
+      .disable {
+        color: #999;
+      }
+      .selected,
+      .actived {
+        color: blue;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="calendar-wrap">
+      <p class="calendar-week align-center">
+        <span>日</span>
+        <span>一</span>
+        <span>二</span>
+        <span>三</span>
+        <span>四</span>
+        <span>五</span>
+        <span>六</span>
+      </p>
+      <div class="calendar-content clearfix align-center">
+        <div
+          v-for="item in list"
+          class="cal-list"
+          :class="{
+              'disable': item.disable, 
+              'selected': item.actived === 'selected',
+              'actived': item.actived === 'actived'
+          }"
+        >
+          {{ item.day }}
+        </div>
+      </div>
+    </div>
+    <script>
+      var app = new Vue({
+        el: ".calendar-wrap",
+        data: {
+          list: [],
+        },
+        mounted() {
+          var calendar = new Calender();
+
+          var list = calendar.getList({
+            date: "2020-06",
+            range: ["2020-06-01", "2020-06-04"],
+          });
+          this.list = list;
+          console.log(this.list);
+        },
+      });
+    </script>
+  </body>
+</html>
