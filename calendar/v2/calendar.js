@@ -70,14 +70,14 @@ Calender.prototype = {
 
       for (let item of currentDayDetail) {
         if (item.day === mix) {
-          item.actived = "selected";
+          item.actived = "started";
         }
 
         if (max) {
           if (item.day > mix && item.day < max) {
             item.actived = "actived";
           } else if (item.day === max) {
-            item.actived = "selected";
+            item.actived = "end";
           }
         }
       }
@@ -117,6 +117,11 @@ Calender.prototype = {
 
     return monthDetail;
   },
+  /**
+   * 获取上一个月的天数
+   * @param {*} year
+   * @param {*} month
+   */
   getMonthPreDetail(year, month) {
     var monthDetail = [];
 
@@ -140,6 +145,11 @@ Calender.prototype = {
 
     return monthDetail;
   },
+  /**
+   * 获取下一个月的天数
+   * @param {}} year
+   * @param {*} month
+   */
   getMonthNextDetail(year, month) {
     var monthDetail = [];
 

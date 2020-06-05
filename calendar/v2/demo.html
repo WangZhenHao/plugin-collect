@@ -33,6 +33,10 @@
         width: 14.2%;
         min-height: 40px;
         line-height: 40px;
+        margin: 5px 0;
+      }
+      .cal-list > div {
+        position: relative;
       }
       .font-28 {
         font-size: 28px;
@@ -40,14 +44,31 @@
       .disable {
         color: #999;
       }
-      .selected,
-      .actived {
-        color: blue;
+      .actived > div {
+        background: #f2f6fc;
+      }
+      .started,
+      .end {
+        color: #fff;
+      }
+      .started > div > span {
+        background: #409eff;
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        /* position: absolute;
+        left: 50%;
+        transform: translateX(-50%); */
+      }
+      .started {
+        border-top-left-radius: 40px;
+        border-bottom-left-radius: 40px;
       }
     </style>
   </head>
   <body>
-    <div class="calendar-wrap">
+    <div class="calendar-wrap" style="width: 400px;">
       <p class="calendar-week align-center">
         <span>日</span>
         <span>一</span>
@@ -63,11 +84,12 @@
           class="cal-list"
           :class="{
               'disable': item.disable, 
-              'selected': item.actived === 'selected',
+              'actived started': item.actived === 'started',
+              'end': item.actived === 'end',
               'actived': item.actived === 'actived'
           }"
         >
-          {{ item.day }}
+          <div><span>{{ item.day }}</span></div>
         </div>
       </div>
     </div>
@@ -81,8 +103,8 @@
           var calendar = new Calender();
 
           var list = calendar.getList({
-            date: "2020-06",
-            range: ["2020-06-01", "2020-06-04"],
+            date: "2020-05",
+            range: ["2020-05-01", "2020-05-28"],
           });
           this.list = list;
           console.log(this.list);
