@@ -1,3 +1,64 @@
+function dateToTimestamp(data) {
+  return Date.parse(data);
+}
+function pad(i) {
+  if (i < 10) {
+    i = '0' + i
+  }
+
+  return i
+}
+function TimestampToDate(format, timestamp) {
+  if (!timestamp) {
+    return timestamp;
+  }
+
+  // var date = timestamp ? new Date(parseInt(timestamp) * 1000) : new Date(+new Date());
+  var date = new Date(parseInt(timestamp));
+  var year = date.getFullYear(),
+    month = date.getMonth() + 1,
+    day = date.getDate(),
+    hour = date.getHours(),
+    minute = date.getMinutes(),
+    second = date.getSeconds();
+
+  var str = format.replace(/y+|m+|d+|h+|s+/gi, function (w) {
+    if (w == 'yy' || w == 'YY' || w == 'y' || w == 'Y') {
+      return year.toString().substring(2);
+
+    } else if (w == 'yyyy' || w == 'YYYY') {
+      return year;
+
+    } else if (w == 'MM') {
+      return month >= 10 ? month : '0' + month;
+
+    } else if (w == 'M') {
+      return month;
+
+    } else if (w == 'DD' || w == 'dd') {
+      return day >= 10 ? day : '0' + day;
+
+    } else if (w == 'D' || w == 'd') {
+      return day;
+
+    } else if (w == 'HH' || w == 'hh') {
+      return hour >= 10 ? hour : '0' + hour;
+
+    } else if (w == 'H' || w == 'h') {
+      return hour;
+
+    } else if (w == 'mm') {
+      return minute >= 10 ? minute : '0' + minute;
+
+    } else if (w == 'm') {
+      return minute;
+
+    } else if (w == 'ss' || w == 's') {
+      return second >= 10 ? second : '0' + second;
+    }
+  });
+  return str;
+}
 /**
  * 获取月份的天数
  * @param {*} year
@@ -52,49 +113,145 @@ function getPreDate(year, month) {
     month,
   };
 }
-function Calender(config) {}
+function preDaysSolt(year, month) {
+  var daysSolt = getFirsrtweekend(year, month);
+
+  if (daysSolt === 7) {
+    daysSolt = 0;
+  }
+  return daysSolt;
+}
+
+function getMonthCurDetail(year, month) {
+  var monthDetail = [];
+  var days = getMonthDays(year, month);
+
+  for (var i = 1; i <= days; i++) {
+    monthDetail.push({
+      tips: 'cur',
+      text: i,
+      timeStamp: dateToTimestamp(`${year}-${pad(month)}-${pad(i)}`)
+    });
+  }
+
+  return monthDetail;
+}
+
+function getMonthPreDetail(year, month) {
+  var monthDetail = [];
+
+  var daysSolt = preDaysSolt(year, month);
+  var preDate = getPreDate(year, month);
+  var preMonthDays = getMonthDays(preDate.year, preDate.month);
+
+  for (
+    var i = preMonthDays - daysSolt + 1, len = preMonthDays;
+    i <= len;
+    i++
+  ) {
+    monthDetail.push({
+      text: i,
+      tips: 'pre',
+      timeStamp: dateToTimestamp(`${year}-${pad(month)}-${pad(i)}`)
+    });
+  }
+
+  return monthDetail;
+}
+function getMonthNextDetail(year, month) {
+  var monthDetail = [];
+
+  var daysSolt = preDaysSolt(year, month);
+  var days = getMonthDays(year, month);
+  var nextDate = getNextDate(year, month);
+
+  for (var i = 1, len = 42 - (daysSolt + days); i <= len; i++) {
+    monthDetail.push({
+      text: i,
+      tips: 'next',
+      timeStamp: dateToTimestamp(`${nextDate.year}-${pad(nextDate.nextDatemonth)
+        }-${pad(i)}`)
+    });
+  }
+
+  return monthDetail;
+}
+function Calender(config) {
+
+  var { date, mixDate, maxDate } = config;
+
+  // date = date.split("-");
+  var dateObj = new Date(date);
+
+  this.year = dateObj.getFullYear();
+  this.month = dateObj.getMonth() + 1;
+  this.mixDate = null;
+  this.maxDate = null;
+  this.selecting = false;
+
+  if (mixDate) {
+    var timeStamp = TimestampToDate('yyyy-MM-DD', dateToTimestamp(mixDate))
+    this.mixDate = dateToTimestamp(timeStamp)
+  }
+
+  if (maxDate) {
+    var timeStamp = TimestampToDate('yyyy-MM-DD', dateToTimestamp(maxDate))
+    this.maxDate = dateToTimestamp(timeStamp)
+  }
+
+
+  this.rows = [];
+}
 
 Calender.prototype = {
-  getList(config) {
-    var { date, range } = config;
+  getList() {
 
-    var date = date.split("-");
-    var year = date[0],
-      month = date[1];
+    currentDayDetail = this.getMonthCurDetail(this.year, this.month);
 
-    var currentDayDetail = this.getMonthDetail(year, month);
+    this.rows = this.markRange(this.mixDate, this.maxDate, currentDayDetail)
+    this.rows.unshift(...this.getMonthPreDetail(this.year, this.month));
+    this.rows.push(...this.getMonthNextDetail(this.year, this.month));
 
-    if (range && range.length) {
-      var mix = Number(range[0].split("-")[2]);
-      var max = range[1] ? Number(range[1].split("-")[2]) : null;
-
-      for (let item of currentDayDetail) {
-        if (item.day === mix) {
-          item.actived = "started";
-        }
-
-        if (max) {
-          if (item.day > mix && item.day < max) {
-            item.actived = "actived";
-          } else if (item.day === max) {
-            item.actived = "end";
-          }
-        }
-      }
-    }
-
-    currentDayDetail.unshift(...this.getMonthPreDetail(year, month));
-    currentDayDetail.push(...this.getMonthNextDetail(year, month));
-
-    return currentDayDetail;
+    return this.rows
   },
-  preDaysSolt(year, month) {
-    var preDaysSolt = getFirsrtweekend(year, month);
+  getValue() {
 
-    if (preDaysSolt === 7) {
-      preDaysSolt = 0;
+  },
+  handlerClick(mixDate) {
+    if (this.selecting) {
+      this.selecting = false;
+      this.maxDate = mixDate
+    } else {
+      this.selecting = true;
+      this.mixDate = mixDate;
+      this.maxDate = null;
     }
-    return preDaysSolt;
+
+    let mix = Math.min(this.mixDate, this.maxDate)
+    let max = Math.max(this.mixDate, this.maxDate)
+
+    this.rows = this.markRange(mix, max, this.rows)
+    return this.rows;
+  },
+  handlerMouseMove(maxDate) {
+    // var mixDate = this.mixDate;
+    this.maxDate = maxDate
+    let mix = Math.min(this.mixDate, this.maxDate)
+    let max = Math.max(this.mixDate, this.maxDate)
+
+
+    this.rows = this.markRange(mix, max, this.rows)
+    return this.rows;
+  },
+  markRange(mixDate, maxDate, rows) {
+    for (let item of rows) {
+      var time = item.timeStamp;
+      item.inRange = mixDate && time >= mixDate && time <= maxDate;
+      item.start = mixDate && time === mixDate
+      item.end = maxDate && time === maxDate
+    }
+
+    return rows
   },
   /**
    * 显示该月的所有数据
@@ -102,20 +259,8 @@ Calender.prototype = {
    * @param {*} year
    * @param {*} month
    */
-  getMonthDetail(year, month) {
-    var monthDetail = [];
-    var days = getMonthDays(year, month);
-
-    for (var i = 1; i <= days; i++) {
-      monthDetail.push({
-        year,
-        month,
-        day: i,
-        tips: "cur",
-      });
-    }
-
-    return monthDetail;
+  getMonthCurDetail(year, month) {
+    return getMonthCurDetail(year, month)
   },
   /**
    * 获取上一个月的天数
@@ -123,27 +268,7 @@ Calender.prototype = {
    * @param {*} month
    */
   getMonthPreDetail(year, month) {
-    var monthDetail = [];
-
-    var preDaysSolt = this.preDaysSolt(year, month);
-    var preDate = getPreDate(year, month);
-    var preMonthDays = getMonthDays(preDate.year, preDate.month);
-
-    for (
-      var i = preMonthDays - preDaysSolt + 1, len = preMonthDays;
-      i <= len;
-      i++
-    ) {
-      monthDetail.push({
-        year: preDate.year,
-        month: preDate.month,
-        day: i,
-        tips: "pre",
-        disable: true,
-      });
-    }
-
-    return monthDetail;
+    return getMonthPreDetail(year, month)
   },
   /**
    * 获取下一个月的天数
@@ -151,22 +276,6 @@ Calender.prototype = {
    * @param {*} month
    */
   getMonthNextDetail(year, month) {
-    var monthDetail = [];
-
-    var preDaysSolt = this.preDaysSolt(year, month);
-    var days = getMonthDays(year, month);
-    var nextDate = getNextDate(year, month);
-
-    for (var i = 1, len = 42 - (preDaysSolt + days); i <= len; i++) {
-      monthDetail.push({
-        year: nextDate.year,
-        month: nextDate.month,
-        day: i,
-        tips: "next",
-        disable: true,
-      });
-    }
-
-    return monthDetail;
+    return getMonthNextDetail(year, month)
   },
 };
