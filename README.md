@@ -1,12 +1,14 @@
 # 把自己写的插件汇总在一起
-#### 不断的去优化和添加插件 有问题可以反馈  qq群: 475870039
+
+#### 不断的去优化和添加插件 有问题可以反馈 qq 群: 475870039
 
 ## FileTree 目录结构
+
 ```
 ├── Lottery                     //抽奖插件
 ├── AreaInertailScroll          // 移动端城市联动
 ├── virtualKeyBoard             //虚拟键盘支付插件
-├── class-carousel              // class控制的轮播  
+├── class-carousel              // class控制的轮播
 ├── mobile-touch-slider         // 移动端轮播
 ├── ScrollClassAnimate          // 下拉,上拉加载动画
 ├── imitate-jq-animate          // 仿jquery动画函数
@@ -17,10 +19,20 @@
 ├── BScroll                     //better-scroll 滚动核心原理
 ```
 
+### 日历选择插件
 
+参考 elementUI 而做的日历选择插件
+
+> 目录:calendar(地区惯性滚动)
+
+[演示地址: https://wangzhenhao.github.io/plugin-collect/AreaInertiaScroll/demo.html](https://wangzhenhao.github.io/plugin-collect/calendar/v2/demo.html)
+
+![calendar](https://github.com/WangZhenHao/plugin-collect/blob/master/images/calendar/calendar.gif)
 
 ### 抽奖插件
->目录:Lottery
+
+> 目录:Lottery
+
 ```
   使用方法:
    var lottery = new Lottery({
@@ -65,7 +77,7 @@
       ///抽奖旋转完成之后的回调
       success: function(res) {
         document.querySelector('#result').innerHTML = `恭喜你,抽中${res.desc}`;
-        
+
       }
     });
 
@@ -78,18 +90,19 @@
       setTimeout(() => {
         lotteryHanlde(lotter);
       }, 10)
-      
+
 
     }
 ```
-[演示地址: https://wangzhenhao.github.io/plugin-collect/Lottery/demo.html](https://wangzhenhao.github.io/plugin-collect/Lottery/demo.html)  
+
+[演示地址: https://wangzhenhao.github.io/plugin-collect/Lottery/demo.html](https://wangzhenhao.github.io/plugin-collect/Lottery/demo.html)
 
 ![AreaInertailScroll](https://github.com/WangZhenHao/plugin-collect/blob/master/images/Lottery/Lottery.gif)
 
-
-
 ### 移动端城市联动
->目录:AreaInertailScroll(地区惯性滚动)
+
+> 目录:AreaInertailScroll(地区惯性滚动)
+
 ```
   使用方法:
    var selecter = new InertiaScroll();
@@ -100,25 +113,27 @@
 			console.log(this);
 			this.target.value = res.join(',');
 		}
-	}); 
+	});
 ```
-[演示地址: https://wangzhenhao.github.io/plugin-collect/AreaInertiaScroll/demo.html](https://wangzhenhao.github.io/plugin-collect/AreaInertiaScroll/demo.html)  
+
+[演示地址: https://wangzhenhao.github.io/plugin-collect/AreaInertiaScroll/demo.html](https://wangzhenhao.github.io/plugin-collect/AreaInertiaScroll/demo.html)
 
 ![AreaInertailScroll](https://github.com/WangZhenHao/plugin-collect/blob/master/images/AreaInertiaScroll/AreaInertiaScroll.gif)
 
-
-
 ### 虚拟键盘支付插件
->目录:virtualKeyBoard(虚拟键盘支付插件)
->>网上对于虚拟键盘支付的插件好像不是很多,都是基于vue, react, angular,挺少是基于原生js的,
-于是乎这个插件就出来了,可以配合其他框架一起使用
+
+> 目录:virtualKeyBoard(虚拟键盘支付插件)
+>
+> > 网上对于虚拟键盘支付的插件好像不是很多,都是基于 vue, react, angular,挺少是基于原生 js 的,
+> > 于是乎这个插件就出来了,可以配合其他框架一起使用
+
 ```
    //class="key-board-cursor" 获取焦点闪烁的class类
    //data-key-board="target"  触发虚拟键盘显示和隐藏的元素
-  
+
    <div class="key-board-cursor" data-key-board="target" id="keyBoard">
    </div>
-    
+
     //javascript
     var keyBoard = new KeyBoard({
     target: 'target',
@@ -133,13 +148,16 @@
   });
 
 ```
-[演示地址: https://wangzhenhao.github.io/plugin-collect/AreaInertiaScroll/demo.html](https://wangzhenhao.github.io/plugin-collect/virtualKeyBoard/demo.html) 
+
+[演示地址: https://wangzhenhao.github.io/plugin-collect/AreaInertiaScroll/demo.html](https://wangzhenhao.github.io/plugin-collect/virtualKeyBoard/demo.html)
 ![AreaInertailScroll](https://github.com/WangZhenHao/plugin-collect/blob/master/images/virtualKeyBoard/virtualKeyBoard.gif)
 
-### class控制的轮播
+### class 控制的轮播
 
->目录:class-carousel(class类轮播)
->>在class类中设置宽度100%,可以很简单的实现响应式的轮播,boostrap就是使用这种方法
+> 目录:class-carousel(class 类轮播)
+>
+> > 在 class 类中设置宽度 100%,可以很简单的实现响应式的轮播,boostrap 就是使用这种方法
+
 ```
   调用方式：
     //wrap:轮播容器元素对象;
@@ -154,7 +172,9 @@
 ```
 
 ### 移动端轮播
->目录: mobile-touch-slider(移动端轮播)
+
+> 目录: mobile-touch-slider(移动端轮播)
+
 ```
      使用方法
      id:轮播容器的id;
@@ -176,15 +196,19 @@
 
 
 ```
+
 [演示地址: https://wangzhenhao.github.io/plugin-collect/mobile-touch-slider/demo.html](https://wangzhenhao.github.io/plugin-collect/mobile-touch-slider/demo.html)
 
 ### 下拉,上拉加载动画
->目录: ScrollClassAnimate(滚动加载动画)
->>需要结合animate.css库,结合自己写的动画库亦可;
+
+> 目录: ScrollClassAnimate(滚动加载动画)
+>
+> > 需要结合 animate.css 库,结合自己写的动画库亦可;
+
 ```
 使用方法
  	//html部分
- 	<div class="boy-animate" boy-animate-duration="2s" boy-animate-effect="bounce" 
+ 	<div class="boy-animate" boy-animate-duration="2s" boy-animate-effect="bounce"
  	boy-animate-delay="0s">
  	</div>
  	boy-animate-duration:表示动画执行的时间(秒);
@@ -197,10 +221,13 @@
   		animate: 'animate'	  //执行动画的class
 	});
 ```
+
 [演示地址: https://wangzhenhao.github.io/plugin-collect/ScrollClassAnimate/demo.html](https://wangzhenhao.github.io/plugin-collect/ScrollClassAnimate/demo.html)
 
-### 仿jquery动画函数
->目录: imitate-jq-animate(仿jquery动画)
+### 仿 jquery 动画函数
+
+> 目录: imitate-jq-animate(仿 jquery 动画)
+
 ```
 	//使用规则:传入一个对象或一个ID，不可以传入一个数组对象;
 
@@ -210,4 +237,3 @@
 ```
 
 [演示地址: https://wangzhenhao.github.io/plugin-collect/imitate-jq-animate/demo.html](https://wangzhenhao.github.io/plugin-collect/imitate-jq-animate/demo.html)
-

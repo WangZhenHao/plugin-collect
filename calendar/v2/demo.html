@@ -1,192 +1,256 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.bootcss.com/vue/2.5.16/vue.min.js"></script>
+    <script src="./calendar.js"></script>
+    <style>
+      .align-center {
+        text-align: center;
+      }
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Document</title>
-  <script src="https://cdn.bootcss.com/vue/2.5.16/vue.min.js"></script>
-  <script src="./calendar.js"></script>
-  <style>
-    .align-center {
-      text-align: center;
-    }
+      .clearfix {
+        zoom: 1;
+      }
 
-    .clearfix {
-      zoom: 1;
-    }
+      .clearfix:after {
+        content: "";
+        display: block;
+        clear: both;
+      }
 
-    .clearfix:after {
-      content: "";
-      display: block;
-      clear: both;
-    }
+      .calendar-wrap > .calendar-week {
+        height: 30px;
+        display: flex;
+        line-height: 30px;
+        background: #fafafa;
+        font-size: 14px;
+      }
 
-    .calendar-wrap>.calendar-week {
-      height: 30px;
-      display: flex;
-      line-height: 30px;
-      background: #fafafa;
-      font-size: 14px;
-    }
+      .calendar-wrap > .calendar-week > span {
+        flex: 1;
+      }
 
-    .calendar-wrap>.calendar-week>span {
-      flex: 1;
-    }
+      .calendar-wrap > .calendar-content > .cal-list {
+        float: left;
+        width: 14.2%;
+        min-height: 40px;
+        line-height: 40px;
+        margin: 5px 0;
+        position: relative;
+      }
 
-    .calendar-wrap>.calendar-content>.cal-list {
-      float: left;
-      width: 14.2%;
-      min-height: 40px;
-      line-height: 40px;
-      margin: 5px 0;
-      position: relative;
-    }
+      .cal-list > div {
+        width: 100%;
+        /* height: 100%; */
+        height: 40px;
+      }
 
-    .cal-list>div {
+      .font-28 {
+        font-size: 28px;
+      }
 
-      width: 100%;
-      /* height: 100%; */
-      height: 40px;
-    }
+      .cal-list {
+        color: #666;
+      }
 
-    .font-28 {
-      font-size: 28px;
-    }
+      .disable {
+        color: #999;
+      }
 
-    .cal-list {
-      color: #666;
-    }
+      .actived > div {
+        background: #f2f6fc;
+      }
 
-    .disable {
-      color: #999;
-    }
+      .start,
+      .end {
+        color: #fff;
+      }
 
-    .actived>div {
-      background: #f2f6fc;
-    }
+      .start > div > span,
+      .end > div > span {
+        background: #409eff;
+        display: inline-block;
+        width: 34px;
+        height: 34px;
+        line-height: 34px;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate3d(-50%, -50%, 0);
+      }
 
-    .start,
-    .end {
-      color: #fff;
-    }
+      .start > div {
+        border-top-left-radius: 40px;
+        border-bottom-left-radius: 40px;
+      }
 
-    .start>div>span,
-    .end>div>span {
-      background: #409eff;
-      display: inline-block;
-      width: 34px;
-      height: 34px;
-      line-height: 34px;
-      border-radius: 50%;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate3d(-50%, -50%, 0);
-    }
+      .end > div {
+        border-top-right-radius: 40px;
+        border-bottom-right-radius: 40px;
+      }
 
-    .start>div {
-      border-top-left-radius: 40px;
-      border-bottom-left-radius: 40px;
-    }
+      .cursor {
+        cursor: pointer;
+      }
 
-    .end>div {
-      border-top-right-radius: 40px;
-      border-bottom-right-radius: 40px;
-    }
+      .btn {
+        padding: 10px 20px;
+        background: #409eff;
+        border-color: #409eff;
+        color: #fff;
+        border-width: 0;
+        border-radius: 5px;
+        outline: none;
+        cursor: pointer;
+      }
+    </style>
+  </head>
 
-    .cursor {
-      cursor: pointer;
-    }
-  </style>
-</head>
-
-<body>
-  <div id="app">
-    <div class="align-center" style="width: 400px;">{{ date }}</div>
-    <div class="calendar-wrap" style="width: 400px;">
-      <p class="calendar-week align-center">
-        <span>日</span>
-        <span>一</span>
-        <span>二</span>
-        <span>三</span>
-        <span>四</span>
-        <span>五</span>
-        <span>六</span>
-      </p>
-      <div class="calendar-content clearfix align-center" ref="calendarWrap" @click="handleClick"
-        @mousemove="handleMouseMove">
-        <div :date-timeStamp="item.timeStamp" v-for="item in list" class="cal-list" :key="item.timeStamp" :class="{
+  <body>
+    <div id="app">
+      <div class="align-center" style="width: 400px;">{{ date }}</div>
+      <div class="calendar-wrap" style="width: 400px;">
+        <p class="calendar-week align-center">
+          <span>日</span>
+          <span>一</span>
+          <span>二</span>
+          <span>三</span>
+          <span>四</span>
+          <span>五</span>
+          <span>六</span>
+        </p>
+        <div
+          class="calendar-content clearfix align-center"
+          ref="calendarWrap"
+          @click="handleClick"
+          @mousemove="handleMouseMove"
+        >
+          <div
+            :date-timeStamp="item.timeStamp"
+            v-for="item in list"
+            class="cal-list"
+            :key="item.timeStamp"
+            :class="{
                 'disable': item.tips === 'pre' || item.tips === 'next', 
                 'start': item.start,
                 'end': item.end,
                 'actived': item.inRange,
                 'cursor': item.tips === 'cur'
-            }" @click="handleItemClick(item)">
-          <div><span>{{ item.text }}</span></div>
+            }"
+            @click="handleItemClick($event, item)"
+          >
+            <div><span>{{ item.text }}</span></div>
+          </div>
         </div>
       </div>
+      <button class="btn" @click="selectType('day')">日范围</button>
+      <button class="btn" @click="selectType('week')">周范围</button>
+      <button class="btn" @click="toSwitch('pre')">上一月</button>
+      <button class="btn" @click="toSwitch('next')">下一月</button>
     </div>
-  </div>
 
-  <script>
-    var app = new Vue({
-      el: "#app",
-      data: {
-        list: [],
-        date: '2020-06'
-      },
-      mounted() {
-        this.calendar = new Calender({
-          date: this.date,
-          // mixDate: '2020-6-01',
-          // maxDate: '2020-6-30'
-        });
-
-        var list = this.calendar.getList();
-        this.list = list;
-        console.log(this.list);
-      },
-      methods: {
-        handleItemClick(info) {
-
+    <script>
+      var app = new Vue({
+        el: "#app",
+        data: {
+          list: [],
+          date: "2020-06",
+          type: "day",
         },
-        handleClick(event) {
-          let target = event.target;
-          if (target.tagName === 'SPAN') {
-            target = target.parentNode;
-          }
-          target = target.parentNode;
+        mounted() {
+          this.calendar = new Calender({
+            date: this.date,
+            mixDate: "2020-6-01",
+            maxDate: "2020-6-10",
+          });
 
-          if (target.className.indexOf('disable') > -1) return;
-
-          // if()
-          var timeStamp = target.getAttribute('date-timestamp')
-          if (timeStamp) {
-            this.list = this.calendar.handlerClick(Number(timeStamp))
-          }
-
+          var list = this.calendar.getList();
+          this.list = list;
+          console.log(this.list);
         },
-        handleMouseMove(event) {
-          if (!this.calendar.selecting) return;
+        methods: {
+          selectType(type) {
+            this.type = type;
 
-          let target = event.target;
-          if (target.tagName === 'SPAN') {
+            this.calendar.selecting = false;
+            this.calendar.mixDate = null;
+            this.calendar.maxDate = null;
+            this.list = this.calendar.getList();
+          },
+          toSwitch(type) {
+            var list;
+
+            if (type === "pre") {
+              list = this.calendar.switchPreMonth();
+            } else {
+              list = this.calendar.switchNextMonth();
+            }
+
+            var month =
+              this.calendar.month > 10
+                ? this.calendar.month
+                : "0" + this.calendar.month;
+
+            this.date = this.calendar.year + "-" + month;
+            this.list = list;
+          },
+          handleItemClick(event, info) {
+            if (this.type === "day") return;
+
+            if (info.tips === "pre" || info.tips === "next") {
+              return;
+            }
+            var dateObj = new Date(info.timeStamp);
+            var index = dateObj.getDay();
+            index = index ? index : 7;
+
+            var start = info.timeStamp - (index - 1) * 86400000;
+            var end = start + 6 * 86400000;
+
+            this.list = this.calendar.handlerClickRange(start, end);
+
+            event.stopPropagation();
+          },
+          handleClick(event) {
+            if (this.type === "week") return;
+
+            let target = event.target;
+            if (target.tagName === "SPAN") {
+              target = target.parentNode;
+            }
             target = target.parentNode;
-          }
-          target = target.parentNode;
 
-          if (target.className.indexOf('disable') > -1) return;
+            if (target.className.indexOf("disable") > -1) return;
 
-          var timeStamp = target.getAttribute('date-timestamp')
-          if (timeStamp) {
-            this.list = this.calendar.handlerMouseMove(Number(timeStamp))
-            // }
-          }
-        }
-      }
-    });
-  </script>
-</body>
+            // if()
+            var timeStamp = target.getAttribute("date-timestamp");
+            if (timeStamp) {
+              this.list = this.calendar.handlerClick(Number(timeStamp));
+            }
+          },
+          handleMouseMove(event) {
+            if (!this.calendar.selecting) return;
 
+            let target = event.target;
+            if (target.tagName === "SPAN") {
+              target = target.parentNode;
+            }
+            target = target.parentNode;
+
+            if (target.className.indexOf("disable") > -1) return;
+
+            var timeStamp = target.getAttribute("date-timestamp");
+            if (timeStamp) {
+              this.list = this.calendar.handlerMouseMove(Number(timeStamp));
+              // }
+            }
+          },
+        },
+      });
+    </script>
+  </body>
 </html>
