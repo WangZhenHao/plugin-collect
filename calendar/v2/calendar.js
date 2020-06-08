@@ -207,6 +207,11 @@ Calender.prototype = {
   getList() {
     currentDayDetail = getMonthCurDetail(this.year, this.month);
 
+    let mix = Math.min(this.mixDate, this.maxDate);
+    let max = Math.max(this.mixDate, this.maxDate);
+    this.mixDate = mix;
+    this.maxDate = max;
+
     this.rows = this.markRange(this.mixDate, this.maxDate, currentDayDetail);
     this.rows.unshift(...getMonthPreDetail(this.year, this.month));
     this.rows.push(...getMonthNextDetail(this.year, this.month));
@@ -251,6 +256,11 @@ Calender.prototype = {
     return this.markRange(mixDate, maxDate, this.rows);
   },
   markRange(mixDate, maxDate, rows) {
+    // [mixDate, maxDate] = [
+    //   Math.mix(mixDate, maxDate),
+    //   Math.max(mixDate, maxDate),
+    // ];
+
     for (let item of rows) {
       var time = item.timeStamp;
       item.inRange = mixDate && time >= mixDate && time <= maxDate;
