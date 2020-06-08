@@ -23,11 +23,11 @@
 
 参考 elementUI 而做的日历选择插件
 
-> 目录:calendar(地区惯性滚动)
+> 目录:calendar(日历选择插件)
 
-[演示地址: https://wangzhenhao.github.io/plugin-collect/AreaInertiaScroll/demo.html](https://wangzhenhao.github.io/plugin-collect/calendar/v2/demo.html)
+[演示地址: https://wangzhenhao.github.io/plugin-collect/calendar/v2/demo.html](https://wangzhenhao.github.io/plugin-collect/calendar/v2/demo.html)
 
-![calendar](https://github.com/WangZhenHao/plugin-collect/blob/master/images/calendar/calendar.gif)
+![calendar](https://github.com/WangZhenHao/plugin-collect/blob/master/images/calendar/calendar.jpg)
 
 ### 抽奖插件
 
