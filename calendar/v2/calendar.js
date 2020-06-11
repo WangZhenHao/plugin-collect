@@ -234,8 +234,8 @@ Calender.prototype = {
     let mix = Math.min(this.mixDate, this.maxDate);
     let max = Math.max(this.mixDate, this.maxDate);
 
-    this.rows = this.markRange(mix, max, this.rows);
-    return this.rows;
+    return this.markRange(mix, max, this.rows);
+    // return this.rows;
   },
   handlerMouseMove(maxDate) {
     // var mixDate = this.mixDate;
@@ -243,8 +243,8 @@ Calender.prototype = {
     let mix = Math.min(this.mixDate, this.maxDate);
     let max = Math.max(this.mixDate, this.maxDate);
 
-    this.rows = this.markRange(mix, max, this.rows);
-    return this.rows;
+    return this.markRange(mix, max, this.rows);
+    // return this.rows;
   },
   handlerClickRange(mixDate, maxDate) {
     if (this.mixDate === mixDate && this.maxDate === maxDate) {
