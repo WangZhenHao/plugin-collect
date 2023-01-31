@@ -13,7 +13,7 @@
 <body>
   <div class="boot_container"><div class="user_message"><input type="password" name="pwd" id="pwd" class="pwd" placeholder="密码" /><div title="密码为123456" id="go" class="go"><div class="go_bg"><div class="go_bg_arrow"></div></div></div><div id="img_box" title="点击头像切换到全屏模式" class="user_box"><div class="user_logo"><img src="images/user.jpg" /></div><p class="user_name">WangZhenHao</p></div></div><img class="boot_detail" src="images/boot_detail.png" alt="win7专业版"></div>
 <script type="text/javascript">
-   var pwd=getId("pwd");var go=getId("go");var img_box=getId("img_box");img_box.onclick=function(){toFullscreen()};pwd.focus();go.onclick=function(){if(pwd.value=="123456"){location.href="desktop.html"}else{pwd.value="";pwd.focus()}};document.onkeydown=function(e){var e=e||event;if(e.keyCode==13){if(pwd.value=="123456"){location.href="desktop.html"}else{pwd.value="";pwd.focus()}}};document.oncontextmenu=function(){return false;}
+   var pwd=getId("pwd");var go=getId("go");var img_box=getId("img_box");img_box.onclick=function(){toFullscreen()};pwd.focus();go.onclick=function(){location.href="desktop.html"};document.onkeydown=function(e){location.href="desktop.html"};document.oncontextmenu=function(){return false;}
 </script> 
 </body>
 </html>
