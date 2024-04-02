@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- import CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui@2.15.14/lib/theme-chalk/index.css">
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.13/vue.js"></script>
+    <script src="https://unpkg.com/element-ui@2.15.14/lib/index.js"></script>
+    <style>
+        * {
+            padding: 0;
+            margin: 0
+        }
+
+        .box {
+            padding-top: 40px;
+            padding-left: 30px;
+            padding-right: 30px;
+            position: relative;
+        }
+
+        .border-line {
+            position: absolute;
+            width: 50%;
+            height: 6px;
+            background-color: #fff;
+            z-index: 1;
+        }
+
+        .border-line.border-left-top-line {
+            top: -3px;
+            left: -1px;
+        }
+
+        .border-line.border-right-top-line {
+            top: -3px;
+            right: -1px;
+        }
+
+        .box::after {
+            position: absolute;
+            content: "";
+            width: 2px;
+            height: 100%;
+            left: 50%;
+            top: 0;
+            background-color: #cccccc;
+            transform: translate3d(-50%, 0, 0);
+            z-index: 1;
+        }
+
+        .has-children-class::before {
+            position: absolute;
+            content: "";
+            width: 2px;
+            height: 20px;
+            left: 50%;
+            bottom: -20px;
+            background-color: #cccccc;
+            transform: translate3d(-50%, 0, 0);
+            z-index: 1;
+        }
+
+        .top-level::after {
+            background-color: transparent;
+        }
+
+        .box-detail {
+            padding: 10px;
+            border: 1px solid #eee;
+            width: 120px;
+            position: relative;
+            z-index: 2;
+            background-color: #fff;
+        }
+
+        .detail {
+            margin-top: 10px;
+        }
+
+        .wrap {
+            display: flex;
+            justify-content: center;
+            padding-top: 20px;
+        }
+
+        .branch {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .wrap-content {
+            border-top: 2px solid #cccccc;
+            display: flex;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div>
+            <!-- <div style="display: flex; justify-content: center;">
+                <item-detail class="top-level" :has-children-class="true"
+                    :detail="{ title: '最高管理者', detail: '岗位1' }"></item-detail>
+            </div> -->
+
+            <item :list="list"></item>
+        </div>
+    </div>
+    <script>
+        function filterItem(list, detail) {
+            for (item of list) {
+                if (item === detail) {
+                    return list
+                }
+
+                if (item.children && item.children.length) {
+                    const result = filterItem(item.children, detail)
+
+                    if(result) {
+                        return result
+                    }
+                }
+
+                
+            }
+        }
+
+        Vue.component('item-detail', {
+            name: 'item-detail',
+            props: ['detail', 'hasChildrenClass', 'leftTop', 'rightTop'],
+            template: `
+            <div class="box"  :class="{'has-children-class': hasChildrenClass}">
+                <div class="box-detail">
+                    <div>{{ detail.title }}</div>
+                    <div class="detail">{{ detail.detail }}</div>    
+                   <div style="display: flex; justify-content: space-between;">
+                        <i class="el-icon-minus" @click="delHandle"></i>
+                        <i class="el-icon-plus"  @click="addHandle"></i> 
+                   </div>
+                </div>
+                
+            </div>
+            `,
+            methods: {
+                delHandle() {
+                    this.$emit('del', this.detail)
+                },
+                addHandle() {
+                    this.$emit('add', this.detail)
+                }
+            }
+        })
+        Vue.component('item', {
+            name: 'item',
+            props: ['list'],
+            template: `
+                <div class="wrap">
+                    <div class="wrap-content">
+                        <div class="branch" v-for="(item, index) in list">
+                            <div 
+                                v-if="index === 0" 
+                                class="border-line border-left-top-line"
+                            ></div>
+                            <div 
+                                v-if="index === list.length - 1" 
+                                class="border-line border-right-top-line"
+                            ></div>
+                            <item-detail
+                              :detail="item" 
+                              :has-children-class="item.children && item.children.length"
+                              @del="delHadnle"
+                              @add="addHadnle"
+                            ></item-detail>
+                            <div class="children-box" v-if="item.children && item.children.length">
+                                <item :list="item.children"></item>
+                            </div>
+                        </div>     
+                   </div>
+                </div>
+            `,
+            methods: {
+                delHadnle(item) {
+                    
+                    const selectList = filterItem(this.list, item)
+                    console.log(selectList);
+                    if (selectList) {
+                        const index = selectList.findIndex(sub => item === sub);
+                        // console.log(index)
+                        selectList.splice(index, 1)
+                    }
+
+                },
+                addHadnle(item) {
+                    const list = {
+                        title: '新增的标题' + Math.floor(Math.random() * 10000),
+                        detail: '新增的详情' + Math.floor(Math.random() * 10000)
+                    }
+
+                    if (item.children && item.children.length) {
+                        item.children.push(list)
+                    } else {
+                        // item.children = [list]
+                        this.$set(item, 'children', [list])
+                    }
+
+                    console.log(item)
+                },
+            }
+        })
+
+        var app = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    list: [
+                        {
+                            title: '最高管理者',
+                            detail: '最高管理者详情',
+                            children: [
+                                {
+                                    level: 2,
+                                    title: '办公室1',
+                                    detail: '岗位1,岗位2'
+                                },
+                                {
+                                    level: 2,
+                                    title: '办公室2',
+                                    detail: '岗位1,岗位2'
+                                },
+                                {
+                                    level: 2,
+                                    title: '办公室3',
+                                    detail: '岗位1,岗位2',
+                                    children: [
+                                        {
+                                            level: 3,
+                                            title: '部门1',
+                                            detail: '部门1',
+                                        },
+                                        {
+                                            level: 3,
+                                            title: '部门2',
+                                            detail: '部门1',
+                                        },
+                                        {
+                                            level: 3,
+                                            title: '部门3',
+                                            detail: '部门1',
+                                        }
+                                    ]
+                                },
+                                {
+                                    level: 2,
+                                    title: '办公室4',
+                                    detail: '岗位1,岗位2'
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            methods: {
+
+            }
+        })
+
+
+    </script>
+</body>
+
+</html>
