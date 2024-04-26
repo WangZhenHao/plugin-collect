@@ -9,6 +9,66 @@
     <link rel="stylesheet" href="https://unpkg.com/element-ui@2.15.14/lib/theme-chalk/index.css">
     <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.13/vue.js"></script>
     <script src="https://unpkg.com/element-ui@2.15.14/lib/index.js"></script>
+    <script>
+        var Drag = /** @class */ (function () {
+            function Drag(el, scaleEl) {
+                var _this = this;
+                this.mouseData = {
+                    isDown: false // 是否触发mousedown
+                };
+                this.limitScroll = {
+                    x: 0,
+                    y: 0
+                };
+                this.handleMousedown = function () {
+                    _this.mouseData = {
+                        isDown: true
+                    };
+                    console.log(_this.limitScroll, 'start');
+                };
+                // private handleMousemove = throttle((event: MouseEvent) => {
+                //   event.preventDefault()
+                //   if (!this.mouseData.isDown)
+                //     return
+                //   const {
+                //     movementY,
+                //     movementX
+                //   } = event
+                //   this.el.scrollTop = this.el.scrollTop - movementY * 1
+                //   this.el.scrollLeft = this.el.scrollLeft - movementX * 1
+                // }, 0)
+                this.handleMousemove = function (event) {
+                    event.preventDefault();
+                    if (!_this.mouseData.isDown)
+                        return;
+                    var movementY = event.movementY, movementX = event.movementX;
+                    _this.el.scrollTop = _this.el.scrollTop - movementY * 1;
+                    _this.el.scrollLeft = _this.el.scrollLeft - movementX * 1;
+                };
+                this.handleMouseup = function (event) {
+                    console.log(event, 'up');
+                    _this.mouseData = {
+                        isDown: false
+                    };
+                };
+                this.el = el;
+                this.scaleEl = scaleEl;
+                this.init();
+            }
+            Drag.prototype.init = function () {
+                this.el.addEventListener('mousedown', this.handleMousedown);
+                this.el.addEventListener('mousemove', this.handleMousemove);
+                document.addEventListener('mouseup', this.handleMouseup);
+            };
+            Drag.prototype.destroy = function () {
+                this.el.removeEventListener('mousedown', this.handleMousedown);
+                this.el.removeEventListener('mousemove', this.handleMousemove);
+                document.removeEventListener('mouseup', this.handleMouseup);
+            };
+            return Drag;
+        }());
+
+    </script>
     <style>
         * {
             padding: 0;
@@ -102,20 +162,44 @@
         i {
             cursor: pointer;
         }
+
+        .flow-design {
+            width: 100vw;
+            height: 100vh;
+            overflow: auto;
+            /* background-color: #f5f5f7; */
+            position: relative;
+        }
+
+        .box-scale {
+            transform-origin: 50% 0px 0px;
+            position: relative;
+            padding: 54px 0;
+            min-width: 100%;
+            display: inline-block;
+            align-items: flex-start;
+            justify-content: center;
+            flex-wrap: wrap;
+            /* background-color: #f5f5f7; */
+            transform-origin: 50% 0px 0px;
+        }
     </style>
 </head>
 
 <body>
     <div id="app">
-        <div>
+        <div ref="flowDesign" class="flow-design">
             <!-- <div style="display: flex; justify-content: center;">
                 <item-detail class="top-level" :has-children-class="true"
                     :detail="{ title: '最高管理者', detail: '岗位1' }"></item-detail>
             </div> -->
 
-            <item :list="list"></item>
+            <div ref="flowScale" class="box-scale" :style="{ transform: `scale(${scale / 100})` }">
+                <item :list="list"></item>
+            </div>
         </div>
     </div>
+
     <script>
         function filterItem(list, detail) {
             for (item of list) {
@@ -126,12 +210,12 @@
                 if (item.children && item.children.length) {
                     const result = filterItem(item.children, detail)
 
-                    if(result) {
+                    if (result) {
                         return result
                     }
                 }
 
-                
+
             }
         }
 
@@ -190,7 +274,7 @@
             `,
             methods: {
                 delHadnle(item) {
-                    
+
                     const selectList = filterItem(this.list, item)
                     console.log(selectList);
                     if (selectList) {
@@ -222,6 +306,7 @@
             el: '#app',
             data() {
                 return {
+                    scale: 100,
                     list: [
                         {
                             title: '最高管理者',
@@ -230,7 +315,24 @@
                                 {
                                     level: 2,
                                     title: '办公室1',
-                                    detail: '岗位1,岗位2'
+                                    detail: '岗位1,岗位2',
+                                    children: [
+                                        {
+                                            level: 3,
+                                            title: '部门13',
+                                            detail: '部门11',
+                                        },
+                                        {
+                                            level: 3,
+                                            title: '部门24',
+                                            detail: '部门12',
+                                        },
+                                        {
+                                            level: 3,
+                                            title: '部门53',
+                                            detail: '部门13',
+                                        },
+                                    ]
                                 },
                                 {
                                     level: 2,
@@ -271,6 +373,10 @@
             },
             methods: {
 
+            },
+            mounted() {
+                console.log(this)
+                new Drag(this.$refs.flowDesign)
             }
         })
 
