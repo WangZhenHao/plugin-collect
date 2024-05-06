@@ -168,20 +168,30 @@
             height: 100vh;
             overflow: auto;
             /* background-color: #f5f5f7; */
-            position: relative;
+            /* position: relative; */
         }
 
         .box-scale {
-            transform-origin: 50% 0px 0px;
             position: relative;
             padding: 54px 0;
             min-width: 100%;
             display: inline-block;
+            /* display: inline-block;
             align-items: flex-start;
             justify-content: center;
-            flex-wrap: wrap;
+            flex-wrap: wrap; */
             /* background-color: #f5f5f7; */
-            transform-origin: 50% 0px 0px;
+            /* transform-origin: 50% 0px 0px; */
+            transform-origin: 0px 0px 0px;
+            
+        }
+    </style>
+    <style>
+        .scale-wrap {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 24px;
         }
     </style>
 </head>
@@ -194,9 +204,14 @@
                     :detail="{ title: '最高管理者', detail: '岗位1' }"></item-detail>
             </div> -->
 
-            <div ref="flowScale" class="box-scale" :style="{ transform: `scale(${scale / 100})` }">
+            <div ref="flowScale" class="box-scale" :style="{ transform: `scale(${scale / 100})`, padding: changePadding }">
                 <item :list="list"></item>
             </div>
+        </div>
+        <div class="scale-wrap">
+            <button @click="triggerCalcScale('reduce')">减少</button>
+            <span>{{ scale }}%</span>
+            <button  @click="triggerCalcScale('add')">增加</button>
         </div>
     </div>
 
@@ -307,6 +322,7 @@
             data() {
                 return {
                     scale: 100,
+                    changePadding: "54px 0",
                     list: [
                         {
                             title: '最高管理者',
@@ -372,7 +388,21 @@
                 }
             },
             methods: {
+                triggerCalcScale(type) {
+                    if (type === 'add') {
+                        if (this.scale < 300)
+                        this.scale += 10
+                    } else {
+                        if (this.scale > 50)
+                        this.scale -= 10
+                    }
 
+                    this.changePadding = 0;
+
+                    setTimeout(() => {
+                        this.changePadding = "54px 0"
+                    }, 100)
+                }
             },
             mounted() {
                 console.log(this)
