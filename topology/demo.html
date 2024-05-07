@@ -182,7 +182,7 @@
             flex-wrap: wrap; */
             /* background-color: #f5f5f7; */
             /* transform-origin: 50% 0px 0px; */
-            transform-origin: 0px 0px 0px;
+            transform-origin: 50% 0px 0px;
             
         }
     </style>
@@ -203,8 +203,8 @@
                 <item-detail class="top-level" :has-children-class="true"
                     :detail="{ title: '最高管理者', detail: '岗位1' }"></item-detail>
             </div> -->
-
-            <div ref="flowScale" class="box-scale" :style="{ transform: `scale(${scale / 100})`, padding: changePadding }">
+            <!-- :style="{ transform: `scale(${scale / 100})`, padding: changePadding }" -->
+            <div ref="flowScale" class="box-scale" :style="{ zoom: `${scale / 100}`}">
                 <item :list="list"></item>
             </div>
         </div>
