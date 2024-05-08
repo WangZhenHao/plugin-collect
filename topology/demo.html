@@ -205,7 +205,7 @@
                     :detail="{ title: '最高管理者', detail: '岗位1' }"></item-detail>
             </div> -->
             <!-- :style="{ transform: `scale(${scale / 100})`, padding: changePadding }" -->
-            <div ref="flowScale" class="box-scale" :style="{ transform: `scale(${scale / 100})` }">
+            <div ref="flowScale" class="box-scale" :style="{ zoom: `${scale}%` }">
                 <item :list="list"></item>
             </div>
         </div>
