@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>列表递归显示</title>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui@2.15.14/lib/theme-chalk/index.css">
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.13/vue.js"></script>
+    <script src="https://unpkg.com/element-ui@2.15.14/lib/index.js"></script>
+    <style>
+        #app {
+            padding-bottom: 40px;
+        }
+        .flex-box {
+            display: flex;
+        }
+
+        .items-center {
+            align-items: center;
+        }
+
+        .flex-1 {
+            flex: 1;
+        }
+
+        .directive-wrap {
+            padding-left: 60px;
+            margin-top: 20px;
+            position: relative;
+        }
+
+        .has-directive-wrap__line::after {
+            content: "";
+            position: absolute;
+            height: 100%;
+            width: 1px;
+            background-color: #ccc;
+            top: -24px;
+            left: 10px;
+        }
+
+        .hide-directive-wrap__line::before {
+            content: "";
+            position: absolute;
+            height: calc(100% - 20px);
+            width: 4px;
+            background-color: #fff;
+            top: 11px;
+            left: -52px;
+            z-index: 3;
+        }
+
+        .hide-directive-wrap__listline {
+            position: absolute;
+            height: calc(100% - 20px);
+            width: 4px;
+            background-color: #fff;
+            top: 21px;
+            left: -52px;
+            z-index: 3;
+        }
+
+        .horizontal__line {
+            position: relative;
+        }
+
+        .has-directive-wrap__line .horizontal__line::after {
+            content: "";
+            position: absolute;
+            background-color: #ccc;
+            height: 1px;
+            width: 30px;
+            top: 20px;
+            left: -50px;
+        }
+
+        .has-directive-wrap__line .horizontal__line__area::after {
+            top: 10px;
+        }
+
+        .wrap-list {
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .wrap-list .input-wrap {
+            width: 300px;
+            /* margin-left: 25px; */
+        }
+
+        .wrap-list .input-wrap__area {
+            height: 174px;
+        }
+
+        .wrap-list .input-wrap__area .el-textarea__inner {
+            height: 100%;
+        }
+
+        .m-t-15 {
+            margin-top: 15px;
+        }
+
+        .option-wrap {
+            margin-left: 10px;
+        }
+
+        .wrap-list__item {
+            width: 98px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <directive-list :list="ruleForm.list" :level="1"></directive-list>
+    </div>
+    <script>
+        function findOptionList(list, detail) {
+            for (item of list) {
+                if (item === detail) {
+                    return list
+                }
+
+                if (item.children && item.children.length) {
+                    const result = findOptionList(item.children, detail)
+
+                    if (result) {
+                        return result
+                    }
+                }
+
+
+            }
+        }
+        Vue.component('directive-list', {
+            name: 'directiveList',
+            props: {
+                list: {
+                    type: Array,
+                    default() {
+                        return []
+                    }
+                },
+                prefix: {
+                    type: String,
+                    default: ''
+                },
+                level: {
+                    type: Number,
+                    default: 0
+                }
+            },
+            template: `
+                <div class="directive-wrap">
+                      <div v-for="(item, index) in list" class="wrap-list">
+                        <div class="flex-box items-center horizontal__line">
+                            <span class="wrap-list__item">标题{{ fixPrefix(prefix, index) }}:</span>
+                            <el-input class="input-wrap" v-model="item.titleField"></el-input>
+                            <div class="option-wrap">
+                                <el-button 
+                                  type="text" 
+                                  @click="addSiblingNodeHandle(item)" 
+                                  v-if="level !== 1"
+                                >添加</el-button>
+                                <el-button 
+                                  @click="addChildNodeHandle(item, index)" 
+                                  type="text"
+                                  v-if="level !== 5"
+                                >添加子级</el-button>
+                                <el-button 
+                                  @click="removeHandle(item, index)"
+                                  type="text" 
+                                  v-if="level !== 1"
+                                >移除</el-button>
+                            </div>
+                        </div>
+                        <template v-if="item.children && item.children.length" >
+                            <directive-list
+                              :list="item.children"
+                              :prefix="fixPrefix(prefix, index)"
+                              :level="level + 1"
+                              class="has-directive-wrap__line"
+                            ></directive-list>
+                            <div class="hide-directive-wrap__listline" v-if="index === list.length - 1"></div>
+                        </template>
+                        
+                        <div 
+                          v-else 
+                          class="flex-box m-t-15 horizontal__line horizontal__line__area" 
+                          :class="{'hide-directive-wrap__line': index === list.length - 1}"
+                        >
+                            <span class="wrap-list__item">指令:</span> 
+                            <el-input  class="input-wrap input-wrap__area" type="textarea" v-model="item.directiveField"></el-input>
+                        </div>  
+
+                      </div>
+                </div>
+            `,
+            methods: {
+                createFrom() {
+                    return {
+                        directiveField: '',
+                        titleField: ''
+                    }
+                },
+                fixPrefix(prefix, index) {
+                    return prefix ? prefix + '.' + (index + 1) : String(index + 1)
+                },
+                addSiblingNodeHandle(item) {
+                    const result = findOptionList(this.list, item);
+                    
+                    if(result) {
+                        result.push(this.createFrom())
+                    }
+                },
+                addChildNodeHandle(item, index) {
+                    const result = findOptionList(this.list, item);
+                    const pushList = result[index];
+                    const newItem = this.createFrom();
+
+                    if(pushList.children && pushList.children.length) {
+                        pushList.children.push(newItem)
+                    } else {
+                        this.$set(pushList, 'children', [newItem])
+                    }
+                },
+                removeHandle(item, index) {
+                    const result = findOptionList(this.list, item);
+
+                    if(result) {
+                        result.splice(index, 1)
+                    }
+                    
+                }
+            }
+        })
+        var app = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    ruleForm: {
+                        list: [
+                            {
+                                titleField: '测试1',
+                                directiveField: '',
+                                children: [
+                                    // { 
+                                    //     titleField: '测试2',
+                                    //     directiveField: '内容1',
+                                    // },
+                                    // { 
+                                    //     titleField: '测试3',
+                                    //     directiveField: '内容2',
+                                    // },
+                                    {
+                                        titleField: '测试4',
+                                        directiveField: '内容3',
+                                        children: [
+                                            {
+                                                titleField: '测试6',
+                                                directiveField: '内容3',
+                                            },
+                                            {
+                                                titleField: '测试5',
+                                                directiveField: '内容3',
+                                                children: [
+                                                    {
+                                                        titleField: '测试5',
+                                                        directiveField: '内容3',
+                                                        children: [
+                                                            {
+                                                                titleField: '第五级',
+                                                                directiveField: '内容3',
+                                                            },
+                                                            {
+                                                                titleField: '第五级',
+                                                                directiveField: '内容3',
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        titleField: '测试6',
+                                                        directiveField: '内容3',
+                                                    }
+                                                ]
+                                            },
+
+                                        ]
+                                    },
+                                    {
+                                        titleField: '',
+                                        directiveField: '',
+                                        children: [
+                                            {
+                                                titleField: '测试5',
+                                                directiveField: '内容3',
+                                            },
+                                            {
+                                                titleField: '测试6',
+                                                directiveField: '内容3',
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            },
+            methods: {
+
+            }
+        })
+    </script>
+</body>
+
+</html>

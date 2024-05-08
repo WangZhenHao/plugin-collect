@@ -182,7 +182,8 @@
             flex-wrap: wrap; */
             /* background-color: #f5f5f7; */
             /* transform-origin: 50% 0px 0px; */
-            transform-origin: 50% 0px 0px;
+            /* transform-origin: 50% 0px 0px; */
+            transform-origin: 0 0;
             
         }
     </style>
@@ -204,7 +205,7 @@
                     :detail="{ title: '最高管理者', detail: '岗位1' }"></item-detail>
             </div> -->
             <!-- :style="{ transform: `scale(${scale / 100})`, padding: changePadding }" -->
-            <div ref="flowScale" class="box-scale" :style="{ zoom: `${scale / 100}`}">
+            <div ref="flowScale" class="box-scale" :style="{ transform: `scale(${scale / 100})` }">
                 <item :list="list"></item>
             </div>
         </div>
@@ -397,11 +398,11 @@
                         this.scale -= 10
                     }
 
-                    this.changePadding = 0;
+                    // this.changePadding = 0;
 
-                    setTimeout(() => {
-                        this.changePadding = "54px 0"
-                    }, 100)
+                    // setTimeout(() => {
+                    //     this.changePadding = "54px 0"
+                    // }, 100)
                 }
             },
             mounted() {
