@@ -1,9 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CSS Conic gradients</title>
+
+</head>
+
+<body>
     <style>
         * {
             padding: 0;
@@ -43,11 +48,12 @@
         button::before {
             content: "";
             background: conic-gradient(from var(--roate),
-            transparent 0%, white 5%, transparent 10%);
+                    transparent 0%, white 5%, transparent 10%);
             position: absolute;
             inset: 0;
             animation: rotate 2s linear infinite;
         }
+
         button::after {
             content: "";
             background: var(--bule);
@@ -55,11 +61,13 @@
             inset: 3px;
             border-radius: calc(var(--radius) - 3px);
         }
+
         .fancy {
             position: absolute;
             inset: 0;
             /* background: red; */
         }
+
         .text {
             position: relative;
             z-index: 1;
@@ -69,14 +77,53 @@
             to {
                 --roate: 360deg
             }
-            
+
         }
     </style>
-</head>
-<body>
     <button>
         <div class="fancy"></div>
         <span class="text">Download For Free</span>
     </button>
+    <style>
+        .rainbow::before {
+            background: conic-gradient(from var(--roate),
+                    #fd004c,
+                    #fe9000,
+                    #fff020,
+                    #3edf4b,
+                    #3363ff,
+                    #b102b7,
+                    #fd004c);
+            animation: rotate 0.8s linear infinite;
+            transition: opacity  0.5s linear;
+            opacity: 1;
+        }
+        .step::before {
+            opacity: 0;
+        }
+        .rainbow {
+            background: #1c1b29;
+        }
+        .rainbow::after {
+            background: #1c1b29;
+        }
+    </style>
+    <button class="rainbow" style="margin-left: 20px;">
+        <div class="fancy"></div>
+        <span class="text">Download For Free</span>
+    </button>
+    <script>
+       var btn = document.querySelector('.rainbow')
+
+       setInterval(() => {
+        if(btn.classList.contains('step')) {
+            btn.classList.remove('step')
+        } else {
+            btn.classList.add('step')
+        }
+       }, 3000)
+       console.log(btn)
+    </script>
 </body>
+
 </html>
