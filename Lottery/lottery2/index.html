@@ -15,7 +15,9 @@
             height: 430px;
             background-image: url('./roll_center.png');
             background-size: 100% 100%;
-            transition: transform 6s ease-in-out;
+            /* transition: transform 6s ease-in-out; */
+            transition-duration: 6s;
+            transition-timing-function: ease-in-out;
             transform: rotate(0deg);
         }
         .box {
@@ -56,20 +58,30 @@
             { name: '天猫优惠券', deg: -330 },
         ]
         btn.addEventListener('click', () => {
-            const deg  = toLotter(4)
-
-            lotter.style.transform = `rotate(${deg}deg)`
+            lotter.style.transitionProperty = 'none'
+            lotter.style.transform = `rotate(0deg)`
+            setTimeout(() => {
+                const deg  = toLotter(4)
+                lotter.style.transitionProperty = 'transform'
+                lotter.style.transform = `rotate(${deg}deg)`
+            })
+            
         })
         pointer.addEventListener('click', () => {
-            const deg  = toLotter(1)
+            lotter.style.transitionProperty = 'none'
+            lotter.style.transform = `rotate(0deg)`
 
-            lotter.style.transform = `rotate(${deg}deg)`
+            setTimeout(() => {
+                const deg  = toLotter(1)
+                lotter.style.transitionProperty = 'transform'
+                lotter.style.transform = `rotate(${deg}deg)`
+            })
         })
 
         function toLotter(index) {
             const item = list[index]
 
-            const deg = item.deg + -360
+            const deg = item.deg + -360 * 3
 
             return deg
         }
