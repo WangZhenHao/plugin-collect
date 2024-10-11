@@ -49,18 +49,18 @@ Lottery.prototype = {
 		    	position: absolute;
 		    	width: 76px;
 		    	height: 110px;
-		    	background: url(https://operator-advmainimg.zhongxiang51.com/lottery-arrow.png);
+		    	background: url(./lottery-arrow.png);
 		    	background-size: 100% 100%;
 		    	left: 50%;
 		    	top: 50%;
-		    	transform: translate3d(-50%, -40%, 0);
+		    	transform: translate3d(-50%, -66%, 0) rotate(180deg);
 		    	z-index: 2;
 		    }
 			.lottery-wrap {
 				width: 100%;
 				height: 100%;
 				transition: transform 6s ease-in-out;	
-				transform: rotate(0deg);			
+				transform: rotate(30deg);			
 			}
 			.lottery-wrap .lottery-item {
 				width: 100px;
@@ -169,7 +169,7 @@ Lottery.prototype = {
 		if(this.isAnimated) return;
 
 		var cricle = 360 * 4,
-			deg = 180 - (index - 1) * this.lotteryItemDeg,
+			deg = -(index - 1) * this.lotteryItemDeg,
 			rotate = 0,
 			self = this;
 		this.isAnimated = true;
