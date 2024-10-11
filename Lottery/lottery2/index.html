@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lotter</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        .lotter {
+            width: 430px;
+            height: 430px;
+            background-image: url('./roll_center.png');
+            background-size: 100% 100%;
+            transition: transform 6s ease-in-out;
+            transform: rotate(0deg);
+        }
+        .box {
+            position: relative;
+            width: 430px;
+            height: 430px;
+        }
+        .pointer {
+            width: 130px;
+            height: 162px;
+            background-image: url('./roll_point.png');
+            background-size: 100% 100%;
+
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate3d(-50%, -50%, 0);
+        }
+    </style>
+</head>
+<body>
+    <button id="btn">开始抽奖(U形头枕)</button>
+    <div class="box">
+        <div class="lotter"></div>
+        <div class="pointer"></div>
+    </div>
+    <script>
+        const btn = document.querySelector('#btn');
+        const lotter = document.querySelector('.lotter');
+        const pointer = document.querySelector('.pointer');
+
+        const list = [
+            { name: '迪士尼保卫背', deg: -30 },
+            { name: '谢谢参与', deg: -90 },
+            { name: '保湿计时器', deg: -150 },
+            { name: '京东E卡电子券', deg: -210 },
+            { name: 'U形头枕', deg: -270 },
+            { name: '天猫优惠券', deg: -330 },
+        ]
+        btn.addEventListener('click', () => {
+            const deg  = toLotter(4)
+
+            lotter.style.transform = `rotate(${deg}deg)`
+        })
+        pointer.addEventListener('click', () => {
+            const deg  = toLotter(1)
+
+            lotter.style.transform = `rotate(${deg}deg)`
+        })
+
+        function toLotter(index) {
+            const item = list[index]
+
+            const deg = item.deg + -360
+
+            return deg
+        }
+    </script>
+</body>
+</html>
